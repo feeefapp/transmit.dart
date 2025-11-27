@@ -20,29 +20,29 @@ import 'test_utils/fake_http_client.dart';
 void main() {
   group('Transmit', () {
     test('should connect to the server', () async {
-      FakeSseChannel? sseChannel;
+      FakeEventSource? eventSource;
 
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        sseChannelFactory: (url) async {
-          sseChannel = FakeSseChannel(url);
-          return sseChannel!;
+        eventSourceFactory: (url, {withCredentials}) {
+          eventSource = FakeEventSource(url, withCredentials: withCredentials);
+          return eventSource!;
         },
       ));
 
       await Future.delayed(const Duration(milliseconds: 100));
 
-      expect(sseChannel, isNotNull);
-      expect(sseChannel?.url.toString(), contains('http://localhost/__transmit/events'));
-      expect(sseChannel?.url.queryParameters['uid'], equals('1'));
+      expect(eventSource, isNotNull);
+      expect(eventSource?.url.toString(), contains('http://localhost/__transmit/events'));
+      expect(eventSource?.url.queryParameters['uid'], equals('1'));
     });
 
     test('should allow to create subscription', () async {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        sseChannelFactory: (url) async => FakeSseChannel(url),
+        eventSourceFactory: (url, {withCredentials}) => FakeEventSource(url, withCredentials: withCredentials),
       ));
 
       await Future.delayed(const Duration(milliseconds: 100));
@@ -56,7 +56,7 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => 'custom-uid',
-        sseChannelFactory: (url) async => FakeSseChannel(url),
+        eventSourceFactory: (url, {withCredentials}) => FakeEventSource(url, withCredentials: withCredentials),
       ));
 
       expect(transmit.uid, equals('custom-uid'));
@@ -65,7 +65,7 @@ void main() {
     test('should compute uuid when uid generator is not defined', () async {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
-        sseChannelFactory: (url) async => FakeSseChannel(url),
+        eventSourceFactory: (url, {withCredentials}) => FakeEventSource(url, withCredentials: withCredentials),
       ));
 
       expect(transmit.uid, isA<String>());
@@ -73,14 +73,14 @@ void main() {
     });
 
     test('should dispatch messages to the subscriptions', () async {
-      FakeSseChannel? sseChannel;
+      FakeEventSource? eventSource;
 
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        sseChannelFactory: (url) async {
-          sseChannel = FakeSseChannel(url);
-          return sseChannel!;
+        eventSourceFactory: (url, {withCredentials}) {
+          eventSource = FakeEventSource(url, withCredentials: withCredentials);
+          return eventSource!;
         },
       ));
 
@@ -93,7 +93,7 @@ void main() {
         receivedPayload = payload as String;
       });
 
-      sseChannel?.emitMessage(
+      eventSource?.emitMessage(
         jsonEncode({'channel': 'channel', 'payload': 'hello'}),
       );
 
@@ -105,15 +105,15 @@ void main() {
     test(
         'should not register subscription if they are not created on connection failure',
         () async {
-      FakeSseChannel? sseChannel;
+      FakeEventSource? eventSource;
       FakeHttpClient? httpClient;
 
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        sseChannelFactory: (url) async {
-          sseChannel = FakeSseChannel(url);
-          return sseChannel!;
+        eventSourceFactory: (url, {withCredentials}) {
+          eventSource = FakeEventSource(url, withCredentials: withCredentials);
+          return eventSource!;
         },
         httpClientFactory: (baseUrl, uid) {
           httpClient = FakeHttpClient(baseUrl: baseUrl, uid: uid);
@@ -129,8 +129,8 @@ void main() {
 
       expect(httpClient?.sentRequests.length, equals(0));
 
-      sseChannel?.sendCloseEvent();
-      sseChannel?.sendOpenEvent();
+      eventSource?.sendErrorEvent();
+      eventSource?.sendOpenEvent();
 
       await Future.delayed(const Duration(milliseconds: 100));
 
@@ -138,15 +138,15 @@ void main() {
     });
 
     test('should re-connect only created subscription', () async {
-      FakeSseChannel? sseChannel;
+      FakeEventSource? eventSource;
       FakeHttpClient? httpClient;
 
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        sseChannelFactory: (url) async {
-          sseChannel = FakeSseChannel(url);
-          return sseChannel!;
+        eventSourceFactory: (url, {withCredentials}) {
+          eventSource = FakeEventSource(url, withCredentials: withCredentials);
+          return eventSource!;
         },
         httpClientFactory: (baseUrl, uid) {
           httpClient = FakeHttpClient(baseUrl: baseUrl, uid: uid);
@@ -166,8 +166,8 @@ void main() {
 
       expect(httpClient?.sentRequests.length, equals(1));
 
-      sseChannel?.sendCloseEvent();
-      sseChannel?.sendOpenEvent();
+      eventSource?.sendErrorEvent();
+      eventSource?.sendOpenEvent();
 
       await Future.delayed(const Duration(milliseconds: 200));
 

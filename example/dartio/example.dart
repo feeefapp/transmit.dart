@@ -40,10 +40,12 @@ Future<void> main() async {
     print('Message received: $message');
   });
 
+
   // Create the subscription on the server
   await subscription.create();
   print('Subscription created');
 
+  return;
   // Wait a bit to receive messages
   await Future.delayed(const Duration(seconds: 30));
 
