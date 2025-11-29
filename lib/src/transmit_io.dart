@@ -32,8 +32,12 @@ class EventSourceIO {
     try {
       _client = http.Client();
       final request = http.Request('GET', _url);
+      // SSE anti-buffering request headers
       request.headers['Accept'] = 'text/event-stream';
-      request.headers['Cache-Control'] = 'no-cache';
+      request.headers['Cache-Control'] = 'no-cache, no-transform';
+      request.headers['Connection'] = 'keep-alive';
+      // Note: X-Accel-Buffering is a response header that the server should send
+      // It cannot be set as a request header
 
       final response = await _client!.send(request);
       

@@ -2,6 +2,8 @@
 
 A Dart client for the native Server-Sent-Event (SSE) module of AdonisJS. This package provides a simple and powerful API to receive real-time events from AdonisJS Transmit servers.
 
+Working on both Dart VM (dart:io) and Web (dart:web).
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -432,6 +434,41 @@ On `dart:io` platforms, the client manually parses Server-Sent Events from HTTP 
 - CLI applications
 - Server-side Dart applications
 - Flutter mobile/desktop applications
+
+The client automatically sets the following request headers for optimal SSE performance:
+- `Accept: text/event-stream`
+- `Cache-Control: no-cache, no-transform`
+- `Connection: keep-alive`
+
+### SSE Anti-Buffering Headers
+
+For optimal real-time event delivery, your server should send the following response headers:
+
+```
+Content-Type: text/event-stream
+Cache-Control: no-cache, no-transform
+Connection: keep-alive
+X-Accel-Buffering: no  # Important for Nginx proxies
+```
+
+#### Web Platform (Browser)
+
+**Important**: The browser's `EventSource` API does not allow setting custom request headers. The server **must** send these headers in the response. This is a browser security limitation.
+
+#### Dart IO Platform
+
+The client automatically sets appropriate request headers (`Accept`, `Cache-Control`, `Connection`). However, the server should still send the response headers listed above, especially `X-Accel-Buffering: no` if you're behind an Nginx proxy.
+
+**Nginx Configuration**: If using Nginx as a reverse proxy, ensure buffering is disabled:
+
+```nginx
+location /__transmit/events {
+  proxy_pass http://your_backend;
+  proxy_buffering off;
+  proxy_cache off;
+  proxy_read_timeout 24h;
+}
+```
 
 ## Examples
 

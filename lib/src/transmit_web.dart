@@ -13,6 +13,13 @@ import 'package:web/web.dart' as web;
 
 /// Web implementation using EventSource API.
 /// This replaces EventSourceStub when running on web.
+///
+/// **Important**: The EventSource API does not allow setting custom request headers.
+/// The server must send the following anti-buffering headers in the response:
+/// - Content-Type: text/event-stream
+/// - Cache-Control: no-cache, no-transform
+/// - Connection: keep-alive
+/// - X-Accel-Buffering: no (for Nginx proxies)
 class EventSourceWeb {
   final web.EventSource _eventSource;
   final StreamController<MessageEvent> _messageController =
