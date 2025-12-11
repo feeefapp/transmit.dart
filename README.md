@@ -37,8 +37,8 @@ Add this package to your `pubspec.yaml`:
 dependencies:
   transmit_client:
     git:
-      url: https://github.com/adonisjs/transmit-client
-      path: transmit-dart
+      url: https://pub.dev/packages/transmit_client
+      path: main
 ```
 
 Or if published to pub.dev:

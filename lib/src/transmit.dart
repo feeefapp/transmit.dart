@@ -247,6 +247,30 @@ class Transmit {
     throw ArgumentError('Unknown event: $event');
   }
 
+  /// Set headers that will be included in all HTTP requests.
+  /// Useful for setting authentication headers when user logs in/out.
+  /// [headers] - Map with header key-value pairs, or null to clear headers
+  ///
+  /// Example:
+  /// ```dart
+  /// // When user logs in
+  /// transmit.setHeaders({
+  ///   'Authorization': 'Bearer token-123',
+  ///   'X-User-Id': '123'
+  /// });
+  ///
+  /// // When user logs out
+  /// transmit.setHeaders(null);
+  /// ```
+  void setHeaders(Map<String, String>? headers) {
+    _httpClient.setHeaders(headers);
+  }
+
+  /// Get the current headers that are set via setHeaders.
+  Map<String, String> getHeaders() {
+    return _httpClient.getHeaders();
+  }
+
   /// Close the connection.
   void close() {
     _messageSubscription?.cancel();
