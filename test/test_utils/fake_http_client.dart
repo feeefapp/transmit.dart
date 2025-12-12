@@ -8,7 +8,7 @@
  */
 
 import 'package:http/http.dart' as http;
-import '../../lib/src/http_client.dart';
+import 'package:transmit_client/src/http_client.dart';
 
 /// Fake HTTP client for testing.
 class FakeHttpClient extends HttpClient {

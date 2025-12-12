@@ -8,30 +8,67 @@
  */
 
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'http_client_stub.dart'
     if (dart.library.html) 'http_client_web.dart'
     if (dart.library.io) 'http_client_io.dart';
 
 /// HTTP client for communicating with the Transmit server.
-class HttpClient {
+class TransmitHttpClient {
   final String baseUrl;
   final String uid;
   Map<String, String> _headers = {};
+  final Dio _dio;
 
-  HttpClient({
+  TransmitHttpClient({
     required this.baseUrl,
     required this.uid,
-  });
+    Dio? dio,
+  }) : _dio = dio ??
+            Dio(BaseOptions(
+              baseUrl: baseUrl,
+              followRedirects: false,
+              // We map all status codes back to http.Response,
+              // so let dio accept all.
+              validateStatus: (_) => true,
+              responseType: ResponseType.plain,
+            ));
 
-  /// Send an HTTP request.
+  /// Send an HTTP request using Dio under the hood while returning
+  /// an http.Response for compatibility with existing hooks/tests.
   Future<http.Response> send(http.Request request) async {
-    final client = http.Client();
-    try {
-      return await client.send(request).then(http.Response.fromStream);
-    } finally {
-      client.close();
-    }
+    final options = Options(
+      method: request.method,
+      headers: request.headers,
+      responseType: ResponseType.plain,
+      validateStatus: (_) => true,
+    );
+
+    final dioResponse = await _dio.requestUri(
+      request.url,
+      data: request.body.isNotEmpty ? request.body : null,
+      options: options,
+    );
+
+    final rawHeaders = <String, String>{};
+    dioResponse.headers.forEach((key, values) {
+      rawHeaders[key] = values.join(',');
+    });
+
+    final bodyString = dioResponse.data is String
+        ? dioResponse.data as String
+        : jsonEncode(dioResponse.data);
+
+    return http.Response(
+      bodyString,
+      dioResponse.statusCode ?? 500,
+      headers: rawHeaders,
+      request: request,
+      isRedirect: dioResponse.isRedirect ?? false,
+      persistentConnection: true,
+      reasonPhrase: dioResponse.statusMessage,
+    );
   }
 
   /// Set headers that will be included in all HTTP requests.

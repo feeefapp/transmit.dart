@@ -25,7 +25,7 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        eventSourceFactory: (url, {withCredentials}) {
+        eventSourceFactory: (url, {bool withCredentials = true}) {
           eventSource = FakeEventSource(url, withCredentials: withCredentials);
           return eventSource!;
         },
@@ -42,7 +42,8 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        eventSourceFactory: (url, {withCredentials}) => FakeEventSource(url, withCredentials: withCredentials),
+        eventSourceFactory: (url, {bool withCredentials = true}) =>
+            FakeEventSource(url, withCredentials: withCredentials),
       ));
 
       await Future.delayed(const Duration(milliseconds: 100));
@@ -56,7 +57,8 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => 'custom-uid',
-        eventSourceFactory: (url, {withCredentials}) => FakeEventSource(url, withCredentials: withCredentials),
+        eventSourceFactory: (url, {bool withCredentials = true}) =>
+            FakeEventSource(url, withCredentials: withCredentials),
       ));
 
       expect(transmit.uid, equals('custom-uid'));
@@ -65,7 +67,8 @@ void main() {
     test('should compute uuid when uid generator is not defined', () async {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
-        eventSourceFactory: (url, {withCredentials}) => FakeEventSource(url, withCredentials: withCredentials),
+        eventSourceFactory: (url, {bool withCredentials = true}) =>
+            FakeEventSource(url, withCredentials: withCredentials),
       ));
 
       expect(transmit.uid, isA<String>());
@@ -78,7 +81,7 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        eventSourceFactory: (url, {withCredentials}) {
+        eventSourceFactory: (url, {bool withCredentials = true}) {
           eventSource = FakeEventSource(url, withCredentials: withCredentials);
           return eventSource!;
         },
@@ -89,6 +92,9 @@ void main() {
       final subscription = transmit.subscription('channel');
       var receivedPayload = '';
 
+      expect(eventSource, isNotNull);
+      await eventSource!.ready;
+
       subscription.onMessage((payload) {
         receivedPayload = payload as String;
       });
@@ -97,7 +103,7 @@ void main() {
         jsonEncode({'channel': 'channel', 'payload': 'hello'}),
       );
 
-      await Future.delayed(const Duration(milliseconds: 50));
+      await Future.delayed(const Duration(milliseconds: 150));
 
       expect(receivedPayload, equals('hello'));
     });
@@ -111,7 +117,7 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        eventSourceFactory: (url, {withCredentials}) {
+        eventSourceFactory: (url, {bool withCredentials = true}) {
           eventSource = FakeEventSource(url, withCredentials: withCredentials);
           return eventSource!;
         },
@@ -144,7 +150,7 @@ void main() {
       final transmit = Transmit(TransmitOptions(
         baseUrl: 'http://localhost',
         uidGenerator: () => '1',
-        eventSourceFactory: (url, {withCredentials}) {
+        eventSourceFactory: (url, {bool withCredentials = true}) {
           eventSource = FakeEventSource(url, withCredentials: withCredentials);
           return eventSource!;
         },
@@ -155,6 +161,9 @@ void main() {
       ));
 
       await Future.delayed(const Duration(milliseconds: 100));
+
+      expect(eventSource, isNotNull);
+      await eventSource!.ready;
 
       final subscription = transmit.subscription('channel1');
       transmit.subscription('channel2');

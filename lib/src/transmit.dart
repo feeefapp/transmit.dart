@@ -25,7 +25,7 @@ class TransmitOptions {
   final String baseUrl;
   final String Function()? uidGenerator;
   final dynamic Function(Uri, {bool withCredentials})? eventSourceFactory;
-  final HttpClient Function(String baseUrl, String uid)? httpClientFactory;
+  final TransmitHttpClient Function(String baseUrl, String uid)? httpClientFactory;
   final void Function(http.Request)? beforeSubscribe;
   final void Function(http.Request)? beforeUnsubscribe;
   final int? maxReconnectAttempts;
@@ -56,7 +56,7 @@ class Transmit {
   final String _uid;
   final TransmitOptions _options;
   final Map<String, Subscription> _subscriptions = {};
-  late final HttpClient _httpClient;
+  late final TransmitHttpClient _httpClient;
   final Hook _hooks;
   TransmitStatus _status = TransmitStatus.initializing;
   dynamic _eventSource;
@@ -78,7 +78,7 @@ class Transmit {
         _hooks = Hook() {
     // Initialize HTTP client after _uid is set
     _httpClient =
-        options.httpClientFactory?.call(options.baseUrl, _uid) ?? HttpClient(baseUrl: options.baseUrl, uid: _uid);
+        options.httpClientFactory?.call(options.baseUrl, _uid) ?? TransmitHttpClient(baseUrl: options.baseUrl, uid: _uid);
     // Register hooks
     if (options.beforeSubscribe != null) {
       _hooks.register(HookEvent.beforeSubscribe, options.beforeSubscribe!);
@@ -131,12 +131,7 @@ class Transmit {
       _changeStatus(TransmitStatus.connected);
       _reconnectAttempts = 0;
 
-      // Re-register all created subscriptions
-      for (final subscription in _subscriptions.values) {
-        if (subscription.isCreated) {
-          await subscription.forceCreate();
-        }
-      }
+      await _reRegisterSubscriptions();
 
       // Listen to messages
       _messageSubscription = _eventSource.stream.listen(
@@ -146,9 +141,10 @@ class Transmit {
       );
 
       // Listen to open events
-      _openSubscription = _eventSource.onOpen.listen((_) {
+      _openSubscription = _eventSource.onOpen.listen((_) async {
         _changeStatus(TransmitStatus.connected);
         _reconnectAttempts = 0;
+        await _reRegisterSubscriptions();
       });
 
       // Listen to error events
@@ -212,6 +208,15 @@ class Transmit {
         _connect();
       }
     });
+  }
+
+  /// Re-register subscriptions that have already been created.
+  Future<void> _reRegisterSubscriptions() async {
+    for (final subscription in _subscriptions.values) {
+      if (subscription.isCreated) {
+        await subscription.forceCreate();
+      }
+    }
   }
 
   /// Create or get a subscription for a channel.

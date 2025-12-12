@@ -12,6 +12,9 @@ Working on both Dart VM (dart:io) and Web (dart:web).
   - [Creating a Client](#creating-a-client)
   - [Subscribing to Channels](#subscribing-to-channels)
   - [Listening to Messages](#listening-to-messages)
+  - [Stream API (Recommended)](#stream-api-recommended)
+  - [Callback API](#callback-api)
+  - [Choosing Between APIs](#choosing-between-stream-and-callback-api)
   - [Unsubscribing](#unsubscribing)
   - [Connection Events](#connection-events)
 - [API Reference](#api-reference)
@@ -27,6 +30,13 @@ Working on both Dart VM (dart:io) and Web (dart:web).
   - [Testing](#testing)
 - [Platform Support](#platform-support)
 - [Examples](#examples)
+  - [Complete Flutter Example](#complete-flutter-example)
+  - [Basic Example](#basic-example)
+  - [Multiple Channels](#multiple-channels)
+  - [Typed Messages](#typed-messages)
+  - [Error Handling](#error-handling)
+  - [Flutter Code Examples](#flutter-example-with-stream-api)
+  - [Advanced Stream Composition](#advanced-stream-composition-example)
 - [License](#license)
 
 ## Installation
@@ -37,7 +47,7 @@ Add this package to your `pubspec.yaml`:
 dependencies:
   transmit_client:
     git:
-      url: https://pub.dev/packages/transmit_client
+      url: https://github.com/adonisjs/transmit-client
       path: main
 ```
 
@@ -56,6 +66,8 @@ dart pub get
 
 ## Quick Start
 
+### Using Stream API (Recommended)
+
 ```dart
 import 'package:transmit_client/transmit.dart';
 
@@ -73,7 +85,36 @@ void main() async {
   // Create a subscription
   final subscription = transmit.subscription('chat/1');
 
-  // Listen for messages
+  // Listen for messages using Stream API
+  subscription.stream.listen((message) {
+    print('Received: $message');
+  });
+
+  // Register the subscription on the server
+  await subscription.create();
+}
+```
+
+### Using Callback API
+
+```dart
+import 'package:transmit_client/transmit.dart';
+
+void main() async {
+  // Create a Transmit client
+  final transmit = Transmit(TransmitOptions(
+    baseUrl: 'http://localhost:3333',
+  ));
+
+  // Wait for connection
+  transmit.on('connected', () {
+    print('Connected to server');
+  });
+
+  // Create a subscription
+  final subscription = transmit.subscription('chat/1');
+
+  // Listen for messages using Callback API
   subscription.onMessage((message) {
     print('Received: $message');
   });
@@ -117,13 +158,156 @@ await subscription.create();
 
 ### Listening to Messages
 
-Use `onMessage` to register a handler that will be called whenever a message is received on the channel:
+The package provides two APIs for listening to messages: **Stream API** (recommended for Dart/Flutter) and **Callback API** (for compatibility). Both work simultaneously and receive the same messages.
+
+#### Stream API (Recommended)
+
+The Stream API is the idiomatic Dart way to handle messages. It provides better integration with Flutter, easier composition, and more powerful error handling.
+
+##### Basic Stream Usage
+
+```dart
+// Basic stream listening
+subscription.stream.listen((message) {
+  print('Message received: $message');
+});
+```
+
+##### Multiple Listeners (Broadcast Stream)
+
+The `subscription.stream` is a **broadcast stream**, meaning multiple listeners can subscribe to it simultaneously:
+
+```dart
+// Listener 1
+subscription.stream.listen((message) {
+  print('Listener 1: $message');
+});
+
+// Listener 2
+subscription.stream.listen((message) {
+  print('Listener 2: $message');
+});
+
+// Listener 3
+subscription.stream.listen((message) {
+  print('Listener 3: $message');
+});
+
+// All three listeners will receive the same messages!
+```
+
+##### Error Handling
+
+Streams provide built-in error handling:
+
+```dart
+subscription.stream.listen(
+  (message) {
+    print('Message: $message');
+  },
+  onError: (error) {
+    print('Error: $error');
+  },
+  onDone: () {
+    print('Stream closed');
+  },
+);
+```
+
+##### Typed Streams
+
+Use `streamAs<T>()` for type-safe message handling:
+
+```dart
+// Typed stream
+subscription.streamAs<Map<String, dynamic>>().listen((message) {
+  print('User: ${message['user']}');
+  print('Text: ${message['text']}');
+});
+```
+
+##### Stream Composition
+
+One of the biggest advantages of the Stream API is the ability to compose and transform streams:
+
+```dart
+// Filter messages
+subscription.stream
+  .where((msg) => msg.toString().contains('important'))
+  .listen((msg) => print('Important: $msg'));
+
+// Transform messages
+subscription.streamAs<Map<String, dynamic>>()
+  .map((msg) => msg['text'] as String)
+  .listen((text) => print('Text: $text'));
+
+// Take first N messages
+subscription.stream.take(5).listen((msg) {
+  print('First 5: $msg');
+});
+
+// Skip first N messages
+subscription.stream.skip(3).listen((msg) {
+  print('After first 3: $msg');
+});
+
+// Debounce messages (wait for pause in stream)
+subscription.stream
+  .transform(StreamTransformer.fromHandlers(
+    handleData: (data, sink) {
+      // Custom transformation logic
+      sink.add('Processed: $data');
+    },
+  ))
+  .listen((msg) => print(msg));
+```
+
+##### Stream Subscription Management
+
+You can cancel stream subscriptions:
+
+```dart
+// Store the subscription
+final streamSubscription = subscription.stream.listen((message) {
+  print('Message: $message');
+});
+
+// Later, cancel it
+await streamSubscription.cancel();
+```
+
+##### Flutter Integration with StreamBuilder
+
+The Stream API integrates seamlessly with Flutter's `StreamBuilder`:
+
+```dart
+StreamBuilder(
+  stream: subscription.stream,
+  builder: (context, snapshot) {
+    if (snapshot.hasError) {
+      return Text('Error: ${snapshot.error}');
+    }
+    if (snapshot.hasData) {
+      return Text('Message: ${snapshot.data}');
+    }
+    return CircularProgressIndicator();
+  },
+)
+```
+
+#### Callback API
+
+The Callback API provides a simpler, function-based approach that matches the TypeScript implementation:
+
+##### Basic Callback Usage
 
 ```dart
 subscription.onMessage((message) {
   print('Message received: $message');
 });
 ```
+
+##### Multiple Handlers
 
 You can register multiple handlers on the same subscription:
 
@@ -139,7 +323,7 @@ subscription.onMessage((message) {
 
 All registered handlers will be called when a message is received.
 
-#### One-Time Handlers
+##### One-Time Handlers
 
 Use `onMessageOnce` to register a handler that will only be called once:
 
@@ -151,7 +335,7 @@ subscription.onMessageOnce((message) {
 
 After the handler is called, it's automatically removed from the subscription.
 
-#### Typed Messages
+##### Typed Messages
 
 You can specify the message type for better type safety:
 
@@ -161,6 +345,36 @@ subscription.onMessage<Map<String, dynamic>>((message) {
   print('Text: ${message['text']}');
 });
 ```
+
+##### Removing Handlers
+
+The `onMessage` method returns a function to remove the handler:
+
+```dart
+final unsubscribe = subscription.onMessage((message) {
+  print('Message received');
+});
+
+// Later, remove the handler
+unsubscribe();
+```
+
+#### Choosing Between Stream and Callback API
+
+**Use Stream API when:**
+- Building Flutter applications (works great with `StreamBuilder`)
+- You need stream composition (filtering, mapping, transforming)
+- You want better error handling
+- You need multiple independent listeners
+- You're building idiomatic Dart code
+
+**Use Callback API when:**
+- You need compatibility with TypeScript version
+- You prefer simple function callbacks
+- You don't need stream composition
+- You're migrating from TypeScript code
+
+**Note:** Both APIs work simultaneously - messages are delivered to both streams and callbacks!
 
 ### Unsubscribing
 
@@ -310,8 +524,15 @@ Represents a subscription to a channel.
 
 - `Future<void> create()` - Create the subscription on the server (idempotent)
 - `Future<void> delete()` - Remove the subscription from the server
-- `void Function() onMessage<T>(void Function(T) handler)` - Register a message handler. Returns an unsubscribe function
-- `void onMessageOnce<T>(void Function(T) handler)` - Register a one-time message handler
+- `Stream<dynamic> get stream` - Get a broadcast stream of messages (Stream API)
+- `Stream<T> streamAs<T>()` - Get a typed broadcast stream of messages
+- `void Function() onMessage<T>(void Function(T) handler)` - Register a message handler. Returns an unsubscribe function (Callback API)
+- `void onMessageOnce<T>(void Function(T) handler)` - Register a one-time message handler (Callback API)
+
+#### Stream Properties
+
+- **`stream`**: A broadcast stream that emits all messages received on this subscription. Multiple listeners can subscribe to it simultaneously.
+- **`streamAs<T>()`**: Returns a typed broadcast stream. Useful for type-safe message handling.
 
 ### TransmitStatus
 
@@ -581,11 +802,102 @@ try {
 }
 ```
 
-### Flutter Example
+### Complete Flutter Example
+
+A complete, runnable Flutter example is available in `example/flutter/`. To run it:
+
+```bash
+cd example/flutter
+flutter pub get
+flutter run
+```
+
+The example demonstrates:
+- Real-time message display
+- Connection status management
+- Stream API integration
+- Proper cleanup and resource management
+
+### Flutter Example with Stream API
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:transmit_client/transmit.dart';
+import 'dart:async';
+
+class ChatScreen extends StatefulWidget {
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  Transmit? _transmit;
+  Subscription? _subscription;
+  StreamSubscription<dynamic>? _streamSubscription;
+  final List<String> _messages = [];
+  String _status = 'Disconnected';
+
+  @override
+  void initState() {
+    super.initState();
+    _transmit = Transmit(TransmitOptions(
+      baseUrl: 'http://localhost:3333',
+    ));
+    
+    _subscription = _transmit!.subscription('test');
+    
+    // Listen to messages using Stream API
+    _streamSubscription = _subscription!.stream.listen((message) {
+      setState(() {
+        _messages.insert(0, message.toString());
+      });
+    });
+    
+    _subscription!.create();
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    _transmit?.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Chat')),
+      body: Column(
+        children: [
+          // Status indicator
+          Container(
+            padding: EdgeInsets.all(16),
+            color: _status == 'Connected' ? Colors.green : Colors.red,
+            child: Text('Status: $_status'),
+          ),
+          // Messages list
+          Expanded(
+            child: ListView.builder(
+              reverse: true,
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                return ListTile(title: Text(_messages[index]));
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+### Flutter Example with State Management
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:transmit_client/transmit.dart';
+import 'dart:async';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -595,6 +907,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   late Transmit _transmit;
   late Subscription _subscription;
+  StreamSubscription<dynamic>? _streamSubscription;
   final List<String> _messages = [];
 
   @override
@@ -605,7 +918,9 @@ class _ChatScreenState extends State<ChatScreen> {
     ));
     
     _subscription = _transmit.subscription('chat/1');
-    _subscription.onMessage((message) {
+    
+    // Listen to stream and update state
+    _streamSubscription = _subscription.stream.listen((message) {
       setState(() {
         _messages.add(message.toString());
       });
@@ -616,6 +931,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void dispose() {
+    _streamSubscription?.cancel();
     _transmit.close();
     super.dispose();
   }
@@ -632,6 +948,69 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+}
+```
+
+### Advanced Stream Composition Example
+
+```dart
+import 'package:transmit_client/transmit.dart';
+
+void main() async {
+  final transmit = Transmit(TransmitOptions(
+    baseUrl: 'http://localhost:3333',
+  ));
+
+  final subscription = transmit.subscription('notifications');
+
+  // Example 1: Filter important notifications
+  subscription.streamAs<Map<String, dynamic>>()
+    .where((msg) => msg['priority'] == 'high')
+    .listen((msg) {
+      print('🔴 High priority: ${msg['message']}');
+    });
+
+  // Example 2: Transform and format messages
+  subscription.streamAs<Map<String, dynamic>>()
+    .map((msg) => '${msg['user']}: ${msg['text']}')
+    .listen((formatted) {
+      print('💬 $formatted');
+    });
+
+  // Example 3: Rate limiting - take only first message per second
+  var lastMessageTime = DateTime.now();
+  subscription.stream
+    .where((_) {
+      final now = DateTime.now();
+      if (now.difference(lastMessageTime).inSeconds >= 1) {
+        lastMessageTime = now;
+        return true;
+      }
+      return false;
+    })
+    .listen((msg) {
+      print('📨 (Rate limited): $msg');
+    });
+
+  // Example 4: Combine multiple subscriptions
+  final chatSub = transmit.subscription('chat/1');
+  final notifSub = transmit.subscription('notifications');
+  
+  // Merge streams using StreamController
+  final mergedController = StreamController<dynamic>.broadcast();
+  
+  chatSub.stream.listen((msg) => mergedController.add('Chat: $msg'));
+  notifSub.stream.listen((msg) => mergedController.add('Notif: $msg'));
+  
+  mergedController.stream.listen((msg) {
+    print('Merged: $msg');
+  });
+
+  await Future.wait([
+    subscription.create(),
+    chatSub.create(),
+    notifSub.create(),
+  ]);
 }
 ```
 

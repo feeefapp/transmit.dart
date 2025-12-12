@@ -8,7 +8,6 @@
  */
 
 import 'dart:async';
-import 'package:http/http.dart' as http;
 import 'http_client.dart';
 import 'hook.dart';
 import 'subscription_status.dart';
@@ -17,7 +16,7 @@ import 'transmit_status.dart';
 /// Options for creating a subscription.
 class SubscriptionOptions {
   final String channel;
-  final HttpClient httpClient;
+  final TransmitHttpClient httpClient;
   final TransmitStatus Function() getEventSourceStatus;
   final Hook? hooks;
 
@@ -31,11 +30,12 @@ class SubscriptionOptions {
 
 /// A subscription to a channel.
 class Subscription {
-  final HttpClient _httpClient;
+  final TransmitHttpClient _httpClient;
   final Hook? _hooks;
   final String _channel;
   final TransmitStatus Function() _getEventSourceStatus;
   final Set<void Function(dynamic)> _handlers = {};
+  final StreamController<dynamic> _messageStreamController = StreamController<dynamic>.broadcast();
   SubscriptionStatus _status = SubscriptionStatus.pending;
 
   Subscription(SubscriptionOptions options)
@@ -56,10 +56,50 @@ class Subscription {
   /// Run all registered handlers for the subscription.
   /// This is an internal method exposed for testing.
   void $runHandler(dynamic message) {
-    for (final handler in _handlers) {
+    // Emit to stream first
+    if (!_messageStreamController.isClosed) {
+      _messageStreamController.add(message);
+    }
+    
+    // Then run callbacks (iterate over a snapshot to allow handlers to remove themselves safely)
+    for (final handler in List<void Function(dynamic)>.from(_handlers)) {
       handler(message);
     }
   }
+
+  /// Get a stream of messages for this subscription.
+  /// This is the idiomatic Dart way to listen for messages.
+  /// 
+  /// Example:
+  /// ```dart
+  /// subscription.stream.listen((message) {
+  ///   print('Received: $message');
+  /// });
+  /// ```
+  /// 
+  /// For Flutter, you can use StreamBuilder:
+  /// ```dart
+  /// StreamBuilder(
+  ///   stream: subscription.stream,
+  ///   builder: (context, snapshot) {
+  ///     if (snapshot.hasData) {
+  ///       return Text('Message: ${snapshot.data}');
+  ///     }
+  ///     return CircularProgressIndicator();
+  ///   },
+  /// )
+  /// ```
+  Stream<dynamic> get stream => _messageStreamController.stream;
+
+  /// Get a typed stream of messages for this subscription.
+  /// 
+  /// Example:
+  /// ```dart
+  /// subscription.streamAs<Map<String, dynamic>>().listen((message) {
+  ///   print('User: ${message['user']}');
+  /// });
+  /// ```
+  Stream<T> streamAs<T>() => _messageStreamController.stream.cast<T>();
 
   /// Create the subscription on the server.
   Future<void> create() async {
@@ -124,6 +164,11 @@ class Subscription {
 
       _status = SubscriptionStatus.deleted;
       _hooks?.onUnsubscription(_channel);
+      
+      // Close the stream controller when subscription is deleted
+      if (!_messageStreamController.isClosed) {
+        _messageStreamController.close();
+      }
     } catch (error) {
       // Error handling
     }

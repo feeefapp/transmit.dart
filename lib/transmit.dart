@@ -9,5 +9,8 @@
 
 export 'src/transmit.dart';
 export 'src/subscription.dart';
-
-
+export 'src/http_client.dart';
+export 'src/hook.dart';
+export 'src/hook_event.dart';
+export 'src/subscription_status.dart';
+export 'src/transmit_status.dart';

@@ -7,6 +7,7 @@
       "name": "transmit_client",
       "version": "1.0.3",
       "dependencies": [
+        "dio",
         "http",
         "uuid",
         "web"
@@ -75,6 +76,19 @@
         "crypto",
         "fixnum",
         "meta"
+      ]
+    },
+    {
+      "name": "dio",
+      "version": "5.9.0",
+      "dependencies": [
+        "async",
+        "collection",
+        "dio_web_adapter",
+        "http_parser",
+        "meta",
+        "mime",
+        "path"
       ]
     },
     {
@@ -405,6 +419,21 @@
       ]
     },
     {
+      "name": "dio_web_adapter",
+      "version": "2.1.1",
+      "dependencies": [
+        "dio",
+        "http_parser",
+        "meta",
+        "web"
+      ]
+    },
+    {
+      "name": "mime",
+      "version": "2.0.0",
+      "dependencies": []
+    },
+    {
       "name": "http_parser",
       "version": "4.1.2",
       "dependencies": [
@@ -526,11 +555,6 @@
         "async",
         "path"
       ]
-    },
-    {
-      "name": "mime",
-      "version": "2.0.0",
-      "dependencies": []
     },
     {
       "name": "cli_config",

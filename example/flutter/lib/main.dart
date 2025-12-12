@@ -1,0 +1,223 @@
+import 'package:flutter/material.dart';
+import 'package:transmit_client/transmit.dart';
+import 'dart:async';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Transmit Flutter Example',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        useMaterial3: true,
+      ),
+      home: const ChatScreen(),
+    );
+  }
+}
+
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  Transmit? _transmit;
+  Subscription? _subscription;
+  StreamSubscription<dynamic>? _streamSubscription;
+  final List<String> _messages = [];
+  String _status = 'Disconnected';
+  bool _isConnected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _connect();
+  }
+
+  void _connect() {
+    setState(() {
+      _status = 'Connecting...';
+    });
+
+    _transmit = Transmit(TransmitOptions(
+      baseUrl: 'http://localhost:3333',
+      maxReconnectAttempts: 5,
+      onReconnectAttempt: (attempt) {
+        setState(() {
+          _status = 'Reconnecting... (attempt $attempt)';
+        });
+      },
+      onReconnectFailed: () {
+        setState(() {
+          _status = 'Reconnect failed';
+          _isConnected = false;
+        });
+      },
+    ));
+
+    // Listen to connection events
+    _transmit!.on('connected', () {
+      setState(() {
+        _status = 'Connected';
+        _isConnected = true;
+      });
+    });
+
+    _transmit!.on('disconnected', () {
+      setState(() {
+        _status = 'Disconnected';
+        _isConnected = false;
+      });
+    });
+
+    _transmit!.on('reconnecting', () {
+      setState(() {
+        _status = 'Reconnecting...';
+      });
+    });
+
+    // Create subscription
+    _subscription = _transmit!.subscription('test');
+
+    // Listen to messages using Stream API
+    _streamSubscription = _subscription!.stream.listen(
+      (message) {
+        setState(() {
+          _messages.insert(0, '${DateTime.now().toString().substring(11, 19)} - $message');
+        });
+      },
+      onError: (error) {
+        setState(() {
+          _messages.insert(0, '${DateTime.now().toString().substring(11, 19)} - Error: $error');
+        });
+      },
+    );
+
+    // Create subscription on server
+    _subscription!.create().then((_) {
+      setState(() {
+        _messages.insert(0, '${DateTime.now().toString().substring(11, 19)} - Subscription created');
+      });
+    }).catchError((error) {
+      setState(() {
+        _messages.insert(0, '${DateTime.now().toString().substring(11, 19)} - Failed to create subscription: $error');
+      });
+    });
+  }
+
+  void _disconnect() {
+    _streamSubscription?.cancel();
+    _subscription?.delete();
+    _transmit?.close();
+    setState(() {
+      _transmit = null;
+      _subscription = null;
+      _streamSubscription = null;
+      _status = 'Disconnected';
+      _isConnected = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    _transmit?.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Transmit Flutter Example'),
+      ),
+      body: Column(
+        children: [
+          // Status bar
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            color: _isConnected ? Colors.green.shade100 : Colors.red.shade100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Status: $_status',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: _isConnected ? Colors.green.shade900 : Colors.red.shade900,
+                  ),
+                ),
+                if (_transmit != null)
+                  Text(
+                    'UID: ${_transmit!.uid.substring(0, 8)}...',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: _isConnected ? Colors.green.shade900 : Colors.red.shade900,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+
+          // Messages list
+          Expanded(
+            child: _messages.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No messages yet.\nSend GET request to http://localhost:3333/test',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
+                  )
+                : ListView.builder(
+                    reverse: true,
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(_messages[index]),
+                        leading: const Icon(Icons.message, size: 20),
+                      );
+                    },
+                  ),
+          ),
+
+          // Control buttons
+          Container(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _isConnected ? null : _connect,
+                  icon: const Icon(Icons.connect_without_contact),
+                  label: const Text('Connect'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: _isConnected ? _disconnect : null,
+                  icon: const Icon(Icons.close),
+                  label: const Text('Disconnect'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

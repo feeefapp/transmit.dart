@@ -297,6 +297,67 @@
     JSArray_JSArray$markGrowable(allocation, $E) {
       return A._setArrayType(allocation, $E._eval$1("JSArray<0>"));
     },
+    JSString__isWhitespace(codeUnit) {
+      if (codeUnit < 256)
+        switch (codeUnit) {
+          case 9:
+          case 10:
+          case 11:
+          case 12:
+          case 13:
+          case 32:
+          case 133:
+          case 160:
+            return true;
+          default:
+            return false;
+        }
+      switch (codeUnit) {
+        case 5760:
+        case 8192:
+        case 8193:
+        case 8194:
+        case 8195:
+        case 8196:
+        case 8197:
+        case 8198:
+        case 8199:
+        case 8200:
+        case 8201:
+        case 8202:
+        case 8232:
+        case 8233:
+        case 8239:
+        case 8287:
+        case 12288:
+        case 65279:
+          return true;
+        default:
+          return false;
+      }
+    },
+    JSString__skipLeadingWhitespace(string, index) {
+      var t1, codeUnit;
+      for (t1 = string.length; index < t1;) {
+        codeUnit = string.charCodeAt(index);
+        if (codeUnit !== 32 && codeUnit !== 13 && !J.JSString__isWhitespace(codeUnit))
+          break;
+        ++index;
+      }
+      return index;
+    },
+    JSString__skipTrailingWhitespace(string, index) {
+      var t1, index0, codeUnit;
+      for (t1 = string.length; index > 0; index = index0) {
+        index0 = index - 1;
+        if (!(index0 < t1))
+          return A.ioore(string, index0);
+        codeUnit = string.charCodeAt(index0);
+        if (codeUnit !== 32 && codeUnit !== 13 && !J.JSString__isWhitespace(codeUnit))
+          break;
+      }
+      return index;
+    },
     getInterceptor$(receiver) {
       if (typeof receiver == "number") {
         if (Math.floor(receiver) == receiver)
@@ -397,8 +458,17 @@
     set$_innerHtml$x(receiver, value) {
       return J.getInterceptor$x(receiver).set$_innerHtml(receiver, value);
     },
+    set$data$z(receiver, value) {
+      return J.getInterceptor$z(receiver).set$data(receiver, value);
+    },
+    set$headers$x(receiver, value) {
+      return J.getInterceptor$x(receiver).set$headers(receiver, value);
+    },
     set$innerHtml$x(receiver, value) {
       return J.getInterceptor$x(receiver).set$innerHtml(receiver, value);
+    },
+    set$stream$x(receiver, value) {
+      return J.getInterceptor$x(receiver).set$stream(receiver, value);
     },
     set$text$x(receiver, value) {
       return J.getInterceptor$x(receiver).set$text(receiver, value);
@@ -406,11 +476,17 @@
     get$attributes$x(receiver) {
       return J.getInterceptor$x(receiver).get$attributes(receiver);
     },
+    get$first$ax(receiver) {
+      return J.getInterceptor$ax(receiver).get$first(receiver);
+    },
     get$hashCode$(receiver) {
       return J.getInterceptor$(receiver).get$hashCode(receiver);
     },
     get$isEmpty$asx(receiver) {
       return J.getInterceptor$asx(receiver).get$isEmpty(receiver);
+    },
+    get$isNotEmpty$asx(receiver) {
+      return J.getInterceptor$asx(receiver).get$isNotEmpty(receiver);
     },
     get$iterator$ax(receiver) {
       return J.getInterceptor$ax(receiver).get$iterator(receiver);
@@ -465,14 +541,23 @@
     asUint8List$2$x(receiver, a0, a1) {
       return J.getInterceptor$x(receiver).asUint8List$2(receiver, a0, a1);
     },
+    cancel$0$z(receiver) {
+      return J.getInterceptor$z(receiver).cancel$0(receiver);
+    },
     close$0$x(receiver) {
       return J.getInterceptor$x(receiver).close$0(receiver);
+    },
+    contains$1$asx(receiver, a0) {
+      return J.getInterceptor$asx(receiver).contains$1(receiver, a0);
+    },
+    containsKey$1$x(receiver, a0) {
+      return J.getInterceptor$x(receiver).containsKey$1(receiver, a0);
     },
     elementAt$1$ax(receiver, a0) {
       return J.getInterceptor$ax(receiver).elementAt$1(receiver, a0);
     },
-    forEach$1$ax(receiver, a0) {
-      return J.getInterceptor$ax(receiver).forEach$1(receiver, a0);
+    forEach$1$x(receiver, a0) {
+      return J.getInterceptor$x(receiver).forEach$1(receiver, a0);
     },
     insertAdjacentElement$2$x(receiver, a0, a1) {
       return J.getInterceptor$x(receiver).insertAdjacentElement$2(receiver, a0, a1);
@@ -480,23 +565,26 @@
     insertBefore$2$x(receiver, a0, a1) {
       return J.getInterceptor$x(receiver).insertBefore$2(receiver, a0, a1);
     },
+    join$1$ax(receiver, a0) {
+      return J.getInterceptor$ax(receiver).join$1(receiver, a0);
+    },
     map$1$1$ax(receiver, a0, $T1) {
       return J.getInterceptor$ax(receiver).map$1$1(receiver, a0, $T1);
     },
     matchAsPrefix$2$s(receiver, a0, a1) {
       return J.getInterceptor$s(receiver).matchAsPrefix$2(receiver, a0, a1);
     },
-    remove$0$ax(receiver) {
-      return J.getInterceptor$ax(receiver).remove$0(receiver);
-    },
-    send$1$x(receiver, a0) {
-      return J.getInterceptor$x(receiver).send$1(receiver, a0);
+    remove$0$x(receiver) {
+      return J.getInterceptor$x(receiver).remove$0(receiver);
     },
     skip$1$ax(receiver, a0) {
       return J.getInterceptor$ax(receiver).skip$1(receiver, a0);
     },
     sort$1$ax(receiver, a0) {
       return J.getInterceptor$ax(receiver).sort$1(receiver, a0);
+    },
+    take$1$ax(receiver, a0) {
+      return J.getInterceptor$ax(receiver).take$1(receiver, a0);
     },
     toLowerCase$0$s(receiver) {
       return J.getInterceptor$s(receiver).toLowerCase$0(receiver);
@@ -595,11 +683,6 @@
           A.throwExpression(A.RangeError$range(_start, 0, _endOrLength, "start", null));
       }
       return new A.SubListIterable(_iterable, _start, _endOrLength, $E._eval$1("SubListIterable<0>"));
-    },
-    MappedIterable_MappedIterable(iterable, $function, $S, $T) {
-      if (type$.EfficientLengthIterable_dynamic._is(iterable))
-        return new A.EfficientLengthMappedIterable(iterable, $function, $S._eval$1("@<0>")._bind$1($T)._eval$1("EfficientLengthMappedIterable<1,2>"));
-      return new A.MappedIterable(iterable, $function, $S._eval$1("@<0>")._bind$1($T)._eval$1("MappedIterable<1,2>"));
     },
     SkipIterable_SkipIterable(iterable, count, $E) {
       var _s5_ = "count";
@@ -862,6 +945,21 @@
       } else
         A.Sort__doSort(a, less, great, compare, $E);
     },
+    CastStream: function CastStream(t0, t1) {
+      this.__internal$_source = t0;
+      this.$ti = t1;
+    },
+    CastStreamSubscription: function CastStreamSubscription(t0, t1, t2) {
+      var _ = this;
+      _.__internal$_source = t0;
+      _.__internal$_zone = t1;
+      _.__internal$_handleError = _.__internal$_handleData = null;
+      _.$ti = t2;
+    },
+    _BytesBuilder: function _BytesBuilder(t0) {
+      this.__internal$_length = 0;
+      this._chunks = t0;
+    },
     LateError: function LateError(t0) {
       this._message = t0;
     },
@@ -891,25 +989,8 @@
       _.__internal$_current = null;
       _.$ti = t2;
     },
-    MappedIterable: function MappedIterable(t0, t1, t2) {
-      this.__internal$_iterable = t0;
-      this._f = t1;
-      this.$ti = t2;
-    },
-    EfficientLengthMappedIterable: function EfficientLengthMappedIterable(t0, t1, t2) {
-      this.__internal$_iterable = t0;
-      this._f = t1;
-      this.$ti = t2;
-    },
-    MappedIterator: function MappedIterator(t0, t1, t2) {
-      var _ = this;
-      _.__internal$_current = null;
-      _._iterator = t0;
-      _._f = t1;
-      _.$ti = t2;
-    },
     MappedListIterable: function MappedListIterable(t0, t1, t2) {
-      this._source = t0;
+      this.__internal$_source = t0;
       this._f = t1;
       this.$ti = t2;
     },
@@ -958,11 +1039,11 @@
       this.$ti = t0;
     },
     WhereTypeIterable: function WhereTypeIterable(t0, t1) {
-      this._source = t0;
+      this.__internal$_source = t0;
       this.$ti = t1;
     },
     WhereTypeIterator: function WhereTypeIterator(t0, t1) {
-      this._source = t0;
+      this.__internal$_source = t0;
       this.$ti = t1;
     },
     FixedLengthListMixin: function FixedLengthListMixin() {
@@ -972,7 +1053,7 @@
     UnmodifiableListBase: function UnmodifiableListBase() {
     },
     ReversedListIterable: function ReversedListIterable(t0, t1) {
-      this._source = t0;
+      this.__internal$_source = t0;
       this.$ti = t1;
     },
     unminifyOrTag(rawClassName) {
@@ -1066,6 +1147,29 @@
       }
       return "Instance of '" + A.Primitives_objectTypeName(object) + "'";
     },
+    Primitives_dateNow() {
+      return Date.now();
+    },
+    Primitives_initTicker() {
+      var $window, performance;
+      if ($.Primitives_timerFrequency !== 0)
+        return;
+      $.Primitives_timerFrequency = 1000;
+      if (typeof window == "undefined")
+        return;
+      $window = window;
+      if ($window == null)
+        return;
+      if (!!$window.dartUseDateNowForTicks)
+        return;
+      performance = $window.performance;
+      if (performance == null)
+        return;
+      if (typeof performance.now != "function")
+        return;
+      $.Primitives_timerFrequency = 1000000;
+      $.Primitives_timerTicks = new A.Primitives_initTicker_closure(performance);
+    },
     Primitives_currentUri() {
       if (!!self.location)
         return self.location.href;
@@ -1138,29 +1242,36 @@
     },
     Primitives_lazyAsJsDate(receiver) {
       if (receiver.date === void 0)
-        receiver.date = new Date(receiver._value);
+        receiver.date = new Date(receiver._core$_value);
       return receiver.date;
     },
     Primitives_getYear(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCFullYear() + 0 : A.Primitives_lazyAsJsDate(receiver).getFullYear() + 0;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getFullYear() + 0;
+      return t1;
     },
     Primitives_getMonth(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCMonth() + 1 : A.Primitives_lazyAsJsDate(receiver).getMonth() + 1;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getMonth() + 1;
+      return t1;
     },
     Primitives_getDay(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCDate() + 0 : A.Primitives_lazyAsJsDate(receiver).getDate() + 0;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getDate() + 0;
+      return t1;
     },
     Primitives_getHours(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCHours() + 0 : A.Primitives_lazyAsJsDate(receiver).getHours() + 0;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getHours() + 0;
+      return t1;
     },
     Primitives_getMinutes(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCMinutes() + 0 : A.Primitives_lazyAsJsDate(receiver).getMinutes() + 0;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getMinutes() + 0;
+      return t1;
     },
     Primitives_getSeconds(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCSeconds() + 0 : A.Primitives_lazyAsJsDate(receiver).getSeconds() + 0;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getSeconds() + 0;
+      return t1;
     },
     Primitives_getMilliseconds(receiver) {
-      return receiver.isUtc ? A.Primitives_lazyAsJsDate(receiver).getUTCMilliseconds() + 0 : A.Primitives_lazyAsJsDate(receiver).getMilliseconds() + 0;
+      var t1 = A.Primitives_lazyAsJsDate(receiver).getMilliseconds() + 0;
+      return t1;
     },
     Primitives_extractStackTrace(error) {
       var jsError = error.$thrownJsError;
@@ -1924,23 +2035,14 @@
       this._values = t1;
       this.$ti = t2;
     },
-    _KeysOrValues: function _KeysOrValues(t0, t1) {
-      this._elements = t0;
-      this.$ti = t1;
-    },
-    _KeysOrValuesOrElementsIterator: function _KeysOrValuesOrElementsIterator(t0, t1, t2) {
-      var _ = this;
-      _._elements = t0;
-      _._length = t1;
-      _.__js_helper$_index = 0;
-      _.__js_helper$_current = null;
-      _.$ti = t2;
-    },
     Instantiation: function Instantiation() {
     },
     Instantiation1: function Instantiation1(t0, t1) {
       this._genericClosure = t0;
       this.$ti = t1;
+    },
+    Primitives_initTicker_closure: function Primitives_initTicker_closure(t0) {
+      this.performance = t0;
     },
     SafeToStringHook: function SafeToStringHook() {
     },
@@ -2096,17 +2198,41 @@
       _.__js_helper$_index = t2;
       _.__js_helper$_current = null;
     },
+    throwLateFieldNI(fieldName) {
+      throw A.initializeExceptionWrapper(A.LateError$fieldNI(fieldName), new Error());
+    },
+    throwLateFieldADI(fieldName) {
+      throw A.initializeExceptionWrapper(A.LateError$fieldADI(fieldName), new Error());
+    },
+    _Cell$named(_name) {
+      var t1 = new A._Cell(_name);
+      return t1._value = t1;
+    },
+    _Cell: function _Cell(t0) {
+      this.__late_helper$_name = t0;
+      this._value = null;
+    },
     _checkLength($length) {
       return $length;
     },
     _ensureNativeList(list) {
-      return list;
+      var t1, result, i;
+      if (type$.JSIndexable_dynamic._is(list))
+        return list;
+      t1 = J.getInterceptor$asx(list);
+      result = A.List_List$filled(t1.get$length(list), null, false, type$.dynamic);
+      for (i = 0; i < t1.get$length(list); ++i)
+        B.JSArray_methods.$indexSet(result, i, t1.$index(list, i));
+      return result;
     },
     NativeInt8List__create1(arg) {
       return new Int8Array(arg);
     },
     NativeUint8List_NativeUint8List($length) {
       return new Uint8Array($length);
+    },
+    NativeUint8List_NativeUint8List$fromList(elements) {
+      return new Uint8Array(A._ensureNativeList(elements));
     },
     NativeUint8List_NativeUint8List$view(buffer, offsetInBytes, $length) {
       return $length == null ? new Uint8Array(buffer, offsetInBytes) : new Uint8Array(buffer, offsetInBytes, $length);
@@ -2127,10 +2253,12 @@
     },
     NativeByteBuffer: function NativeByteBuffer() {
     },
+    NativeArrayBuffer: function NativeArrayBuffer() {
+    },
     NativeTypedData: function NativeTypedData() {
     },
     _UnmodifiableNativeByteBufferView: function _UnmodifiableNativeByteBufferView(t0) {
-      this.__native_typed_data$_data = t0;
+      this._data = t0;
     },
     NativeByteData: function NativeByteData() {
     },
@@ -3667,7 +3795,7 @@
     },
     Timer__createTimer(duration, callback) {
       var milliseconds = B.JSInt_methods._tdivFast$1(duration._duration, 1000);
-      return A._TimerImpl$(milliseconds, callback);
+      return A._TimerImpl$(milliseconds < 0 ? 0 : milliseconds, callback);
     },
     _TimerImpl$(milliseconds, callback) {
       var t1 = new A._TimerImpl();
@@ -3734,6 +3862,18 @@
       }
       return B.C__StringStackTrace;
     },
+    Future_Future(computation, $T) {
+      var result = new A._Future($.Zone__current, $T._eval$1("_Future<0>"));
+      A.Timer_Timer(B.Duration_0, new A.Future_Future_closure(computation, result));
+      return result;
+    },
+    Future_Future$value(value, $T) {
+      var t1;
+      $T._as(value);
+      t1 = new A._Future($.Zone__current, $T._eval$1("_Future<0>"));
+      t1._asyncComplete$1(value);
+      return t1;
+    },
     Future_Future$delayed(duration, computation, $T) {
       var result;
       if (computation == null && !$T._is(null))
@@ -3741,6 +3881,45 @@
       result = new A._Future($.Zone__current, $T._eval$1("_Future<0>"));
       A.Timer_Timer(duration, new A.Future_Future$delayed_closure(computation, result, $T));
       return result;
+    },
+    Future_wait(futures, $T) {
+      var handleError, future, pos, e, s, t1, t2, _i, t3, exception, t4, _box_0 = {}, cleanUp = null,
+        eagerError = false,
+        _future = new A._Future($.Zone__current, $T._eval$1("_Future<List<0>>"));
+      _box_0.values = null;
+      _box_0.remaining = 0;
+      _box_0.stackTrace = _box_0.error = null;
+      handleError = new A.Future_wait_handleError(_box_0, cleanUp, eagerError, _future);
+      try {
+        for (t1 = futures.length, t2 = type$.Null, _i = 0, t3 = 0; _i < futures.length; futures.length === t1 || (0, A.throwConcurrentModificationError)(futures), ++_i) {
+          future = futures[_i];
+          pos = t3;
+          future.then$1$2$onError(new A.Future_wait_closure(_box_0, pos, _future, $T, cleanUp, eagerError), handleError, t2);
+          t3 = ++_box_0.remaining;
+        }
+        if (t3 === 0) {
+          t1 = _future;
+          t1._completeWithValue$1(A._setArrayType([], $T._eval$1("JSArray<0>")));
+          return t1;
+        }
+        _box_0.values = A.List_List$filled(t3, null, false, $T._eval$1("0?"));
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        if (_box_0.remaining === 0 || eagerError) {
+          t1 = _future;
+          t2 = e;
+          t3 = s;
+          t4 = A._interceptError(t2, t3);
+          t2 = new A.AsyncError(t2, t3 == null ? A.AsyncError_defaultStackTrace(t2) : t3);
+          t1._asyncCompleteErrorObject$1(t2);
+          return t1;
+        } else {
+          _box_0.error = e;
+          _box_0.stackTrace = s;
+        }
+      }
+      return _future;
     },
     _interceptError(error, stackTrace) {
       if ($.Zone__current === B.C__RootZone)
@@ -3762,6 +3941,13 @@
       else if (type$.Error._is(error))
         A.Primitives_trySetStackTrace(error, stackTrace);
       return new A.AsyncError(error, stackTrace);
+    },
+    _Future$zoneValue(value, _zone, $T) {
+      var t1 = new A._Future(_zone, $T._eval$1("_Future<0>"));
+      $T._as(value);
+      t1._state = 8;
+      t1._resultOrListeners = value;
+      return t1;
     },
     _Future$value(value, $T) {
       var t1 = new A._Future($.Zone__current, $T._eval$1("_Future<0>"));
@@ -3977,9 +4163,11 @@
       }
       A._rootScheduleMicrotask(_null, _null, currentZone, type$.void_Function._as(currentZone.bindCallbackGuarded$1(callback)));
     },
+    Stream_Stream$fromIterable(elements, $T) {
+      return new A._MultiStream(new A.Stream_Stream$fromIterable_closure(elements, $T), $T._eval$1("_MultiStream<0>"));
+    },
     StreamIterator_StreamIterator(stream, $T) {
-      A.checkNotNullable(stream, "stream", type$.Object);
-      return new A._StreamIterator($T._eval$1("_StreamIterator<0>"));
+      return new A._StreamIterator(A.checkNotNullable(stream, "stream", type$.Object), $T._eval$1("_StreamIterator<0>"));
     },
     StreamController_StreamController$broadcast($T) {
       return new A._AsyncBroadcastStreamController(null, null, $T._eval$1("_AsyncBroadcastStreamController<0>"));
@@ -3997,14 +4185,17 @@
       }
     },
     _ControllerSubscription$(_controller, onData, onError, onDone, cancelOnError, $T) {
-      var t4, t5,
-        t1 = $.Zone__current,
+      var t1 = $.Zone__current,
         t2 = cancelOnError ? 1 : 0,
-        t3 = onError != null ? 32 : 0;
-      type$.$env_1_1_void._bind$1($T)._eval$1("1(2)")._as(onData);
-      t4 = A._BufferingStreamSubscription__registerErrorHandler(t1, onError);
-      t5 = onDone == null ? A.async___nullDoneHandler$closure() : onDone;
-      return new A._ControllerSubscription(_controller, onData, t4, type$.void_Function._as(t5), t1, t2 | t3, $T._eval$1("_ControllerSubscription<0>"));
+        t3 = onError != null ? 32 : 0,
+        t4 = A._BufferingStreamSubscription__registerDataHandler(t1, onData, $T),
+        t5 = A._BufferingStreamSubscription__registerErrorHandler(t1, onError),
+        t6 = onDone == null ? A.async___nullDoneHandler$closure() : onDone;
+      return new A._ControllerSubscription(_controller, t4, t5, type$.void_Function._as(t6), t1, t2 | t3, $T._eval$1("_ControllerSubscription<0>"));
+    },
+    _BufferingStreamSubscription__registerDataHandler(zone, handleData, $T) {
+      var t1 = handleData == null ? A.async___nullDataHandler$closure() : handleData;
+      return type$.$env_1_1_void._bind$1($T)._eval$1("1(2)")._as(t1);
     },
     _BufferingStreamSubscription__registerErrorHandler(zone, handleError) {
       if (handleError == null)
@@ -4013,7 +4204,9 @@
         return zone.registerBinaryCallback$3$1(handleError, type$.dynamic, type$.Object, type$.StackTrace);
       if (type$.void_Function_Object._is(handleError))
         return type$.dynamic_Function_Object._as(handleError);
-      throw A.wrapException(A.ArgumentError$("handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace.", null));
+      throw A.wrapException(A.ArgumentError$(string$.handle, null));
+    },
+    _nullDataHandler(value) {
     },
     _nullErrorHandler(error, stackTrace) {
       A._rootHandleError(A._asObject(error), type$.StackTrace._as(stackTrace));
@@ -4026,6 +4219,16 @@
       if (onDone != null)
         t1._onDone = type$.void_Function._as(onDone);
       return t1;
+    },
+    _cancelAndValue(subscription, future, value) {
+      var cancelFuture = subscription.cancel$0(0);
+      if (cancelFuture !== $.$get$Future__nullFuture())
+        cancelFuture.whenComplete$1(new A._cancelAndValue_closure(future, value));
+      else
+        future._complete$1(value);
+    },
+    _StreamHandlerTransformer$(handleData, $S, $T) {
+      return new A._StreamHandlerTransformer(new A._StreamHandlerTransformer_closure(handleData, null, null, $T, $S), $S._eval$1("@<0>")._bind$1($T)._eval$1("_StreamHandlerTransformer<1,2>"));
     },
     Timer_Timer(duration, callback) {
       var t1 = $.Zone__current;
@@ -4101,6 +4304,7 @@
       this.callback = t0;
     },
     _TimerImpl: function _TimerImpl() {
+      this._handle = null;
     },
     _TimerImpl_internalCallback: function _TimerImpl_internalCallback(t0, t1) {
       this.$this = t0;
@@ -4151,10 +4355,30 @@
       _._doneFuture = _._addStreamState = _._lastSubscription = _._firstSubscription = null;
       _.$ti = t2;
     },
+    Future_Future_closure: function Future_Future_closure(t0, t1) {
+      this.computation = t0;
+      this.result = t1;
+    },
     Future_Future$delayed_closure: function Future_Future$delayed_closure(t0, t1, t2) {
       this.computation = t0;
       this.result = t1;
       this.T = t2;
+    },
+    Future_wait_handleError: function Future_wait_handleError(t0, t1, t2, t3) {
+      var _ = this;
+      _._box_0 = t0;
+      _.cleanUp = t1;
+      _.eagerError = t2;
+      _._future = t3;
+    },
+    Future_wait_closure: function Future_wait_closure(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _._box_0 = t0;
+      _.pos = t1;
+      _._future = t2;
+      _.T = t3;
+      _.cleanUp = t4;
+      _.eagerError = t5;
     },
     _Completer: function _Completer() {
     },
@@ -4224,6 +4448,20 @@
     },
     Stream: function Stream() {
     },
+    Stream_Stream$fromIterable_closure: function Stream_Stream$fromIterable_closure(t0, t1) {
+      this.elements = t0;
+      this.T = t1;
+    },
+    Stream_Stream$fromIterable_closure_next: function Stream_Stream$fromIterable_closure_next(t0, t1, t2) {
+      this._box_0 = t0;
+      this.controller = t1;
+      this.zone = t2;
+    },
+    Stream_Stream$fromIterable__closure: function Stream_Stream$fromIterable__closure(t0, t1, t2) {
+      this._box_0 = t0;
+      this.zone = t1;
+      this.next = t2;
+    },
     Stream_length_closure: function Stream_length_closure(t0, t1) {
       this._box_0 = t0;
       this.$this = t1;
@@ -4232,7 +4470,23 @@
       this._box_0 = t0;
       this.future = t1;
     },
-    StreamView: function StreamView() {
+    Stream_toList_closure: function Stream_toList_closure(t0, t1) {
+      this.$this = t0;
+      this.result = t1;
+    },
+    Stream_toList_closure0: function Stream_toList_closure0(t0, t1) {
+      this.future = t0;
+      this.result = t1;
+    },
+    Stream_first_closure: function Stream_first_closure(t0) {
+      this.future = t0;
+    },
+    Stream_first_closure0: function Stream_first_closure0(t0, t1, t2) {
+      this.$this = t0;
+      this.subscription = t1;
+      this.future = t2;
+    },
+    StreamTransformerBase: function StreamTransformerBase() {
     },
     _StreamController: function _StreamController() {
     },
@@ -4313,11 +4567,12 @@
       _._onDone = null;
       _.$ti = t1;
     },
-    _StreamIterator: function _StreamIterator(t0) {
-      this.$ti = t0;
-    },
-    _EmptyStream: function _EmptyStream(t0) {
-      this.$ti = t0;
+    _StreamIterator: function _StreamIterator(t0, t1) {
+      var _ = this;
+      _._subscription = null;
+      _._stateData = t0;
+      _._async$_hasValue = false;
+      _.$ti = t1;
     },
     _MultiStream: function _MultiStream(t0, t1) {
       this._onListen = t0;
@@ -4338,6 +4593,10 @@
       _.onCancel = t3;
       _.$ti = t4;
     },
+    _cancelAndValue_closure: function _cancelAndValue_closure(t0, t1) {
+      this.future = t0;
+      this.value = t1;
+    },
     _ForwardingStream: function _ForwardingStream() {
     },
     _ForwardingStreamSubscription: function _ForwardingStreamSubscription(t0, t1, t2, t3, t4, t5, t6) {
@@ -4354,8 +4613,51 @@
     },
     _WhereStream: function _WhereStream(t0, t1, t2) {
       this._test = t0;
-      this._async$_source = t1;
+      this._source = t1;
       this.$ti = t2;
+    },
+    _EventSinkWrapper: function _EventSinkWrapper(t0, t1) {
+      this._async$_sink = t0;
+      this.$ti = t1;
+    },
+    _SinkTransformerStreamSubscription: function _SinkTransformerStreamSubscription(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.___SinkTransformerStreamSubscription__transformerSink_A = $;
+      _._subscription = null;
+      _._async$_onData = t0;
+      _._onError = t1;
+      _._onDone = t2;
+      _._zone = t3;
+      _._state = t4;
+      _._pending = _._cancelFuture = null;
+      _.$ti = t5;
+    },
+    _StreamSinkTransformer: function _StreamSinkTransformer() {
+    },
+    _BoundSinkStream: function _BoundSinkStream(t0, t1, t2) {
+      this._sinkMapper = t0;
+      this._stream = t1;
+      this.$ti = t2;
+    },
+    _HandlerEventSink: function _HandlerEventSink(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._handleData = t0;
+      _._handleError = t1;
+      _._handleDone = t2;
+      _._async$_sink = t3;
+      _.$ti = t4;
+    },
+    _StreamHandlerTransformer: function _StreamHandlerTransformer(t0, t1) {
+      this._sinkMapper = t0;
+      this.$ti = t1;
+    },
+    _StreamHandlerTransformer_closure: function _StreamHandlerTransformer_closure(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.handleData = t0;
+      _.handleError = t1;
+      _.handleDone = t2;
+      _.T = t3;
+      _.S = t4;
     },
     _Zone: function _Zone() {
     },
@@ -4373,22 +4675,6 @@
       this.$this = t0;
       this.f = t1;
       this.T = t2;
-    },
-    _HashMap__getTableEntry(table, key) {
-      var entry = table[key];
-      return entry === table ? null : entry;
-    },
-    _HashMap__setTableEntry(table, key, value) {
-      if (value == null)
-        table[key] = table;
-      else
-        table[key] = value;
-    },
-    _HashMap__newHashTable() {
-      var table = Object.create(null);
-      A._HashMap__setTableEntry(table, "<non-identifier-key>", table);
-      delete table["<non-identifier-key>"];
-      return table;
     },
     LinkedHashMap_LinkedHashMap(equals, hashCode, $K, $V) {
       if (hashCode == null) {
@@ -4437,7 +4723,7 @@
     },
     LinkedHashMap_LinkedHashMap$from(other, $K, $V) {
       var result = A.LinkedHashMap_LinkedHashMap(null, null, $K, $V);
-      other._collection$_map.forEach$1(0, other.$ti._eval$1("~(1,2)")._as(new A.LinkedHashMap_LinkedHashMap$from_closure(result, $K, $V)));
+      other.forEach$1(0, new A.LinkedHashMap_LinkedHashMap$from_closure(result, $K, $V));
       return result;
     },
     LinkedHashSet_LinkedHashSet$from(elements, $E) {
@@ -4457,7 +4743,7 @@
         B.JSArray_methods.add$1($.toStringVisiting, m);
         result._contents += "{";
         t1.first = true;
-        J.forEach$1$ax(m, new A.MapBase_mapToString_closure(t1, result));
+        J.forEach$1$x(m, new A.MapBase_mapToString_closure(t1, result));
         result._contents += "}";
       } finally {
         if (0 >= $.toStringVisiting.length)
@@ -4466,26 +4752,6 @@
       }
       t1 = result._contents;
       return t1.charCodeAt(0) == 0 ? t1 : t1;
-    },
-    _HashMap: function _HashMap() {
-    },
-    _IdentityHashMap: function _IdentityHashMap(t0) {
-      var _ = this;
-      _._collection$_length = 0;
-      _._collection$_keys = _._collection$_rest = _._collection$_nums = _._collection$_strings = null;
-      _.$ti = t0;
-    },
-    _HashMapKeyIterable: function _HashMapKeyIterable(t0, t1) {
-      this._collection$_map = t0;
-      this.$ti = t1;
-    },
-    _HashMapKeyIterator: function _HashMapKeyIterator(t0, t1, t2) {
-      var _ = this;
-      _._collection$_map = t0;
-      _._collection$_keys = t1;
-      _._offset = 0;
-      _._collection$_current = null;
-      _.$ti = t2;
     },
     _LinkedCustomHashMap: function _LinkedCustomHashMap(t0, t1, t2, t3) {
       var _ = this;
@@ -4609,25 +4875,156 @@
       if (paddingCount > 2)
         throw A.wrapException(A.FormatException$("Invalid base64 padding, more than two '=' characters", source, sourceIndex));
     },
+    _Base64Encoder_encodeChunk(alphabet, bytes, start, end, isLast, output, outputIndex, state) {
+      var t1, t2, t3, i, byteOr, byte, outputIndex0, t4, t5, outputIndex1,
+        bits = state >>> 2,
+        expectedChars = 3 - (state & 3);
+      for (t1 = J.getInterceptor$asx(bytes), t2 = alphabet.length, t3 = output.$flags | 0, i = start, byteOr = 0; i < end; ++i) {
+        byte = t1.$index(bytes, i);
+        byteOr = (byteOr | byte) >>> 0;
+        bits = (bits << 8 | byte) & 16777215;
+        --expectedChars;
+        if (expectedChars === 0) {
+          outputIndex0 = outputIndex + 1;
+          t4 = bits >>> 18 & 63;
+          if (!(t4 < t2))
+            return A.ioore(alphabet, t4);
+          t3 & 2 && A.throwUnsupportedOperation(output);
+          t5 = output.length;
+          if (!(outputIndex < t5))
+            return A.ioore(output, outputIndex);
+          output[outputIndex] = alphabet.charCodeAt(t4);
+          outputIndex = outputIndex0 + 1;
+          t4 = bits >>> 12 & 63;
+          if (!(t4 < t2))
+            return A.ioore(alphabet, t4);
+          if (!(outputIndex0 < t5))
+            return A.ioore(output, outputIndex0);
+          output[outputIndex0] = alphabet.charCodeAt(t4);
+          outputIndex0 = outputIndex + 1;
+          t4 = bits >>> 6 & 63;
+          if (!(t4 < t2))
+            return A.ioore(alphabet, t4);
+          if (!(outputIndex < t5))
+            return A.ioore(output, outputIndex);
+          output[outputIndex] = alphabet.charCodeAt(t4);
+          outputIndex = outputIndex0 + 1;
+          t4 = bits & 63;
+          if (!(t4 < t2))
+            return A.ioore(alphabet, t4);
+          if (!(outputIndex0 < t5))
+            return A.ioore(output, outputIndex0);
+          output[outputIndex0] = alphabet.charCodeAt(t4);
+          bits = 0;
+          expectedChars = 3;
+        }
+      }
+      if (byteOr >= 0 && byteOr <= 255) {
+        if (isLast && expectedChars < 3) {
+          outputIndex0 = outputIndex + 1;
+          outputIndex1 = outputIndex0 + 1;
+          if (3 - expectedChars === 1) {
+            t1 = bits >>> 2 & 63;
+            if (!(t1 < t2))
+              return A.ioore(alphabet, t1);
+            t3 & 2 && A.throwUnsupportedOperation(output);
+            t3 = output.length;
+            if (!(outputIndex < t3))
+              return A.ioore(output, outputIndex);
+            output[outputIndex] = alphabet.charCodeAt(t1);
+            t1 = bits << 4 & 63;
+            if (!(t1 < t2))
+              return A.ioore(alphabet, t1);
+            if (!(outputIndex0 < t3))
+              return A.ioore(output, outputIndex0);
+            output[outputIndex0] = alphabet.charCodeAt(t1);
+            outputIndex = outputIndex1 + 1;
+            if (!(outputIndex1 < t3))
+              return A.ioore(output, outputIndex1);
+            output[outputIndex1] = 61;
+            if (!(outputIndex < t3))
+              return A.ioore(output, outputIndex);
+            output[outputIndex] = 61;
+          } else {
+            t1 = bits >>> 10 & 63;
+            if (!(t1 < t2))
+              return A.ioore(alphabet, t1);
+            t3 & 2 && A.throwUnsupportedOperation(output);
+            t3 = output.length;
+            if (!(outputIndex < t3))
+              return A.ioore(output, outputIndex);
+            output[outputIndex] = alphabet.charCodeAt(t1);
+            t1 = bits >>> 4 & 63;
+            if (!(t1 < t2))
+              return A.ioore(alphabet, t1);
+            if (!(outputIndex0 < t3))
+              return A.ioore(output, outputIndex0);
+            output[outputIndex0] = alphabet.charCodeAt(t1);
+            outputIndex = outputIndex1 + 1;
+            t1 = bits << 2 & 63;
+            if (!(t1 < t2))
+              return A.ioore(alphabet, t1);
+            if (!(outputIndex1 < t3))
+              return A.ioore(output, outputIndex1);
+            output[outputIndex1] = alphabet.charCodeAt(t1);
+            if (!(outputIndex < t3))
+              return A.ioore(output, outputIndex);
+            output[outputIndex] = 61;
+          }
+          return 0;
+        }
+        return (bits << 2 | 3 - expectedChars) >>> 0;
+      }
+      for (i = start; i < end;) {
+        byte = t1.$index(bytes, i);
+        if (byte < 0 || byte > 255)
+          break;
+        ++i;
+      }
+      throw A.wrapException(A.ArgumentError$value(bytes, "Not a byte value at index " + i + ": 0x" + B.JSInt_methods.toRadixString$1(t1.$index(bytes, i), 16), null));
+    },
     Encoding_getByName($name) {
       return $.$get$Encoding__nameToEncoding().$index(0, $name.toLowerCase());
     },
     JsonUnsupportedObjectError$(unsupportedObject, cause, partialResult) {
       return new A.JsonUnsupportedObjectError(unsupportedObject, cause);
     },
+    jsonEncode(object, toEncodable) {
+      return B.C_JsonCodec.encode$2$toEncodable(object, type$.nullable_nullable_Object_Function_nullable_Object._as(toEncodable));
+    },
     _defaultToEncodable(object) {
       return object.toJson$0();
     },
     _JsonStringStringifier$(_sink, _toEncodable) {
-      return new A._JsonStringStringifier(_sink, [], A.convert___defaultToEncodable$closure());
+      var t1 = _toEncodable == null ? A.convert___defaultToEncodable$closure() : _toEncodable;
+      return new A._JsonStringStringifier(_sink, [], t1);
     },
     _JsonStringStringifier_stringify(object, toEncodable, indent) {
       var t1,
-        output = new A.StringBuffer(""),
-        stringifier = A._JsonStringStringifier$(output, toEncodable);
-      stringifier.writeObject$1(object);
+        output = new A.StringBuffer("");
+      A._JsonStringStringifier_printOn(object, output, toEncodable, indent);
       t1 = output._contents;
       return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _JsonStringStringifier_printOn(object, output, toEncodable, indent) {
+      var stringifier = A._JsonStringStringifier$(output, toEncodable);
+      stringifier.writeObject$1(object);
+    },
+    _Latin1DecoderSink__checkValidLatin1(source, start, end) {
+      var t1, i, mask;
+      for (t1 = J.getInterceptor$asx(source), i = start, mask = 0; i < end; ++i)
+        mask = (mask | t1.$index(source, i)) >>> 0;
+      if (mask >= 0 && mask <= 255)
+        return;
+      A._Latin1DecoderSink__reportInvalidLatin1(source, start, end);
+    },
+    _Latin1DecoderSink__reportInvalidLatin1(source, start, end) {
+      var t1, i, char;
+      for (t1 = J.getInterceptor$asx(source), i = start; i < end; ++i) {
+        char = t1.$index(source, i);
+        if (char < 0 || char > 255)
+          throw A.wrapException(A.FormatException$("Source contains non-Latin-1 characters.", source, i));
+      }
     },
     _Utf8Decoder_errorDescription(state) {
       switch (state) {
@@ -4652,10 +5049,15 @@
     _JsonMap: function _JsonMap(t0, t1) {
       this._original = t0;
       this._processed = t1;
-      this._data = null;
+      this._convert$_data = null;
     },
     _JsonMapKeyIterable: function _JsonMapKeyIterable(t0) {
       this._parent = t0;
+    },
+    _JsonDecoderSink: function _JsonDecoderSink(t0, t1, t2) {
+      this._reviver = t0;
+      this._sink = t1;
+      this._stringSink = t2;
     },
     _Utf8Decoder__decoder_closure: function _Utf8Decoder__decoder_closure() {
     },
@@ -4668,26 +5070,73 @@
     AsciiEncoder: function AsciiEncoder(t0) {
       this._subsetMask = t0;
     },
+    _UnicodeSubsetEncoderSink: function _UnicodeSubsetEncoderSink(t0, t1) {
+      this._sink = t0;
+      this._subsetMask = t1;
+    },
     _UnicodeSubsetDecoder: function _UnicodeSubsetDecoder() {
     },
     AsciiDecoder: function AsciiDecoder(t0, t1) {
       this._allowInvalid = t0;
       this._subsetMask = t1;
     },
+    _ErrorHandlingAsciiDecoderSink: function _ErrorHandlingAsciiDecoderSink(t0) {
+      this._utf8Sink = t0;
+    },
+    _SimpleAsciiDecoderSink: function _SimpleAsciiDecoderSink(t0) {
+      this._sink = t0;
+    },
     Base64Codec: function Base64Codec() {
     },
     Base64Encoder: function Base64Encoder() {
     },
+    _Base64Encoder: function _Base64Encoder(t0) {
+      this._convert$_state = 0;
+      this._alphabet = t0;
+    },
+    _BufferCachingBase64Encoder: function _BufferCachingBase64Encoder(t0) {
+      this.bufferCache = null;
+      this._convert$_state = 0;
+      this._alphabet = t0;
+    },
+    _Base64EncoderSink: function _Base64EncoderSink() {
+    },
+    _AsciiBase64EncoderSink: function _AsciiBase64EncoderSink(t0, t1) {
+      this._sink = t0;
+      this._encoder = t1;
+    },
+    _Utf8Base64EncoderSink: function _Utf8Base64EncoderSink(t0, t1) {
+      this._sink = t0;
+      this._encoder = t1;
+    },
     ByteConversionSink: function ByteConversionSink() {
+    },
+    _ByteAdapterSink: function _ByteAdapterSink(t0) {
+      this._sink = t0;
     },
     _ByteCallbackSink: function _ByteCallbackSink(t0, t1) {
       this._callback = t0;
       this._convert$_buffer = t1;
       this._bufferIndex = 0;
     },
+    ChunkedConversionSink: function ChunkedConversionSink() {
+    },
+    _ConverterStreamEventSink: function _ConverterStreamEventSink(t0, t1, t2) {
+      this._eventSink = t0;
+      this._chunkedSink = t1;
+      this.$ti = t2;
+    },
     Codec: function Codec() {
     },
     Converter: function Converter() {
+    },
+    Converter_bind_closure: function Converter_bind_closure(t0) {
+      this.$this = t0;
+    },
+    _FusedConverter: function _FusedConverter(t0, t1, t2) {
+      this._convert$_first = t0;
+      this._second = t1;
+      this.$ti = t2;
     },
     Encoding: function Encoding() {
     },
@@ -4703,6 +5152,13 @@
     },
     JsonEncoder: function JsonEncoder(t0) {
       this._toEncodable = t0;
+    },
+    _JsonEncoderSink: function _JsonEncoderSink(t0, t1, t2) {
+      var _ = this;
+      _._indent = t0;
+      _._toEncodable = t1;
+      _._sink = t2;
+      _._isDone = false;
     },
     JsonDecoder: function JsonDecoder(t0) {
       this._reviver = t0;
@@ -4727,13 +5183,50 @@
       this._allowInvalid = t0;
       this._subsetMask = t1;
     },
+    _Latin1DecoderSink: function _Latin1DecoderSink(t0) {
+      this._sink = t0;
+    },
+    _Latin1AllowInvalidDecoderSink: function _Latin1AllowInvalidDecoderSink(t0) {
+      this._sink = t0;
+    },
+    StringConversionSink: function StringConversionSink() {
+    },
+    _ClosableStringSink: function _ClosableStringSink(t0, t1) {
+      this._callback = t0;
+      this._sink = t1;
+    },
+    _StringConversionSinkAsStringSinkAdapter: function _StringConversionSinkAsStringSinkAdapter(t0, t1) {
+      this._convert$_buffer = t0;
+      this._chunkedSink = t1;
+    },
+    _StringSinkConversionSink: function _StringSinkConversionSink() {
+    },
+    _StringAdapterSink: function _StringAdapterSink(t0) {
+      this._sink = t0;
+    },
+    _Utf8StringSinkAdapter: function _Utf8StringSinkAdapter(t0, t1, t2) {
+      this._decoder = t0;
+      this._sink = t1;
+      this._stringSink = t2;
+    },
+    _Utf8ConversionSink: function _Utf8ConversionSink(t0, t1, t2) {
+      this._decoder = t0;
+      this._chunkedSink = t1;
+      this._convert$_buffer = t2;
+    },
     Utf8Codec: function Utf8Codec() {
     },
     Utf8Encoder: function Utf8Encoder() {
     },
     _Utf8Encoder: function _Utf8Encoder(t0) {
-      this._bufferIndex = 0;
+      this._bufferIndex = this._carry = 0;
       this._convert$_buffer = t0;
+    },
+    _Utf8EncoderSink: function _Utf8EncoderSink(t0, t1) {
+      var _ = this;
+      _._sink = t0;
+      _._bufferIndex = _._carry = 0;
+      _._convert$_buffer = t1;
     },
     Utf8Decoder: function Utf8Decoder(t0) {
       this._allowMalformed = t0;
@@ -4743,8 +5236,23 @@
       this._convert$_state = 16;
       this._charOrIndex = 0;
     },
+    __Utf8EncoderSink__Utf8Encoder_StringConversionSink: function __Utf8EncoderSink__Utf8Encoder_StringConversionSink() {
+    },
     identityHashCode(object) {
       return A.objectHashCode(object);
+    },
+    _WeakReferenceWrapper__findWeakRefConstructor() {
+      if (typeof WeakRef == "function")
+        return WeakRef;
+      var $constructor = function LeakRef(o) {
+        this._ = o;
+      };
+      $constructor.prototype = {
+        deref() {
+          return this._;
+        }
+      };
+      return $constructor;
     },
     int_parse(source) {
       var value = A.Primitives_parseInt(source, null);
@@ -4772,6 +5280,8 @@
         list = A._setArrayType([], $E._eval$1("JSArray<0>"));
       for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
         B.JSArray_methods.add$1(list, $E._as(t1.get$current(t1)));
+      if (growable)
+        return list;
       list.$flags = 1;
       return list;
     },
@@ -4790,20 +5300,28 @@
       return result;
     },
     String_String$fromCharCodes(charCodes, start, end) {
-      var t1, maxLength;
+      var t1, t2, maxLength, array, len;
       A.RangeError_checkNotNegative(start, "start");
-      t1 = end != null;
-      if (t1) {
+      t1 = end == null;
+      t2 = !t1;
+      if (t2) {
         maxLength = end - start;
         if (maxLength < 0)
           throw A.wrapException(A.RangeError$range(end, start, null, "end", null));
         if (maxLength === 0)
           return "";
       }
+      if (Array.isArray(charCodes)) {
+        array = charCodes;
+        len = array.length;
+        if (t1)
+          end = len;
+        return A.Primitives_stringFromCharCodes(start > 0 || end < len ? array.slice(start, end) : array);
+      }
       if (type$.NativeUint8List._is(charCodes))
         return A.String__stringFromUint8List(charCodes, start, end);
-      if (t1)
-        charCodes = A.SubListIterable$(charCodes, 0, A.checkNotNullable(end, "count", type$.int), A.instanceType(charCodes)._eval$1("ListBase.E"));
+      if (t2)
+        charCodes = J.take$1$ax(charCodes, end);
       if (start > 0)
         charCodes = J.skip$1$ax(charCodes, start);
       t1 = A.List_List$_of(charCodes, type$.int);
@@ -4820,6 +5338,9 @@
     },
     identical(a, b) {
       return a == null ? b == null : a === b;
+    },
+    StringBuffer$($content) {
+      return new A.StringBuffer($content);
     },
     StringBuffer__writeAll(string, objects, separator) {
       var iterator = J.get$iterator$ax(objects);
@@ -4906,6 +5427,9 @@
       if (n >= 10)
         return "" + n;
       return "0" + n;
+    },
+    Duration$(microseconds, milliseconds) {
+      return new A.Duration(microseconds + 1000 * milliseconds);
     },
     Error_safeToString(object) {
       if (typeof object == "number" || A._isBool(object) || object == null)
@@ -5259,6 +5783,9 @@
       path = A._Uri__makePath(uri, pathStart, queryStart, _null, scheme, host != null);
       query = queryStart < fragmentStart ? A._Uri__makeQuery(uri, queryStart + 1, fragmentStart, _null) : _null;
       return A._Uri$_internal(scheme, userInfo, host, port, path, query, fragmentStart < end ? A._Uri__makeFragment(uri, fragmentStart + 1, end) : _null);
+    },
+    Uri_encodeQueryComponent(component, encoding) {
+      return A._Uri__uriEncode(1, component, encoding, true);
     },
     Uri_decodeComponent(encodedComponent) {
       A._asString(encodedComponent);
@@ -6230,11 +6757,15 @@
       }
       return result;
     },
+    _WeakReferenceWrapper: function _WeakReferenceWrapper(t0, t1) {
+      this._weakRef = t0;
+      this.$ti = t1;
+    },
     _Uri__makeQueryFromParameters_closure: function _Uri__makeQueryFromParameters_closure(t0) {
       this.params = t0;
     },
     DateTime: function DateTime(t0, t1, t2) {
-      this._value = t0;
+      this._core$_value = t0;
       this._microsecond = t1;
       this.isUtc = t2;
     },
@@ -6310,6 +6841,9 @@
     Object: function Object() {
     },
     _StringStackTrace: function _StringStackTrace() {
+    },
+    Stopwatch: function Stopwatch() {
+      this._stop = this._core$_start = 0;
     },
     StringBuffer: function StringBuffer(t0) {
       this._contents = t0;
@@ -6396,8 +6930,8 @@
       return t1;
     },
     _EventStreamSubscription$(_target, _eventType, onData, _useCapture, $T) {
-      var t1 = A._wrapZone(new A._EventStreamSubscription_closure(onData), type$.Event);
-      t1 = new A._EventStreamSubscription(_target, _eventType, t1, false, $T._eval$1("_EventStreamSubscription<0>"));
+      var t1 = onData == null ? null : A._wrapZone(new A._EventStreamSubscription_closure0(onData), type$.Event);
+      t1 = new A._EventStreamSubscription0(_target, _eventType, t1, false, $T._eval$1("_EventStreamSubscription0<0>"));
       t1._tryResume$0();
       return t1;
     },
@@ -6662,7 +7196,7 @@
       this._eventType = t0;
       this.$ti = t1;
     },
-    _EventStream: function _EventStream(t0, t1, t2, t3) {
+    _EventStream0: function _EventStream0(t0, t1, t2, t3) {
       var _ = this;
       _._target = t0;
       _._eventType = t1;
@@ -6676,7 +7210,7 @@
       _._useCapture = t2;
       _.$ti = t3;
     },
-    _EventStreamSubscription: function _EventStreamSubscription(t0, t1, t2, t3, t4) {
+    _EventStreamSubscription0: function _EventStreamSubscription0(t0, t1, t2, t3, t4) {
       var _ = this;
       _._pauseCount = 0;
       _._target = t0;
@@ -6685,8 +7219,11 @@
       _._useCapture = t3;
       _.$ti = t4;
     },
-    _EventStreamSubscription_closure: function _EventStreamSubscription_closure(t0) {
+    _EventStreamSubscription_closure0: function _EventStreamSubscription_closure0(t0) {
       this.onData = t0;
+    },
+    _EventStreamSubscription_onData_closure: function _EventStreamSubscription_onData_closure(t0) {
+      this.handleData = t0;
     },
     _Html5NodeValidator: function _Html5NodeValidator(t0) {
       this.uriPolicy = t0;
@@ -6819,62 +7356,6 @@
     },
     __StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin: function __StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin() {
     },
-    NullRejectionException: function NullRejectionException(t0) {
-      this.isUndefined = t0;
-    },
-    _functionToJS1(f) {
-      var result;
-      if (typeof f == "function")
-        throw A.wrapException(A.ArgumentError$("Attempting to rewrap a JS function.", null));
-      result = function(_call, f) {
-        return function(arg1) {
-          return _call(f, arg1, arguments.length);
-        };
-      }(A._callDartFunctionFast1, f);
-      result[$.$get$DART_CLOSURE_PROPERTY_NAME()] = f;
-      return result;
-    },
-    _callDartFunctionFast1(callback, arg1, $length) {
-      type$.Function._as(callback);
-      if (A._asInt($length) >= 1)
-        return callback.call$1(arg1);
-      return callback.call$0();
-    },
-    _callDartFunctionFast3(callback, arg1, arg2, arg3, $length) {
-      type$.Function._as(callback);
-      A._asInt($length);
-      if ($length >= 3)
-        return callback.call$3(arg1, arg2, arg3);
-      if ($length === 2)
-        return callback.call$2(arg1, arg2);
-      if ($length === 1)
-        return callback.call$1(arg1);
-      return callback.call$0();
-    },
-    _noJsifyRequired(o) {
-      return o == null || A._isBool(o) || typeof o == "number" || typeof o == "string" || type$.Int8List._is(o) || type$.Uint8List._is(o) || type$.Uint8ClampedList._is(o) || type$.Int16List._is(o) || type$.Uint16List._is(o) || type$.Int32List._is(o) || type$.Uint32List._is(o) || type$.Float32List._is(o) || type$.Float64List._is(o) || type$.ByteBuffer._is(o) || type$.ByteData._is(o);
-    },
-    jsify(object) {
-      if (A._noJsifyRequired(object))
-        return object;
-      return new A.jsify__convert(new A._IdentityHashMap(type$._IdentityHashMap_of_nullable_Object_and_nullable_Object)).call$1(object);
-    },
-    promiseToFuture(jsPromise, $T) {
-      var t1 = new A._Future($.Zone__current, $T._eval$1("_Future<0>")),
-        completer = new A._AsyncCompleter(t1, $T._eval$1("_AsyncCompleter<0>"));
-      jsPromise.then(A.convertDartClosureToJS(new A.promiseToFuture_closure(completer, $T), 1), A.convertDartClosureToJS(new A.promiseToFuture_closure0(completer), 1));
-      return t1;
-    },
-    jsify__convert: function jsify__convert(t0) {
-      this._convertedObjects = t0;
-    },
-    promiseToFuture_closure: function promiseToFuture_closure(t0, t1) {
-      this.completer = t0;
-      this.T = t1;
-    },
-    promiseToFuture_closure0: function promiseToFuture_closure0(t0) {
-      this.completer = t0;
-    },
     max(a, b, $T) {
       A.checkTypeBound($T, type$.num, "T", "max");
       return Math.max($T._as(a), $T._as(b));
@@ -6933,6 +7414,25 @@
     },
     _AudioParamMap_JavaScriptObject_MapMixin: function _AudioParamMap_JavaScriptObject_MapMixin() {
     },
+    CancelableOperation: function CancelableOperation(t0, t1) {
+      this._cancelable_operation$_completer = t0;
+      this.$ti = t1;
+    },
+    CancelableCompleter: function CancelableCompleter(t0, t1, t2, t3) {
+      var _ = this;
+      _._inner = t0;
+      _._cancelCompleter = t1;
+      _._cancelable_operation$_onCancel = t2;
+      _._mayComplete = true;
+      _.__CancelableCompleter_operation_FI = $;
+      _.$ti = t3;
+    },
+    CancelableCompleter_complete_closure: function CancelableCompleter_complete_closure(t0) {
+      this.$this = t0;
+    },
+    CancelableCompleter_complete_closure0: function CancelableCompleter_complete_closure0(t0) {
+      this.$this = t0;
+    },
     CanonicalizedMap: function CanonicalizedMap() {
     },
     CanonicalizedMap_addAll_closure: function CanonicalizedMap_addAll_closure(t0) {
@@ -6942,14 +7442,601 @@
       this.$this = t0;
       this.f = t1;
     },
-    CanonicalizedMap_keys_closure: function CanonicalizedMap_keys_closure(t0) {
+    ResponseBody: function ResponseBody(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.isRedirect = t0;
+      _.stream = t1;
+      _.statusCode = t2;
+      _.statusMessage = t3;
+      _.headers = t4;
+      _.extra = t5;
+    },
+    _DioExceptionTypeExtension_toPrettyDescription(_this) {
+      switch (_this.index) {
+        case 0:
+          return "connection timeout";
+        case 1:
+          return "send timeout";
+        case 2:
+          return "receive timeout";
+        case 3:
+          return "bad certificate";
+        case 4:
+          return "bad response";
+        case 5:
+          return "request cancelled";
+        case 6:
+          return "connection error";
+        case 7:
+          return "unknown";
+      }
+    },
+    DioException$(error, message, requestOptions, response, stackTrace, type) {
+      var t1 = requestOptions.sourceStackTrace;
+      if (t1 == null)
+        t1 = A.StackTrace_current();
+      return new A.DioException(type, error, t1, message);
+    },
+    DioException_DioException$connectionTimeout(requestOptions, timeout) {
+      return A.DioException$(null, "The request connection took longer than " + timeout.toString$0(0) + " and it was aborted. To get rid of this exception, try raising the RequestOptions.connectTimeout above the duration of " + timeout.toString$0(0) + string$.x20or_im, requestOptions, null, null, B.DioExceptionType_0);
+    },
+    DioException_DioException$receiveTimeout(requestOptions, timeout) {
+      return A.DioException$(null, "The request took longer than " + timeout.toString$0(0) + " to receive data. It was aborted. To get rid of this exception, try raising the RequestOptions.receiveTimeout above the duration of " + timeout.toString$0(0) + string$.x20or_im, requestOptions, null, null, B.DioExceptionType_2);
+    },
+    DioException_DioException$connectionError(reason, requestOptions) {
+      return A.DioException$(null, "The connection errored: " + reason + " This indicates an error which most likely cannot be solved by the library.", requestOptions, null, null, B.DioExceptionType_6);
+    },
+    defaultDioExceptionReadableStringBuilder(e) {
+      var t1, t2;
+      type$.DioException._as(e);
+      t1 = "DioException [" + A._DioExceptionTypeExtension_toPrettyDescription(e.type) + "]: " + A.S(e.message);
+      t2 = e.error;
+      if (t2 != null)
+        t1 = t1 + "\n" + ("Error: " + A.S(t2));
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    DioExceptionType: function DioExceptionType(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    DioException: function DioException(t0, t1, t2, t3) {
+      var _ = this;
+      _.type = t0;
+      _.error = t1;
+      _.stackTrace = t2;
+      _.message = t3;
+    },
+    DioMixin_listenCancelForAsyncTask(cancelToken, future, $T) {
+      return future;
+    },
+    DioMixin_assureDioException(error, requestOptions) {
+      if (error instanceof A.DioException)
+        return error;
+      return A.DioException$(error, null, requestOptions, null, null, B.DioExceptionType_7);
+    },
+    DioMixin_assureResponse(response, requestOptions, $T) {
+      var data, t1, t2, headers, _null = null;
+      if (!(response instanceof A.Response0))
+        return A.Response$($T._as(response), _null, _null, false, B.List_empty0, requestOptions, _null, _null, $T);
+      else if (!$T._eval$1("Response0<0>")._is(response)) {
+        data = $T._eval$1("0?")._as(response.data);
+        if (data instanceof A.ResponseBody) {
+          t1 = data.headers;
+          t2 = requestOptions.___RequestConfig_preserveHeaderCase_A;
+          t2 === $ && A.throwLateFieldNI("preserveHeaderCase");
+          headers = A.Headers$fromMap(t1, t2);
+        } else
+          headers = response.headers;
+        return A.Response$(data, response.extra, headers, response.isRedirect, response.redirects, response.requestOptions, response.statusCode, response.statusMessage, $T);
+      }
+      return response;
+    },
+    DioMixin: function DioMixin() {
+    },
+    DioMixin_fetch_requestInterceptorWrapper: function DioMixin_fetch_requestInterceptorWrapper(t0) {
+      this._box_0 = t0;
+    },
+    DioMixin_fetch_requestInterceptorWrapper_closure: function DioMixin_fetch_requestInterceptorWrapper_closure(t0, t1) {
+      this._box_0 = t0;
+      this.cb = t1;
+    },
+    DioMixin_fetch_requestInterceptorWrapper__closure: function DioMixin_fetch_requestInterceptorWrapper__closure(t0, t1) {
+      this.cb = t0;
+      this.state = t1;
+    },
+    DioMixin_fetch_responseInterceptorWrapper: function DioMixin_fetch_responseInterceptorWrapper(t0) {
+      this._box_0 = t0;
+    },
+    DioMixin_fetch_responseInterceptorWrapper_closure: function DioMixin_fetch_responseInterceptorWrapper_closure(t0, t1) {
+      this._box_0 = t0;
+      this.cb = t1;
+    },
+    DioMixin_fetch_responseInterceptorWrapper__closure: function DioMixin_fetch_responseInterceptorWrapper__closure(t0, t1) {
+      this.cb = t0;
+      this.state = t1;
+    },
+    DioMixin_fetch_errorInterceptorWrapper: function DioMixin_fetch_errorInterceptorWrapper(t0) {
+      this._box_0 = t0;
+    },
+    DioMixin_fetch_errorInterceptorWrapper_closure: function DioMixin_fetch_errorInterceptorWrapper_closure(t0, t1) {
+      this._box_0 = t0;
+      this.cb = t1;
+    },
+    DioMixin_fetch_errorInterceptorWrapper_closure_handleError: function DioMixin_fetch_errorInterceptorWrapper_closure_handleError(t0, t1) {
+      this.cb = t0;
+      this.state = t1;
+    },
+    DioMixin_fetch_closure: function DioMixin_fetch_closure(t0) {
+      this._box_0 = t0;
+    },
+    DioMixin_fetch_closure0: function DioMixin_fetch_closure0(t0, t1, t2) {
+      this._box_0 = t0;
+      this.$this = t1;
+      this.T = t2;
+    },
+    DioMixin__dispatchRequest_closure: function DioMixin__dispatchRequest_closure(t0) {
+      this.operationWeakReference = t0;
+    },
+    InterceptorResultType: function InterceptorResultType(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    InterceptorState: function InterceptorState(t0, t1, t2) {
+      this.data = t0;
+      this.type = t1;
+      this.$ti = t2;
+    },
+    _BaseHandler: function _BaseHandler() {
+    },
+    RequestInterceptorHandler: function RequestInterceptorHandler(t0) {
+      this._completer = t0;
+    },
+    ResponseInterceptorHandler: function ResponseInterceptorHandler(t0) {
+      this._completer = t0;
+    },
+    ErrorInterceptorHandler: function ErrorInterceptorHandler(t0) {
+      this._completer = t0;
+    },
+    Interceptor0: function Interceptor0() {
+    },
+    Interceptors: function Interceptors(t0) {
+      this._list = t0;
+    },
+    Headers$fromMap(map, preserveHeaderCase) {
+      var t1 = type$.List_String;
+      return new A.Headers(A.caseInsensitiveKeyMap(map.map$2$1(map, new A.Headers$fromMap_closure(), type$.String, t1), t1));
+    },
+    Headers: function Headers(t0) {
+      this._headers$_map = t0;
+    },
+    Headers$fromMap_closure: function Headers$fromMap_closure() {
+    },
+    Headers_toString_closure: function Headers_toString_closure(t0) {
+      this.stringBuffer = t0;
+    },
+    ImplyContentTypeInterceptor: function ImplyContentTypeInterceptor() {
+    },
+    BaseOptions$(baseUrl, followRedirects, responseType, validateStatus) {
+      var _null = null,
+        t1 = type$.String,
+        t2 = type$.dynamic,
+        t3 = validateStatus == null ? A.options___defaultValidateStatus$closure() : validateStatus;
+      t3 = new A.BaseOptions($, $, _null, "GET", false, _null, _null, responseType, t3, true, A.LinkedHashMap_LinkedHashMap$_empty(t1, t2), followRedirects !== false, 5, true, _null, _null, B.ListFormat_4);
+      t3._RequestConfig$16$contentType$extra$followRedirects$headers$listFormat$maxRedirects$method$persistentConnection$preserveHeaderCase$receiveDataWhenStatusError$receiveTimeout$requestEncoder$responseDecoder$responseType$sendTimeout$validateStatus(_null, _null, followRedirects, _null, _null, _null, _null, _null, false, _null, _null, _null, _null, responseType, _null, validateStatus);
+      t3.set$baseUrl(baseUrl);
+      t3.OptionsMixin___OptionsMixin_queryParameters_A = type$.Map_String_dynamic._as(A.LinkedHashMap_LinkedHashMap$_empty(t1, t2));
+      t3.set$connectTimeout(_null);
+      return t3;
+    },
+    Options$(headers, method, responseType, validateStatus) {
+      return new A.Options(method, headers, responseType, validateStatus);
+    },
+    _defaultValidateStatus($status) {
+      return $status >= 200 && $status < 300;
+    },
+    ResponseType: function ResponseType(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    ListFormat: function ListFormat(t0, t1) {
+      this.index = t0;
+      this._name = t1;
+    },
+    OptionsMixin: function OptionsMixin() {
+    },
+    BaseOptions: function BaseOptions(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16) {
+      var _ = this;
+      _.OptionsMixin___OptionsMixin__baseUrl_A = t0;
+      _.OptionsMixin___OptionsMixin_queryParameters_A = t1;
+      _.OptionsMixin__connectTimeout = t2;
+      _.___RequestConfig_method_A = t3;
+      _.___RequestConfig__headers_A = $;
+      _.___RequestConfig_preserveHeaderCase_A = t4;
+      _._sendTimeout = t5;
+      _._receiveTimeout = t6;
+      _._defaultContentType = null;
+      _.___RequestConfig_responseType_A = t7;
+      _.___RequestConfig_validateStatus_A = t8;
+      _.___RequestConfig_receiveDataWhenStatusError_A = t9;
+      _.___RequestConfig_extra_A = t10;
+      _.___RequestConfig_followRedirects_A = t11;
+      _.___RequestConfig_maxRedirects_A = t12;
+      _.___RequestConfig_persistentConnection_A = t13;
+      _.requestEncoder = t14;
+      _.responseDecoder = t15;
+      _.___RequestConfig_listFormat_A = t16;
+    },
+    Options: function Options(t0, t1, t2, t3) {
+      var _ = this;
+      _.method = t0;
+      _.headers = t1;
+      _.responseType = t2;
+      _.validateStatus = t3;
+    },
+    RequestOptions: function RequestOptions(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21) {
+      var _ = this;
+      _.sourceStackTrace = null;
+      _.data = t0;
+      _.path = t1;
+      _.cancelToken = t2;
+      _.onReceiveProgress = t3;
+      _.onSendProgress = t4;
+      _.OptionsMixin___OptionsMixin__baseUrl_A = t5;
+      _.OptionsMixin___OptionsMixin_queryParameters_A = t6;
+      _.OptionsMixin__connectTimeout = t7;
+      _.___RequestConfig_method_A = t8;
+      _.___RequestConfig__headers_A = $;
+      _.___RequestConfig_preserveHeaderCase_A = t9;
+      _._sendTimeout = t10;
+      _._receiveTimeout = t11;
+      _._defaultContentType = null;
+      _.___RequestConfig_responseType_A = t12;
+      _.___RequestConfig_validateStatus_A = t13;
+      _.___RequestConfig_receiveDataWhenStatusError_A = t14;
+      _.___RequestConfig_extra_A = t15;
+      _.___RequestConfig_followRedirects_A = t16;
+      _.___RequestConfig_maxRedirects_A = t17;
+      _.___RequestConfig_persistentConnection_A = t18;
+      _.requestEncoder = t19;
+      _.responseDecoder = t20;
+      _.___RequestConfig_listFormat_A = t21;
+    },
+    _RequestConfig: function _RequestConfig() {
+    },
+    _BaseOptions__RequestConfig_OptionsMixin: function _BaseOptions__RequestConfig_OptionsMixin() {
+    },
+    _RequestOptions__RequestConfig_OptionsMixin: function _RequestOptions__RequestConfig_OptionsMixin() {
+    },
+    Response$(data, extra, headers, isRedirect, redirects, requestOptions, statusCode, statusMessage, $T) {
+      var t1, t2;
+      if (headers == null) {
+        requestOptions.___RequestConfig_preserveHeaderCase_A === $ && A.throwLateFieldNI("preserveHeaderCase");
+        t1 = new A.Headers(A.caseInsensitiveKeyMap(null, type$.List_String));
+      } else
+        t1 = headers;
+      t2 = extra == null ? A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic) : extra;
+      return new A.Response0(data, requestOptions, statusCode, statusMessage, t1, isRedirect, redirects, t2, $T._eval$1("Response0<0>"));
+    },
+    Response0: function Response0(t0, t1, t2, t3, t4, t5, t6, t7, t8) {
+      var _ = this;
+      _.data = t0;
+      _.requestOptions = t1;
+      _.statusCode = t2;
+      _.statusMessage = t3;
+      _.headers = t4;
+      _.isRedirect = t5;
+      _.redirects = t6;
+      _.extra = t7;
+      _.$ti = t8;
+    },
+    handleResponseStream(options, response) {
+      var receiveStopwatch, t3, _null = null, t1 = {},
+        source = response.stream,
+        t2 = type$._AsyncStreamController_Uint8List,
+        responseSink = new A._AsyncStreamController(_null, _null, _null, _null, t2),
+        responseSubscription = A._Cell$named("responseSubscription"),
+        totalLength = A._Cell$named("totalLength");
+      t1.receivedLength = 0;
+      receiveStopwatch = new A.Stopwatch();
+      $.$get$Stopwatch__frequency();
+      t1.receiveTimer = null;
+      t3 = new A.handleResponseStream_stopWatchReceiveTimeout(t1, _null, receiveStopwatch);
+      responseSubscription._value = source.listen$4$cancelOnError$onDone$onError(new A.handleResponseStream_closure(t1, new A.handleResponseStream_watchReceiveTimeout(t1, B.Duration_0, receiveStopwatch, t3, response, responseSubscription, responseSink, options), receiveStopwatch, B.Duration_0, responseSink, options, totalLength), true, new A.handleResponseStream_closure0(t3, responseSubscription, responseSink), new A.handleResponseStream_closure1(t3, responseSink));
+      return new A._ControllerStream(responseSink, t2._eval$1("_ControllerStream<1>"));
+    },
+    _extension_0_addErrorAndClose(_this, error, stackTrace) {
+      if ((_this._state & 4) === 0) {
+        _this.addError$2(error, stackTrace);
+        _this.close$0(0);
+      }
+    },
+    handleResponseStream_stopWatchReceiveTimeout: function handleResponseStream_stopWatchReceiveTimeout(t0, t1, t2) {
+      this._box_0 = t0;
+      this.onReceiveTimeoutWatchCancelled = t1;
+      this.receiveStopwatch = t2;
+    },
+    handleResponseStream_watchReceiveTimeout: function handleResponseStream_watchReceiveTimeout(t0, t1, t2, t3, t4, t5, t6, t7) {
+      var _ = this;
+      _._box_0 = t0;
+      _.receiveTimeout = t1;
+      _.receiveStopwatch = t2;
+      _.stopWatchReceiveTimeout = t3;
+      _.response = t4;
+      _.responseSubscription = t5;
+      _.responseSink = t6;
+      _.options = t7;
+    },
+    handleResponseStream_watchReceiveTimeout_closure: function handleResponseStream_watchReceiveTimeout_closure(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.stopWatchReceiveTimeout = t0;
+      _.response = t1;
+      _.responseSubscription = t2;
+      _.responseSink = t3;
+      _.receiveTimeout = t4;
+      _.options = t5;
+    },
+    handleResponseStream_closure: function handleResponseStream_closure(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _._box_0 = t0;
+      _.watchReceiveTimeout = t1;
+      _.receiveStopwatch = t2;
+      _.receiveTimeout = t3;
+      _.responseSink = t4;
+      _.options = t5;
+      _.totalLength = t6;
+    },
+    handleResponseStream_closure1: function handleResponseStream_closure1(t0, t1) {
+      this.stopWatchReceiveTimeout = t0;
+      this.responseSink = t1;
+    },
+    handleResponseStream_closure0: function handleResponseStream_closure0(t0, t1, t2) {
+      this.stopWatchReceiveTimeout = t0;
+      this.responseSubscription = t1;
+      this.responseSink = t2;
+    },
+    Transformer_urlEncodeQueryMap(map, listFormat) {
+      return A.encodeMap(map, new A.Transformer_urlEncodeQueryMap_closure(), true, listFormat);
+    },
+    Transformer_isJsonMimeType(contentType) {
+      var mediaType, s, t1, exception;
+      if (contentType == null)
+        return false;
+      try {
+        mediaType = A.MediaType_MediaType$parse(contentType);
+        t1 = mediaType;
+        if (t1.type + "/" + t1.subtype !== "application/json") {
+          t1 = mediaType;
+          t1 = t1.type + "/" + t1.subtype === "text/json" || B.JSString_methods.endsWith$1(mediaType.subtype, "+json");
+        } else
+          t1 = true;
+        return t1;
+      } catch (exception) {
+        s = A.getTraceFromException(exception);
+        return false;
+      }
+    },
+    Transformer_defaultTransformRequest(options, jsonEncodeCallback) {
+      var t1 = options.data;
+      if (t1 == null)
+        t1 = "";
+      return t1;
+    },
+    Transformer: function Transformer() {
+    },
+    Transformer_urlEncodeQueryMap_closure: function Transformer_urlEncodeQueryMap_closure() {
+    },
+    FusedTransformer__decodeUtf8ToJson(data) {
+      return A.FusedTransformer__decodeUtf8ToJson$body(type$.Uint8List._as(data));
+    },
+    FusedTransformer__decodeUtf8ToJson$body(data) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.nullable_Object),
+        $async$returnValue, t1;
+      var $async$FusedTransformer__decodeUtf8ToJson = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              if (data.length === 0) {
+                $async$returnValue = null;
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              t1 = $.$get$FusedTransformer__utf8JsonDecoder();
+              $async$returnValue = A._parseJson(A._asString(t1._convert$_first.convert$1(t1.$ti._precomputed1._as(data))), t1._second._reviver);
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$FusedTransformer__decodeUtf8ToJson, $async$completer);
+    },
+    FusedTransformer: function FusedTransformer(t0) {
+      this.contentLengthIsolateThreshold = t0;
+    },
+    DefaultNullIfEmptyStreamTransformer: function DefaultNullIfEmptyStreamTransformer() {
+    },
+    DefaultNullIfEmptyStreamTransformer_bind_closure: function DefaultNullIfEmptyStreamTransformer_bind_closure() {
+    },
+    _DefaultIfEmptyStreamSink: function _DefaultIfEmptyStreamSink(t0) {
+      this._outputSink = t0;
+      this._hasData = false;
+    },
+    encodeMap(data, handler, isQuery, listFormat) {
+      var leftBracket, rightBracket, t1 = {},
+        urlData = new A.StringBuffer("");
+      t1.first = true;
+      leftBracket = isQuery ? "[" : "%5B";
+      rightBracket = isQuery ? "]" : "%5D";
+      new A.encodeMap_urlEncode(t1, listFormat, isQuery, new A.encodeMap_maybeEncode(isQuery, A.core_Uri_encodeQueryComponent$closure()), leftBracket, rightBracket, A.core_Uri_encodeQueryComponent$closure(), handler, urlData).call$2(data, "");
+      t1 = urlData._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    _getSeparatorChar(collectionFormat, isQuery) {
+      switch (collectionFormat.index) {
+        case 0:
+          return ",";
+        case 1:
+          return isQuery ? "%20" : " ";
+        case 2:
+          return "\\t";
+        case 3:
+          return "|";
+        default:
+          return "";
+      }
+    },
+    caseInsensitiveKeyMap(value, $V) {
+      var map = A.LinkedHashMap_LinkedHashMap(new A.caseInsensitiveKeyMap_closure(), new A.caseInsensitiveKeyMap_closure0(), type$.String, $V);
+      if (value != null && value._length !== 0)
+        map.addAll$1(0, value);
+      return map;
+    },
+    encodeMap_maybeEncode: function encodeMap_maybeEncode(t0, t1) {
+      this.isQuery = t0;
+      this.encodeComponent = t1;
+    },
+    encodeMap_urlEncode: function encodeMap_urlEncode(t0, t1, t2, t3, t4, t5, t6, t7, t8) {
+      var _ = this;
+      _._box_0 = t0;
+      _.listFormat = t1;
+      _.isQuery = t2;
+      _.maybeEncode = t3;
+      _.leftBracket = t4;
+      _.rightBracket = t5;
+      _.encodeComponent = t6;
+      _.handler = t7;
+      _.urlData = t8;
+    },
+    encodeMap_urlEncode_closure: function encodeMap_urlEncode_closure(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.path = t0;
+      _.urlEncode = t1;
+      _.maybeEncode = t2;
+      _.encodeComponent = t3;
+      _.leftBracket = t4;
+      _.rightBracket = t5;
+    },
+    caseInsensitiveKeyMap_closure: function caseInsensitiveKeyMap_closure() {
+    },
+    caseInsensitiveKeyMap_closure0: function caseInsensitiveKeyMap_closure0() {
+    },
+    _extension_0_getResponseHeaders(_this) {
+      var headersList, t1, t2, _i, header, splitIdx, key, value, t3,
+        headersString = A._asString(_this.getAllResponseHeaders()),
+        headers = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.List_String);
+      if (headersString.length === 0)
+        return headers;
+      headersList = headersString.split("\r\n");
+      for (t1 = headersList.length, t2 = type$.JSArray_String, _i = 0; _i < t1; ++_i) {
+        header = headersList[_i];
+        if (header.length === 0)
+          continue;
+        splitIdx = B.JSString_methods.indexOf$1(header, ": ");
+        if (splitIdx === -1)
+          continue;
+        key = B.JSString_methods.substring$2(header, 0, splitIdx).toLowerCase();
+        value = B.JSString_methods.substring$1(header, splitIdx + 2);
+        t3 = headers.$index(0, key);
+        if (t3 == null) {
+          t3 = A._setArrayType([], t2);
+          headers.$indexSet(0, key, t3);
+        }
+        J.add$1$ax(t3, value);
+      }
+      return headers;
+    },
+    BrowserHttpClientAdapter: function BrowserHttpClientAdapter(t0) {
+      this.xhrs = t0;
+    },
+    BrowserHttpClientAdapter_fetch_closure: function BrowserHttpClientAdapter_fetch_closure(t0) {
+      this.xhr = t0;
+    },
+    BrowserHttpClientAdapter_fetch_closure0: function BrowserHttpClientAdapter_fetch_closure0(t0, t1, t2) {
+      this.xhr = t0;
+      this.completer = t1;
+      this.options = t2;
+    },
+    BrowserHttpClientAdapter_fetch_stopWatchReceiveTimeout: function BrowserHttpClientAdapter_fetch_stopWatchReceiveTimeout(t0, t1) {
+      this._box_0 = t0;
+      this.receiveStopwatch = t1;
+    },
+    BrowserHttpClientAdapter_fetch_watchReceiveTimeout: function BrowserHttpClientAdapter_fetch_watchReceiveTimeout(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _._box_0 = t0;
+      _.receiveTimeout = t1;
+      _.receiveStopwatch = t2;
+      _.completer = t3;
+      _.xhr = t4;
+      _.options = t5;
+      _.stopWatchReceiveTimeout = t6;
+    },
+    BrowserHttpClientAdapter_fetch_watchReceiveTimeout_closure: function BrowserHttpClientAdapter_fetch_watchReceiveTimeout_closure(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.completer = t0;
+      _.xhr = t1;
+      _.receiveTimeout = t2;
+      _.options = t3;
+      _.stopWatchReceiveTimeout = t4;
+    },
+    BrowserHttpClientAdapter_fetch_closure1: function BrowserHttpClientAdapter_fetch_closure1(t0, t1, t2) {
+      this._box_0 = t0;
+      this.watchReceiveTimeout = t1;
+      this.options = t2;
+    },
+    BrowserHttpClientAdapter_fetch_closure2: function BrowserHttpClientAdapter_fetch_closure2(t0) {
+      this.stopWatchReceiveTimeout = t0;
+    },
+    BrowserHttpClientAdapter_fetch_closure3: function BrowserHttpClientAdapter_fetch_closure3(t0, t1, t2) {
+      this._box_0 = t0;
+      this.completer = t1;
+      this.options = t2;
+    },
+    BrowserHttpClientAdapter_fetch_closure4: function BrowserHttpClientAdapter_fetch_closure4(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._box_0 = t0;
+      _.completer = t1;
+      _.connectTimeout = t2;
+      _.options = t3;
+      _.xhrTimeout = t4;
+    },
+    BrowserHttpClientAdapter_fetch_closure5: function BrowserHttpClientAdapter_fetch_closure5(t0) {
+      this.completer = t0;
+    },
+    BrowserHttpClientAdapter_fetch_closure6: function BrowserHttpClientAdapter_fetch_closure6(t0) {
+      this.completer = t0;
+    },
+    BrowserHttpClientAdapter_fetch_closure7: function BrowserHttpClientAdapter_fetch_closure7(t0, t1) {
       this.$this = t0;
+      this.xhr = t1;
     },
-    RequestAbortedException: function RequestAbortedException(t0, t1) {
-      this.message = t0;
-      this.uri = t1;
+    DioForBrowser: function DioForBrowser(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.DioMixin___DioMixin_options_A = t0;
+      _.DioMixin__interceptors = t1;
+      _.DioMixin___DioMixin_httpClientAdapter_A = t2;
+      _.DioMixin_transformer = t3;
+      _.DioMixin__closed = t4;
     },
-    BaseClient: function BaseClient() {
+    _DioForBrowser_Object_DioMixin: function _DioForBrowser_Object_DioMixin() {
+    },
+    addProgress(stream, $length, options) {
+      if (type$.Stream_Uint8List._is(stream))
+        return stream;
+      return stream.$ti._eval$1("StreamTransformer<Stream.T,Uint8List>")._as(A._transform(stream, $length, options, type$.List_int)).bind$1(stream);
+    },
+    _transform(stream, $length, options, $S) {
+      return A._StreamHandlerTransformer$(new A._transform_closure(options, $S), $S, type$.Uint8List);
+    },
+    _transform_closure: function _transform_closure(t0, t1) {
+      this.options = t0;
+      this.S = t1;
     },
     BaseRequest: function BaseRequest() {
     },
@@ -6958,202 +8045,6 @@
     BaseRequest_closure0: function BaseRequest_closure0() {
     },
     BaseResponse: function BaseResponse() {
-    },
-    _toClientException(e, request) {
-      var message;
-      if (type$.JSObject._is(e) && "AbortError" === A._asString(e.name))
-        return new A.RequestAbortedException("Request aborted by `abortTrigger`", request.url);
-      if (!(e instanceof A.ClientException)) {
-        message = J.toString$0$(e);
-        if (B.JSString_methods.startsWith$1(message, "TypeError: "))
-          message = B.JSString_methods.substring$1(message, 11);
-        e = new A.ClientException(message, request.url);
-      }
-      return e;
-    },
-    _rethrowAsClientException(e, st, request) {
-      A.Error_throwWithStackTrace(A._toClientException(e, request), st);
-    },
-    _bodyToStream(request, response) {
-      return new A._MultiStream(new A._bodyToStream_closure(request, response), type$._MultiStream_List_int);
-    },
-    _readStreamBody(request, response, controller) {
-      return A._readStreamBody$body(request, response, controller);
-    },
-    _readStreamBody$body(request, response, controller) {
-      var $async$goto = 0,
-        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$returnValue, $async$handler = 2, $async$errorStack = [], chunk, e, s, t2, t3, t4, t5, t6, t7, exception, varData, t8, t9, _box_0, t1, reader, $async$exception;
-      var $async$_readStreamBody = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
-        if ($async$errorCode === 1) {
-          $async$errorStack.push($async$result);
-          $async$goto = $async$handler;
-        }
-        for (;;)
-          switch ($async$goto) {
-            case 0:
-              // Function start
-              _box_0 = {};
-              t1 = A._asJSObjectQ(response.body);
-              reader = t1 == null ? null : A._asJSObject(t1.getReader());
-              $async$goto = reader == null ? 3 : 4;
-              break;
-            case 3:
-              // then
-              $async$goto = 5;
-              return A._asyncAwait(controller.close$0(0), $async$_readStreamBody);
-            case 5:
-              // returning from await.
-              // goto return
-              $async$goto = 1;
-              break;
-            case 4:
-              // join
-              _box_0.resumeSignal = null;
-              _box_0.hadError = _box_0.cancelled = false;
-              controller.set$onResume(0, new A._readStreamBody_closure(_box_0));
-              controller.set$onCancel(0, new A._readStreamBody_closure0(_box_0, reader, request));
-              t1 = type$.NativeUint8List, t2 = controller.$ti, t3 = t2._precomputed1, t4 = type$.JSObject, t2 = t2._eval$1("_ControllerSubscription<1>"), t5 = type$._StreamControllerAddStreamState_nullable_Object, t6 = type$._Future_void, t7 = type$._AsyncCompleter_void;
-            case 6:
-              // for condition
-              // trivial condition
-              chunk = null;
-              $async$handler = 9;
-              $async$goto = 12;
-              return A._asyncAwait(A.promiseToFuture(A._asJSObject(reader.read()), t4), $async$_readStreamBody);
-            case 12:
-              // returning from await.
-              chunk = $async$result;
-              $async$handler = 2;
-              // goto after finally
-              $async$goto = 11;
-              break;
-            case 9:
-              // catch
-              $async$handler = 8;
-              $async$exception = $async$errorStack.pop();
-              e = A.unwrapException($async$exception);
-              s = A.getTraceFromException($async$exception);
-              $async$goto = !_box_0.cancelled ? 13 : 14;
-              break;
-            case 13:
-              // then
-              _box_0.hadError = true;
-              t1 = A._toClientException(e, request);
-              t3 = type$.nullable_StackTrace._as(s);
-              t4 = controller._state;
-              if (t4 >= 4)
-                A.throwExpression(controller._badEventState$0());
-              if ((t4 & 1) !== 0) {
-                varData = controller._varData;
-                t6 = t2._as((t4 & 8) !== 0 ? t5._as(varData).get$_varData() : varData);
-                t6._addError$2(t1, t3 == null ? B.C__StringStackTrace : t3);
-              }
-              $async$goto = 15;
-              return A._asyncAwait(controller.close$0(0), $async$_readStreamBody);
-            case 15:
-              // returning from await.
-            case 14:
-              // join
-              // goto after for
-              $async$goto = 7;
-              break;
-              // goto after finally
-              $async$goto = 11;
-              break;
-            case 8:
-              // uncaught
-              // goto rethrow
-              $async$goto = 2;
-              break;
-            case 11:
-              // after finally
-              if (A._asBool(chunk.done)) {
-                controller.closeSync$0();
-                // goto after for
-                $async$goto = 7;
-                break;
-              } else {
-                t8 = chunk.value;
-                t8.toString;
-                t8 = t3._as(t1._as(t8));
-                t9 = controller._state;
-                if (t9 >= 4)
-                  A.throwExpression(controller._badEventState$0());
-                if ((t9 & 1) !== 0) {
-                  varData = controller._varData;
-                  t2._as((t9 & 8) !== 0 ? t5._as(varData).get$_varData() : varData)._add$1(0, t8);
-                }
-              }
-              t8 = controller._state;
-              if ((t8 & 1) !== 0) {
-                varData = controller._varData;
-                t9 = (t2._as((t8 & 8) !== 0 ? t5._as(varData).get$_varData() : varData)._state & 4) !== 0;
-                t8 = t9;
-              } else
-                t8 = (t8 & 2) === 0;
-              $async$goto = t8 ? 16 : 17;
-              break;
-            case 16:
-              // then
-              t8 = _box_0.resumeSignal;
-              $async$goto = 18;
-              return A._asyncAwait((t8 == null ? _box_0.resumeSignal = new A._AsyncCompleter(new A._Future($.Zone__current, t6), t7) : t8).future, $async$_readStreamBody);
-            case 18:
-              // returning from await.
-            case 17:
-              // join
-              if ((controller._state & 1) === 0) {
-                // goto after for
-                $async$goto = 7;
-                break;
-              }
-              // goto for condition
-              $async$goto = 6;
-              break;
-            case 7:
-              // after for
-            case 1:
-              // return
-              return A._asyncReturn($async$returnValue, $async$completer);
-            case 2:
-              // rethrow
-              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
-          }
-      });
-      return A._asyncStartSync($async$_readStreamBody, $async$completer);
-    },
-    BrowserClient: function BrowserClient(t0) {
-      this._isClosed = false;
-      this._openRequestAbortControllers = t0;
-    },
-    BrowserClient_send_closure: function BrowserClient_send_closure(t0) {
-      this.headers = t0;
-    },
-    _bodyToStream_closure: function _bodyToStream_closure(t0, t1) {
-      this.request = t0;
-      this.response = t1;
-    },
-    _readStreamBody_closure: function _readStreamBody_closure(t0) {
-      this._box_0 = t0;
-    },
-    _readStreamBody_closure0: function _readStreamBody_closure0(t0, t1, t2) {
-      this._box_0 = t0;
-      this.reader = t1;
-      this.request = t2;
-    },
-    ByteStream: function ByteStream(t0) {
-      this._stream = t0;
-    },
-    ByteStream_toBytes_closure: function ByteStream_toBytes_closure(t0) {
-      this.completer = t0;
-    },
-    ClientException$(message, uri) {
-      return new A.ClientException(message, uri);
-    },
-    ClientException: function ClientException(t0, t1) {
-      this.message = t0;
-      this.uri = t1;
     },
     Request$(method, url) {
       var t1 = new Uint8Array(0),
@@ -7169,45 +8060,6 @@
       _.method = t1;
       _.url = t2;
       _.headers = t3;
-      _._finalized = false;
-    },
-    Response_fromStream(response) {
-      return A.Response_fromStream$body(type$.StreamedResponse._as(response));
-    },
-    Response_fromStream$body(response) {
-      var $async$goto = 0,
-        $async$completer = A._makeAsyncAwaitCompleter(type$.Response),
-        $async$returnValue, body, t1, t2, t3, t4, t5, t6;
-      var $async$Response_fromStream = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
-        if ($async$errorCode === 1)
-          return A._asyncRethrow($async$result, $async$completer);
-        for (;;)
-          switch ($async$goto) {
-            case 0:
-              // Function start
-              $async$goto = 3;
-              return A._asyncAwait(response.stream.toBytes$0(), $async$Response_fromStream);
-            case 3:
-              // returning from await.
-              body = $async$result;
-              t1 = response.statusCode;
-              t2 = response.request;
-              t3 = response.headers;
-              t4 = response.reasonPhrase;
-              t5 = A.toUint8List(body);
-              t6 = body.length;
-              t5 = new A.Response(t5, t2, t1, t4, t6, t3, false, true);
-              t5.BaseResponse$7$contentLength$headers$isRedirect$persistentConnection$reasonPhrase$request(t1, t6, t3, false, true, t4, t2);
-              $async$returnValue = t5;
-              // goto return
-              $async$goto = 1;
-              break;
-            case 1:
-              // return
-              return A._asyncReturn($async$returnValue, $async$completer);
-          }
-      });
-      return A._asyncStartSync($async$Response_fromStream, $async$completer);
     },
     _contentTypeForHeaders(headers) {
       var contentType = headers.$index(0, "content-type");
@@ -7215,29 +8067,12 @@
         return A.MediaType_MediaType$parse(contentType);
       return A.MediaType$("application", "octet-stream", null);
     },
-    Response: function Response(t0, t1, t2, t3, t4, t5, t6, t7) {
+    Response: function Response(t0, t1, t2, t3) {
       var _ = this;
       _.bodyBytes = t0;
-      _.request = t1;
-      _.statusCode = t2;
-      _.reasonPhrase = t3;
-      _.contentLength = t4;
-      _.headers = t5;
-      _.isRedirect = t6;
-      _.persistentConnection = t7;
-    },
-    StreamedResponse: function StreamedResponse() {
-    },
-    StreamedResponseV2: function StreamedResponseV2(t0, t1, t2, t3, t4, t5, t6, t7) {
-      var _ = this;
-      _.stream = t0;
-      _.request = t1;
-      _.statusCode = t2;
-      _.reasonPhrase = t3;
-      _.contentLength = t4;
-      _.headers = t5;
-      _.isRedirect = t6;
-      _.persistentConnection = t7;
+      _.statusCode = t1;
+      _.contentLength = t2;
+      _.headers = t3;
     },
     CaseInsensitiveMap__canonicalizer(key) {
       return A._asString(key).toLowerCase();
@@ -7759,18 +8594,39 @@
     },
     HookEvent: function HookEvent() {
     },
-    HttpClient: function HttpClient(t0, t1) {
-      this.baseUrl = t0;
-      this.uid = t1;
+    TransmitHttpClient$(baseUrl, uid) {
+      var t1 = type$.String,
+        t2 = A.BaseOptions$(baseUrl, false, B.ResponseType_2, new A.TransmitHttpClient_closure()),
+        t3 = new A.Interceptors(A._setArrayType([B.C_ImplyContentTypeInterceptor], type$.JSArray_nullable_Interceptor));
+      t3.addAll$1(t3, B.List_empty2);
+      t3 = new A.DioForBrowser($, t3, $, new A.FusedTransformer(51200), false);
+      t3.DioMixin___DioMixin_options_A = t2;
+      t3.DioMixin___DioMixin_httpClientAdapter_A = new A.BrowserHttpClientAdapter(A.LinkedHashSet_LinkedHashSet$_empty(type$.JSObject));
+      return new A.TransmitHttpClient(baseUrl, uid, A.LinkedHashMap_LinkedHashMap$_empty(t1, t1), t3);
     },
-    Subscription: function Subscription(t0, t1, t2, t3, t4, t5) {
+    TransmitHttpClient: function TransmitHttpClient(t0, t1, t2, t3) {
+      var _ = this;
+      _.baseUrl = t0;
+      _.uid = t1;
+      _._headers = t2;
+      _._dio = t3;
+    },
+    TransmitHttpClient_closure: function TransmitHttpClient_closure() {
+    },
+    TransmitHttpClient_send_closure: function TransmitHttpClient_send_closure() {
+    },
+    TransmitHttpClient_send_closure0: function TransmitHttpClient_send_closure0(t0) {
+      this.rawHeaders = t0;
+    },
+    Subscription: function Subscription(t0, t1, t2, t3, t4, t5, t6) {
       var _ = this;
       _._httpClient = t0;
       _._subscription$_hooks = t1;
       _._channel = t2;
       _._getEventSourceStatus = t3;
       _._subscription$_handlers = t4;
-      _._subscription$_status = t5;
+      _._messageStreamController = t5;
+      _._subscription$_status = t6;
     },
     Subscription_onMessage_closure: function Subscription_onMessage_closure(t0, t1) {
       this.$this = t0;
@@ -7866,6 +8722,50 @@
     CryptoRNG: function CryptoRNG() {
     },
     Uuid: function Uuid() {
+    },
+    _EventStreamSubscription$0(_target, _eventType, onData, _useCapture, $T) {
+      var t1;
+      if (onData == null)
+        t1 = null;
+      else {
+        t1 = A._wrapZone0(new A._EventStreamSubscription_closure(onData), type$.JSObject);
+        t1 = t1 == null ? null : A._functionToJS1(t1);
+      }
+      t1 = new A._EventStreamSubscription(_target, _eventType, t1, false, $T._eval$1("_EventStreamSubscription<0>"));
+      t1._streams$_tryResume$0();
+      return t1;
+    },
+    _wrapZone0(callback, $T) {
+      var t1 = $.Zone__current;
+      if (t1 === B.C__RootZone)
+        return callback;
+      return t1.bindUnaryCallbackGuarded$1$1(callback, $T);
+    },
+    EventStreamProvider0: function EventStreamProvider0(t0, t1) {
+      this._streams$_eventType = t0;
+      this.$ti = t1;
+    },
+    _EventStream: function _EventStream(t0, t1, t2, t3) {
+      var _ = this;
+      _._streams$_target = t0;
+      _._streams$_eventType = t1;
+      _._streams$_useCapture = t2;
+      _.$ti = t3;
+    },
+    _EventStreamSubscription: function _EventStreamSubscription(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._streams$_pauseCount = 0;
+      _._streams$_target = t0;
+      _._streams$_eventType = t1;
+      _._streams$_onData = t2;
+      _._streams$_useCapture = t3;
+      _.$ti = t4;
+    },
+    _EventStreamSubscription_closure: function _EventStreamSubscription_closure(t0) {
+      this.onData = t0;
+    },
+    _EventStreamSubscription_onData_closure0: function _EventStreamSubscription_onData_closure0(t0) {
+      this.handleData = t0;
     },
     main() {
       var _s5_ = "click",
@@ -8011,7 +8911,8 @@
       t5 = t7 + t8 + t9 + t10 + "-" + t11 + t12 + "-" + t13 + t14 + "-" + t15 + t16 + "-" + t17 + t18 + t19 + t20 + t21 + t6[t5];
       t6 = new A.Hook(A.LinkedHashMap_LinkedHashMap$_empty(type$.HookEvent, type$.Set_Function));
       t4 = new A.Transmit(t5, new A.TransmitOptions(_s21_, 5, t2, t3), A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.Subscription), t6, B.TransmitStatus_0, t4);
-      t4.__Transmit__httpClient_F = new A.HttpClient(_s21_, t5);
+      t5 = A.TransmitHttpClient$(_s21_, t5);
+      t4.__Transmit__httpClient_F = t5;
       t6.register$2(0, B.C_HookEvent, t2);
       t6.register$2(0, B.C_HookEvent0, t3);
       t4._connect$0(0);
@@ -8024,14 +8925,24 @@
       $.transmit.on$2(0, "reconnecting", new A.connect_closure3());
       t1 = $.transmit.subscription$1("test");
       $.subscription = t1;
-      t1.onMessage$1(0, new A.connect_closure4());
-      $.subscription.create$0(0).then$1(new A.connect_closure5()).catchError$1(new A.connect_closure6());
+      t1 = t1._messageStreamController;
+      $.streamSubscription = new A._BroadcastStream(t1, A._instanceType(t1)._eval$1("_BroadcastStream<1>")).listen$3$onDone$onError(new A.connect_closure4(), new A.connect_closure5(), new A.connect_closure6());
+      t1 = $.subscription._messageStreamController;
+      t2 = A._instanceType(t1)._eval$1("_BroadcastStream<1>");
+      t3 = t2._eval$1("CastStream<Stream.T,Map<String,@>>");
+      new A._WhereStream(t3._eval$1("bool(Stream.T)")._as(new A.connect_closure7()), new A.CastStream(new A._BroadcastStream(t1, t2), t3), t3._eval$1("_WhereStream<Stream.T>")).listen$1(new A.connect_closure8());
+      $.subscription.onMessage$1$1(0, new A.connect_closure9(), type$.nullable_Object);
+      $.subscription.create$0(0).then$1$1(new A.connect_closure10(), type$.Null).catchError$1(new A.connect_closure11());
     },
     disconnect() {
       var t1, t2, connectBtn, disconnectBtn, triggerBtn,
         _s12_ = "Disconnected";
       if ($.transmit == null)
         return;
+      t1 = $.streamSubscription;
+      if (t1 != null)
+        t1.cancel$0(0);
+      $.streamSubscription = null;
       t1 = $.subscription;
       if (t1 != null)
         t1.delete$0(0);
@@ -8083,7 +8994,7 @@
       if (messagesDiv == null)
         return;
       messageDiv = t1.createElement("div");
-      messageDiv.className = "message";
+      messageDiv.className = "message message-" + type;
       B.DivElement_methods.setInnerHtml$1(messageDiv, '      <div class="message-time">' + B.JSString_methods.substring$2(new A.DateTime(Date.now(), 0, false).toLocal$0().toString$0(0), 11, 19) + '</div>\n      <div class="message-content">' + message + "</div>\n    ");
       J.insertAdjacentElement$2$x(messagesDiv, "afterbegin", messageDiv);
       messagesDiv.scrollTop = 0;
@@ -8114,27 +9025,39 @@
     },
     connect_closure4: function connect_closure4() {
     },
+    connect_closure6: function connect_closure6() {
+    },
     connect_closure5: function connect_closure5() {
     },
-    connect_closure6: function connect_closure6() {
+    connect_closure7: function connect_closure7() {
+    },
+    connect_closure8: function connect_closure8() {
+    },
+    connect_closure9: function connect_closure9() {
+    },
+    connect_closure10: function connect_closure10() {
+    },
+    connect_closure11: function connect_closure11() {
     },
     triggerEvent_closure: function triggerEvent_closure() {
     },
     triggerEvent_closure0: function triggerEvent_closure0() {
     },
-    throwLateFieldNI(fieldName) {
-      throw A.initializeExceptionWrapper(A.LateError$fieldNI(fieldName), new Error());
-    },
-    throwLateFieldADI(fieldName) {
-      throw A.initializeExceptionWrapper(A.LateError$fieldADI(fieldName), new Error());
-    },
     _convertNativeToDart_Value(value) {
-      var t1, values, i;
+      var proto, t1, values, i;
       if (value == null)
         return value;
       if (typeof value == "string" || typeof value == "number" || A._isBool(value))
         return value;
-      if (A.isJavaScriptSimpleObject(value))
+      proto = Object.getPrototypeOf(value);
+      t1 = proto === Object.prototype;
+      t1.toString;
+      if (!t1) {
+        t1 = proto === null;
+        t1.toString;
+      } else
+        t1 = true;
+      if (t1)
         return A.convertNativeToDart_Dictionary(value);
       t1 = Array.isArray(value);
       t1.toString;
@@ -8167,16 +9090,23 @@
       }
       return dict;
     },
-    isJavaScriptSimpleObject(value) {
-      var proto = Object.getPrototypeOf(value),
-        t1 = proto === Object.prototype;
-      t1.toString;
-      if (!t1) {
-        t1 = proto === null;
-        t1.toString;
-      } else
-        t1 = true;
-      return t1;
+    _functionToJS1(f) {
+      var result;
+      if (typeof f == "function")
+        throw A.wrapException(A.ArgumentError$("Attempting to rewrap a JS function.", null));
+      result = function(_call, f) {
+        return function(arg1) {
+          return _call(f, arg1, arguments.length);
+        };
+      }(A._callDartFunctionFast1, f);
+      result[$.$get$DART_CLOSURE_PROPERTY_NAME()] = f;
+      return result;
+    },
+    _callDartFunctionFast1(callback, arg1, $length) {
+      type$.Function._as(callback);
+      if (A._asInt($length) >= 1)
+        return callback.call$1(arg1);
+      return callback.call$0();
     },
     groupBy(values, key, $S, $T) {
       var t1, _i, element, t2, t3,
@@ -8195,6 +9125,107 @@
       }
       return map;
     },
+    consolidateBytes(stream) {
+      return A.consolidateBytes$body(stream);
+    },
+    consolidateBytes$body(stream) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.Uint8List),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$next = [], chunk, t1, builder;
+      var $async$consolidateBytes = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = A._setArrayType([], type$.JSArray_Uint8List);
+              builder = new A._BytesBuilder(t1);
+              t1 = new A._StreamIterator(A.checkNotNullable(stream, "stream", type$.Object), type$._StreamIterator_Uint8List);
+              $async$handler = 3;
+            case 6:
+              // while condition
+              $async$goto = 8;
+              return A._asyncAwait(t1.moveNext$0(), $async$consolidateBytes);
+            case 8:
+              // returning from await.
+              if (!$async$result) {
+                // goto after while
+                $async$goto = 7;
+                break;
+              }
+              chunk = t1.get$current(0);
+              J.add$1$ax(builder, chunk);
+              // goto while condition
+              $async$goto = 6;
+              break;
+            case 7:
+              // after while
+              $async$next.push(5);
+              // goto finally
+              $async$goto = 4;
+              break;
+            case 3:
+              // uncaught
+              $async$next = [2];
+            case 4:
+              // finally
+              $async$handler = 2;
+              $async$goto = 9;
+              return A._asyncAwait(t1.cancel$0(0), $async$consolidateBytes);
+            case 9:
+              // returning from await.
+              // goto the next finally handler
+              $async$goto = $async$next.pop();
+              break;
+            case 5:
+              // after finally
+              $async$returnValue = builder.takeBytes$0();
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$consolidateBytes, $async$completer);
+    },
+    compute(callback, message, debugLabel, $Q, $R) {
+      return A.compute$body($R._eval$1("@<0>")._bind$1($Q)._eval$1("1/(2)")._as(callback), $Q._as(message), debugLabel, $Q, $R, $R);
+    },
+    compute$body(callback, message, debugLabel, $Q, $R, $async$type) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter($async$type),
+        $async$returnValue, t1;
+      var $async$compute = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = A._Future$value(null, type$.Null);
+              $async$goto = 3;
+              return A._asyncAwait(t1, $async$compute);
+            case 3:
+              // returning from await.
+              $async$returnValue = callback.call$1(message);
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$compute, $async$completer);
+    },
     encodingForContentTypeHeader(contentTypeHeader) {
       var t1,
         charset = contentTypeHeader.parameters._collection$_map.$index(0, "charset");
@@ -8210,9 +9241,6 @@
     },
     toUint8List(input) {
       return input;
-    },
-    toByteStream(stream) {
-      return new A.ByteStream(stream);
     },
     wrapFormatException($name, value, body, $T) {
       var error, error0, t1, exception;
@@ -8463,16 +9491,6 @@
         throw A.wrapException(A.diagnoseIndexError(receiver, -1));
       return receiver.pop();
     },
-    remove$1(receiver, element) {
-      var i;
-      receiver.$flags & 1 && A.throwUnsupportedOperation(receiver, "remove", 1);
-      for (i = 0; i < receiver.length; ++i)
-        if (J.$eq$(receiver[i], element)) {
-          receiver.splice(i, 1);
-          return true;
-        }
-      return false;
-    },
     _removeWhere$2(receiver, test, removeMatching) {
       var retained, end, i, element, t1;
       A._arrayInstanceType(receiver)._eval$1("bool(1)")._as(test);
@@ -8514,6 +9532,10 @@
       for (i = 0; i < len; ++i)
         receiver.push(array[i]);
     },
+    clear$0(receiver) {
+      receiver.$flags & 1 && A.throwUnsupportedOperation(receiver, "clear", "clear");
+      receiver.length = 0;
+    },
     map$1$1(receiver, f, $T) {
       var t1 = A._arrayInstanceType(receiver);
       return new A.MappedListIterable(receiver, t1._bind$1($T)._eval$1("1(2)")._as(f), t1._eval$1("@<1>")._bind$1($T)._eval$1("MappedListIterable<1,2>"));
@@ -8524,6 +9546,9 @@
       for (i = 0; i < receiver.length; ++i)
         this.$indexSet(list, i, A.S(receiver[i]));
       return list.join(separator);
+    },
+    take$1(receiver, n) {
+      return A.SubListIterable$(receiver, 0, A.checkNotNullable(n, "count", type$.int), A._arrayInstanceType(receiver)._precomputed1);
     },
     skip$1(receiver, n) {
       return A.SubListIterable$(receiver, n, null, A._arrayInstanceType(receiver)._precomputed1);
@@ -8661,6 +9686,8 @@
     },
     set$length(receiver, newLength) {
       receiver.$flags & 1 && A.throwUnsupportedOperation(receiver, "set length", "change the length of");
+      if (newLength < 0)
+        throw A.wrapException(A.RangeError$range(newLength, 0, null, "newLength", null));
       if (newLength > receiver.length)
         A._arrayInstanceType(receiver)._precomputed1._as(null);
       receiver.length = newLength;
@@ -8687,6 +9714,7 @@
           return i;
       return -1;
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isIterable: 1,
     $isList: 1
@@ -8771,6 +9799,34 @@
         return t1 + 0;
       }
       throw A.wrapException(A.UnsupportedError$("" + receiver + ".toInt()"));
+    },
+    ceil$0(receiver) {
+      var truncated, d;
+      if (receiver >= 0) {
+        if (receiver <= 2147483647) {
+          truncated = receiver | 0;
+          return receiver === truncated ? truncated : truncated + 1;
+        }
+      } else if (receiver >= -2147483648)
+        return receiver | 0;
+      d = Math.ceil(receiver);
+      if (isFinite(d))
+        return d;
+      throw A.wrapException(A.UnsupportedError$("" + receiver + ".ceil()"));
+    },
+    floor$0(receiver) {
+      var truncated, d;
+      if (receiver >= 0) {
+        if (receiver <= 2147483647)
+          return receiver | 0;
+      } else if (receiver >= -2147483648) {
+        truncated = receiver | 0;
+        return receiver === truncated ? truncated : truncated - 1;
+      }
+      d = Math.floor(receiver);
+      if (isFinite(d))
+        return d;
+      throw A.wrapException(A.UnsupportedError$("" + receiver + ".floor()"));
     },
     toRadixString$1(receiver, radix) {
       var result, t1, t2, match, exponent;
@@ -8918,10 +9974,13 @@
       var endIndex;
       if (index < 0 || index > receiver.length)
         throw A.wrapException(A.RangeError$range(index, 0, receiver.length, null, null));
-      endIndex = index + pattern.length;
-      if (endIndex > receiver.length)
-        return false;
-      return pattern === receiver.substring(index, endIndex);
+      if (typeof pattern == "string") {
+        endIndex = index + pattern.length;
+        if (endIndex > receiver.length)
+          return false;
+        return pattern === receiver.substring(index, endIndex);
+      }
+      return J.matchAsPrefix$2$s(pattern, receiver, index) != null;
     },
     startsWith$1(receiver, pattern) {
       return this.startsWith$2(receiver, pattern, 0);
@@ -8934,6 +9993,28 @@
     },
     toLowerCase$0(receiver) {
       return receiver.toLowerCase();
+    },
+    trim$0(receiver) {
+      var startIndex, t1, endIndex0,
+        result = receiver.trim(),
+        endIndex = result.length;
+      if (endIndex === 0)
+        return result;
+      if (0 >= endIndex)
+        return A.ioore(result, 0);
+      if (result.charCodeAt(0) === 133) {
+        startIndex = J.JSString__skipLeadingWhitespace(result, 1);
+        if (startIndex === endIndex)
+          return "";
+      } else
+        startIndex = 0;
+      t1 = endIndex - 1;
+      if (!(t1 >= 0))
+        return A.ioore(result, t1);
+      endIndex0 = result.charCodeAt(t1) === 133 ? J.JSString__skipTrailingWhitespace(result, t1) : endIndex;
+      if (startIndex === 0 && endIndex0 === endIndex)
+        return result;
+      return result.substring(startIndex, endIndex0);
     },
     $mul(receiver, times) {
       var s, result;
@@ -9013,9 +10094,124 @@
     get$length(receiver) {
       return receiver.length;
     },
+    $isJSIndexable: 1,
     $isTrustedGetRuntimeType: 1,
     $isPattern: 1,
     $isString: 1
+  };
+  A.CastStream.prototype = {
+    listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
+      var t2,
+        t1 = this.$ti;
+      t1._eval$1("~(2)?")._as(onData);
+      t2 = this.__internal$_source.listen$3$cancelOnError$onDone(null, cancelOnError, type$.nullable_void_Function._as(onDone));
+      t1 = new A.CastStreamSubscription(t2, $.Zone__current, t1._eval$1("CastStreamSubscription<1,2>"));
+      t2.onData$1(t1.get$__internal$_onData());
+      t1.onData$1(onData);
+      t1.onError$1(0, onError);
+      return t1;
+    },
+    listen$3$onDone$onError(onData, onDone, onError) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    },
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
+    }
+  };
+  A.CastStreamSubscription.prototype = {
+    cancel$0(_) {
+      return this.__internal$_source.cancel$0(0);
+    },
+    onData$1(handleData) {
+      var t1 = this.$ti;
+      t1._eval$1("~(2)?")._as(handleData);
+      this.__internal$_handleData = handleData == null ? null : type$.$env_1_1_dynamic._bind$1(t1._rest[1])._eval$1("1(2)")._as(handleData);
+    },
+    onError$1(_, handleError) {
+      var _this = this;
+      _this.__internal$_source.onError$1(0, handleError);
+      if (handleError == null)
+        _this.__internal$_handleError = null;
+      else if (type$.void_Function_Object_StackTrace._is(handleError))
+        _this.__internal$_handleError = _this.__internal$_zone.registerBinaryCallback$3$1(handleError, type$.dynamic, type$.Object, type$.StackTrace);
+      else if (type$.void_Function_Object._is(handleError))
+        _this.__internal$_handleError = type$.dynamic_Function_Object._as(handleError);
+      else
+        throw A.wrapException(A.ArgumentError$(string$.handle, null));
+    },
+    __internal$_onData$1(data) {
+      var targetData, error, stack, handleError, t2, exception, _this = this,
+        t1 = _this.$ti;
+      t1._precomputed1._as(data);
+      t2 = _this.__internal$_handleData;
+      if (t2 == null)
+        return;
+      targetData = null;
+      try {
+        targetData = t1._rest[1]._as(data);
+      } catch (exception) {
+        error = A.unwrapException(exception);
+        stack = A.getTraceFromException(exception);
+        handleError = _this.__internal$_handleError;
+        if (handleError == null)
+          A._rootHandleError(A._asObject(error), type$.StackTrace._as(stack));
+        else {
+          t1 = type$.Object;
+          t2 = _this.__internal$_zone;
+          if (type$.void_Function_Object_StackTrace._is(handleError))
+            t2.runBinaryGuarded$2$3(handleError, error, stack, t1, type$.StackTrace);
+          else
+            t2.runUnaryGuarded$1$2(type$.void_Function_Object._as(handleError), error, t1);
+        }
+        return;
+      }
+      _this.__internal$_zone.runUnaryGuarded$1$2(t2, targetData, t1._rest[1]);
+    },
+    pause$1(_, resumeSignal) {
+      this.__internal$_source.pause$1(0, resumeSignal);
+    },
+    pause$0(_) {
+      return this.pause$1(0, null);
+    },
+    resume$0(_) {
+      this.__internal$_source.resume$0(0);
+    },
+    $isStreamSubscription: 1
+  };
+  A._BytesBuilder.prototype = {
+    add$1(_, bytes) {
+      type$.List_int._as(bytes);
+      B.JSArray_methods.add$1(this._chunks, bytes);
+      this.__internal$_length = this.__internal$_length + bytes.length;
+    },
+    takeBytes$0() {
+      var t2, t3, buffer, offset, _i, chunk, offset0, _this = this,
+        t1 = _this.__internal$_length;
+      if (t1 === 0)
+        return $.$get$_CopyingBytesBuilder__emptyList();
+      t2 = _this._chunks;
+      t3 = t2.length;
+      if (t3 === 1) {
+        if (0 >= t3)
+          return A.ioore(t2, 0);
+        buffer = t2[0];
+        _this.__internal$_length = 0;
+        B.JSArray_methods.clear$0(t2);
+        return buffer;
+      }
+      buffer = new Uint8Array(t1);
+      for (offset = 0, _i = 0; _i < t2.length; t2.length === t3 || (0, A.throwConcurrentModificationError)(t2), ++_i, offset = offset0) {
+        chunk = t2[_i];
+        offset0 = offset + chunk.length;
+        B.NativeUint8List_methods.setRange$3(buffer, offset, offset0, chunk);
+      }
+      _this.__internal$_length = 0;
+      B.JSArray_methods.clear$0(t2);
+      return buffer;
+    },
+    get$length(_) {
+      return this.__internal$_length;
+    }
   };
   A.LateError.prototype = {
     toString$0(_) {
@@ -9035,11 +10231,9 @@
   };
   A.nullFuture_closure.prototype = {
     call$0() {
-      var t1 = new A._Future($.Zone__current, type$._Future_void);
-      t1._asyncComplete$1(null);
-      return t1;
+      return A.Future_Future$value(null, type$.void);
     },
-    $signature: 23
+    $signature: 87
   };
   A.SentinelValue.prototype = {};
   A.EfficientLengthIterable.prototype = {};
@@ -9082,10 +10276,6 @@
     },
     where$1(_, test) {
       return this.super$Iterable$where(0, A._instanceType(this)._eval$1("bool(ListIterable.E)")._as(test));
-    },
-    map$1$1(_, toElement, $T) {
-      var t1 = A._instanceType(this);
-      return new A.MappedListIterable(this, t1._bind$1($T)._eval$1("1(ListIterable.E)")._as(toElement), t1._eval$1("@<ListIterable.E>")._bind$1($T)._eval$1("MappedListIterable<1,2>"));
     },
     reduce$1(_, combine) {
       var $length, value, i, _this = this;
@@ -9204,47 +10394,17 @@
     },
     $isIterator: 1
   };
-  A.MappedIterable.prototype = {
-    get$iterator(_) {
-      return new A.MappedIterator(J.get$iterator$ax(this.__internal$_iterable), this._f, A._instanceType(this)._eval$1("MappedIterator<1,2>"));
-    },
-    get$length(_) {
-      return J.get$length$asx(this.__internal$_iterable);
-    }
-  };
-  A.EfficientLengthMappedIterable.prototype = {$isEfficientLengthIterable: 1};
-  A.MappedIterator.prototype = {
-    moveNext$0() {
-      var _this = this,
-        t1 = _this._iterator;
-      if (t1.moveNext$0()) {
-        _this.__internal$_current = _this._f.call$1(t1.get$current(t1));
-        return true;
-      }
-      _this.__internal$_current = null;
-      return false;
-    },
-    get$current(_) {
-      var t1 = this.__internal$_current;
-      return t1 == null ? this.$ti._rest[1]._as(t1) : t1;
-    },
-    $isIterator: 1
-  };
   A.MappedListIterable.prototype = {
     get$length(_) {
-      return J.get$length$asx(this._source);
+      return J.get$length$asx(this.__internal$_source);
     },
     elementAt$1(_, index) {
-      return this._f.call$1(J.elementAt$1$ax(this._source, index));
+      return this._f.call$1(J.elementAt$1$ax(this.__internal$_source, index));
     }
   };
   A.WhereIterable.prototype = {
     get$iterator(_) {
       return new A.WhereIterator(J.get$iterator$ax(this.__internal$_iterable), this._f, this.$ti._eval$1("WhereIterator<1>"));
-    },
-    map$1$1(_, toElement, $T) {
-      var t1 = this.$ti;
-      return new A.MappedIterable(this, t1._bind$1($T)._eval$1("1(2)")._as(toElement), t1._eval$1("@<1>")._bind$1($T)._eval$1("MappedIterable<1,2>"));
     }
   };
   A.WhereIterator.prototype = {
@@ -9338,9 +10498,8 @@
     get$length(_) {
       return 0;
     },
-    map$1$1(_, toElement, $T) {
-      this.$ti._bind$1($T)._eval$1("1(2)")._as(toElement);
-      return new A.EmptyIterable($T._eval$1("EmptyIterable<0>"));
+    join$1(_, separator) {
+      return "";
     },
     skip$1(_, count) {
       A.RangeError_checkNotNegative(count, "count");
@@ -9362,19 +10521,19 @@
   };
   A.WhereTypeIterable.prototype = {
     get$iterator(_) {
-      return new A.WhereTypeIterator(J.get$iterator$ax(this._source), this.$ti._eval$1("WhereTypeIterator<1>"));
+      return new A.WhereTypeIterator(J.get$iterator$ax(this.__internal$_source), this.$ti._eval$1("WhereTypeIterator<1>"));
     }
   };
   A.WhereTypeIterator.prototype = {
     moveNext$0() {
       var t1, t2;
-      for (t1 = this._source, t2 = this.$ti._precomputed1; t1.moveNext$0();)
+      for (t1 = this.__internal$_source, t2 = this.$ti._precomputed1; t1.moveNext$0();)
         if (t2._is(t1.get$current(t1)))
           return true;
       return false;
     },
     get$current(_) {
-      var t1 = this._source;
+      var t1 = this.__internal$_source;
       return this.$ti._precomputed1._as(t1.get$current(t1));
     },
     $isIterator: 1
@@ -9408,10 +10567,10 @@
   A.UnmodifiableListBase.prototype = {};
   A.ReversedListIterable.prototype = {
     get$length(_) {
-      return J.get$length$asx(this._source);
+      return J.get$length$asx(this.__internal$_source);
     },
     elementAt$1(_, index) {
-      var t1 = this._source,
+      var t1 = this.__internal$_source,
         t2 = J.getInterceptor$asx(t1);
       return t2.elementAt$1(t1, t2.get$length(t1) - 1 - index);
     }
@@ -9456,37 +10615,7 @@
       values = this._values;
       for (t1 = keys.length, i = 0; i < t1; ++i)
         f.call$2(keys[i], values[i]);
-    },
-    get$keys(_) {
-      return new A._KeysOrValues(this.get$_keys(), this.$ti._eval$1("_KeysOrValues<1>"));
     }
-  };
-  A._KeysOrValues.prototype = {
-    get$length(_) {
-      return this._elements.length;
-    },
-    get$iterator(_) {
-      var t1 = this._elements;
-      return new A._KeysOrValuesOrElementsIterator(t1, t1.length, this.$ti._eval$1("_KeysOrValuesOrElementsIterator<1>"));
-    }
-  };
-  A._KeysOrValuesOrElementsIterator.prototype = {
-    get$current(_) {
-      var t1 = this.__js_helper$_current;
-      return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
-    },
-    moveNext$0() {
-      var _this = this,
-        t1 = _this.__js_helper$_index;
-      if (t1 >= _this._length) {
-        _this.__js_helper$_current = null;
-        return false;
-      }
-      _this.__js_helper$_current = _this._elements[t1];
-      _this.__js_helper$_index = t1 + 1;
-      return true;
-    },
-    $isIterator: 1
   };
   A.Instantiation.prototype = {
     $eq(_, other) {
@@ -9509,6 +10638,12 @@
     $signature() {
       return A.instantiatedGenericFunctionType(A.closureFunctionType(this._genericClosure), this.$ti);
     }
+  };
+  A.Primitives_initTicker_closure.prototype = {
+    call$0() {
+      return B.JSNumber_methods.floor$0(1000 * this.performance.now());
+    },
+    $signature: 9
   };
   A.SafeToStringHook.prototype = {};
   A.TypeErrorDecoder.prototype = {
@@ -9737,6 +10872,31 @@
       _this.$indexSet(0, key, value);
       return value;
     },
+    remove$1(_, key) {
+      var _this = this;
+      if (typeof key == "string")
+        return _this._removeHashTableEntry$2(_this._strings, key);
+      else if (typeof key == "number" && (key & 0x3fffffff) === key)
+        return _this._removeHashTableEntry$2(_this._nums, key);
+      else
+        return _this.internalRemove$1(key);
+    },
+    internalRemove$1(key) {
+      var hash, bucket, index, cell, _this = this,
+        rest = _this.__js_helper$_rest;
+      if (rest == null)
+        return null;
+      hash = _this.internalComputeHashCode$1(key);
+      bucket = rest[hash];
+      index = _this.internalFindBucketIndex$2(bucket, key);
+      if (index < 0)
+        return null;
+      cell = bucket.splice(index, 1)[0];
+      _this._unlinkCell$1(cell);
+      if (bucket.length === 0)
+        delete rest[hash];
+      return cell.hashMapCellValue;
+    },
     forEach$1(_, action) {
       var cell, modifications, _this = this;
       A._instanceType(_this)._eval$1("~(1,2)")._as(action);
@@ -9760,6 +10920,17 @@
       else
         cell.hashMapCellValue = value;
     },
+    _removeHashTableEntry$2(table, key) {
+      var cell;
+      if (table == null)
+        return null;
+      cell = table[key];
+      if (cell == null)
+        return null;
+      this._unlinkCell$1(cell);
+      delete table[key];
+      return cell.hashMapCellValue;
+    },
     _modified$0() {
       this._modifications = this._modifications + 1 & 1073741823;
     },
@@ -9778,6 +10949,21 @@
       ++_this._length;
       _this._modified$0();
       return cell;
+    },
+    _unlinkCell$1(cell) {
+      var _this = this,
+        previous = cell._previous,
+        next = cell._next;
+      if (previous == null)
+        _this._first = next;
+      else
+        previous._next = next;
+      if (next == null)
+        _this._last = previous;
+      else
+        next._previous = previous;
+      --_this._length;
+      _this._modified$0();
     },
     internalComputeHashCode$1(key) {
       return J.get$hashCode$(key) & 1073741823;
@@ -9824,6 +11010,9 @@
     get$iterator(_) {
       var t1 = this._map;
       return new A.LinkedHashMapKeyIterator(t1, t1._modifications, t1._first, this.$ti._eval$1("LinkedHashMapKeyIterator<1>"));
+    },
+    contains$1(_, element) {
+      return this._map.containsKey$1(0, element);
     }
   };
   A.LinkedHashMapKeyIterator.prototype = {
@@ -9930,19 +11119,19 @@
     call$1(o) {
       return this.getTag(o);
     },
-    $signature: 19
+    $signature: 24
   };
   A.initHooks_closure0.prototype = {
     call$2(o, tag) {
       return this.getUnknownTag(o, tag);
     },
-    $signature: 28
+    $signature: 52
   };
   A.initHooks_closure1.prototype = {
     call$1(tag) {
       return this.prototypeForTag(A._asString(tag));
     },
-    $signature: 50
+    $signature: 54
   };
   A.JSSyntaxRegExp.prototype = {
     toString$0(_) {
@@ -10120,6 +11309,14 @@
     },
     $isIterator: 1
   };
+  A._Cell.prototype = {
+    _readLocal$0() {
+      var t1 = this._value;
+      if (t1 === this)
+        throw A.wrapException(new A.LateError("Local '" + this.__late_helper$_name + "' has not been initialized."));
+      return t1;
+    }
+  };
   A.NativeByteBuffer.prototype = {
     get$runtimeType(receiver) {
       return B.Type_ByteBuffer_rqD;
@@ -10128,9 +11325,9 @@
       return $length == null ? new Uint8Array(receiver, offsetInBytes) : new Uint8Array(receiver, offsetInBytes, $length);
     },
     $isTrustedGetRuntimeType: 1,
-    $isNativeByteBuffer: 1,
-    $isByteBuffer: 1
+    $isNativeByteBuffer: 1
   };
+  A.NativeArrayBuffer.prototype = {$isNativeArrayBuffer: 1};
   A.NativeTypedData.prototype = {
     get$buffer(receiver) {
       if (((receiver.$flags | 0) & 2) !== 0)
@@ -10149,11 +11346,10 @@
   };
   A._UnmodifiableNativeByteBufferView.prototype = {
     asUint8List$2(_, offsetInBytes, $length) {
-      var result = A.NativeUint8List_NativeUint8List$view(this.__native_typed_data$_data, offsetInBytes, $length);
+      var result = A.NativeUint8List_NativeUint8List$view(this._data, offsetInBytes, $length);
       result.$flags = 3;
       return result;
-    },
-    $isByteBuffer: 1
+    }
   };
   A.NativeByteData.prototype = {
     get$runtimeType(receiver) {
@@ -10183,6 +11379,7 @@
         source = source.subarray(skipCount, skipCount + count);
       receiver.set(source, start);
     },
+    $isJSIndexable: 1,
     $isJavaScriptIndexingBehavior: 1
   };
   A.NativeTypedArrayOfDouble.prototype = {
@@ -10227,15 +11424,13 @@
     get$runtimeType(receiver) {
       return B.Type_Float32List_9Kz;
     },
-    $isTrustedGetRuntimeType: 1,
-    $isFloat32List: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeFloat64List.prototype = {
     get$runtimeType(receiver) {
       return B.Type_Float64List_9Kz;
     },
-    $isTrustedGetRuntimeType: 1,
-    $isFloat64List: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeInt16List.prototype = {
     get$runtimeType(receiver) {
@@ -10245,8 +11440,7 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isTrustedGetRuntimeType: 1,
-    $isInt16List: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeInt32List.prototype = {
     get$runtimeType(receiver) {
@@ -10256,8 +11450,7 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isTrustedGetRuntimeType: 1,
-    $isInt32List: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeInt8List.prototype = {
     get$runtimeType(receiver) {
@@ -10267,8 +11460,7 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isTrustedGetRuntimeType: 1,
-    $isInt8List: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeUint16List.prototype = {
     get$runtimeType(receiver) {
@@ -10278,8 +11470,7 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isTrustedGetRuntimeType: 1,
-    $isUint16List: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeUint32List.prototype = {
     get$runtimeType(receiver) {
@@ -10306,8 +11497,7 @@
       A._checkValidIndex(index, receiver, receiver.length);
       return receiver[index];
     },
-    $isTrustedGetRuntimeType: 1,
-    $isUint8ClampedList: 1
+    $isTrustedGetRuntimeType: 1
   };
   A.NativeUint8List.prototype = {
     get$runtimeType(receiver) {
@@ -10358,7 +11548,7 @@
       t1.storedCallback = null;
       f.call$0();
     },
-    $signature: 2
+    $signature: 4
   };
   A._AsyncRun__initializeScheduleImmediate_closure.prototype = {
     call$1(callback) {
@@ -10368,7 +11558,7 @@
       t2 = this.span;
       t1.firstChild ? t1.removeChild(t2) : t1.appendChild(t2);
     },
-    $signature: 53
+    $signature: 83
   };
   A._AsyncRun__scheduleImmediateJsOverride_internalCallback.prototype = {
     call$0() {
@@ -10385,13 +11575,25 @@
   A._TimerImpl.prototype = {
     _TimerImpl$2(milliseconds, callback) {
       if (self.setTimeout != null)
-        self.setTimeout(A.convertDartClosureToJS(new A._TimerImpl_internalCallback(this, callback), 0), milliseconds);
+        this._handle = self.setTimeout(A.convertDartClosureToJS(new A._TimerImpl_internalCallback(this, callback), 0), milliseconds);
       else
         throw A.wrapException(A.UnsupportedError$("`setTimeout()` not found."));
+    },
+    cancel$0(_) {
+      var t1;
+      if (self.setTimeout != null) {
+        t1 = this._handle;
+        if (t1 == null)
+          return;
+        self.clearTimeout(t1);
+        this._handle = null;
+      } else
+        throw A.wrapException(A.UnsupportedError$("Canceling a timer."));
     }
   };
   A._TimerImpl_internalCallback.prototype = {
     call$0() {
+      this.$this._handle = null;
       this.callback.call$0();
     },
     $signature: 0
@@ -10426,19 +11628,19 @@
     call$1(result) {
       return this.bodyFunction.call$2(0, result);
     },
-    $signature: 6
+    $signature: 10
   };
   A._awaitOnObject_closure0.prototype = {
     call$2(error, stackTrace) {
       this.bodyFunction.call$2(1, new A.ExceptionAndStackTrace(error, type$.StackTrace._as(stackTrace)));
     },
-    $signature: 62
+    $signature: 69
   };
   A._wrapJsFunctionForAsync_closure.prototype = {
     call$2(errorCode, result) {
       this.$protected(A._asInt(errorCode), result);
     },
-    $signature: 64
+    $signature: 76
   };
   A.AsyncError.prototype = {
     toString$0(_) {
@@ -10483,7 +11685,7 @@
       subscription.set$_async$_next(subscription);
     },
     _subscribe$4(onData, onError, onDone, cancelOnError) {
-      var t2, t3, t4, t5, t6, subscription, oldLast, _this = this,
+      var t2, t3, t4, t5, t6, t7, subscription, oldLast, _this = this,
         t1 = A._instanceType(_this);
       t1._eval$1("~(1)?")._as(onData);
       type$.nullable_void_Function._as(onDone);
@@ -10492,11 +11694,11 @@
       t2 = $.Zone__current;
       t3 = cancelOnError ? 1 : 0;
       t4 = onError != null ? 32 : 0;
-      type$.$env_1_1_void._bind$1(t1._precomputed1)._eval$1("1(2)")._as(onData);
-      t5 = A._BufferingStreamSubscription__registerErrorHandler(t2, onError);
-      t6 = onDone == null ? A.async___nullDoneHandler$closure() : onDone;
+      t5 = A._BufferingStreamSubscription__registerDataHandler(t2, onData, t1._precomputed1);
+      t6 = A._BufferingStreamSubscription__registerErrorHandler(t2, onError);
+      t7 = onDone == null ? A.async___nullDoneHandler$closure() : onDone;
       t1 = t1._eval$1("_BroadcastSubscription<1>");
-      subscription = new A._BroadcastSubscription(_this, onData, t5, type$.void_Function._as(t6), t2, t3 | t4, t1);
+      subscription = new A._BroadcastSubscription(_this, t5, t6, type$.void_Function._as(t7), t2, t3 | t4, t1);
       subscription._async$_previous = subscription;
       subscription._async$_next = subscription;
       t1._as(subscription);
@@ -10547,6 +11749,13 @@
         throw A.wrapException(_this._addEventError$0());
       _this._sendData$1(data);
     },
+    addError$2(error, stackTrace) {
+      var _0_0;
+      if (!this.get$_mayAddEvent())
+        throw A.wrapException(this._addEventError$0());
+      _0_0 = A._interceptUserError(error, stackTrace);
+      this._sendError$2(_0_0.error, _0_0.stackTrace);
+    },
     close$0(_) {
       var t1, doneFuture, _this = this;
       if ((_this._state & 4) !== 0) {
@@ -10571,10 +11780,12 @@
       }
       A._runGuarded(this.onCancel);
     },
+    $isEventSink: 1,
     $isStreamController: 1,
     $is_StreamControllerLifecycle: 1,
     $is_EventSink: 1,
-    $is_EventDispatch: 1
+    $is_EventDispatch: 1,
+    $isSink: 1
   };
   A._AsyncBroadcastStreamController.prototype = {
     _sendData$1(data) {
@@ -10584,6 +11795,11 @@
       for (subscription = this._firstSubscription, t1 = t1._eval$1("_DelayedData<1>"); subscription != null; subscription = subscription._async$_next)
         subscription._addPending$1(new A._DelayedData(data, t1));
     },
+    _sendError$2(error, stackTrace) {
+      var subscription;
+      for (subscription = this._firstSubscription; subscription != null; subscription = subscription._async$_next)
+        subscription._addPending$1(new A._DelayedError(error, stackTrace));
+    },
     _sendDone$0() {
       var subscription = this._firstSubscription;
       if (subscription != null)
@@ -10592,6 +11808,25 @@
       else
         this._doneFuture._asyncComplete$1(null);
     }
+  };
+  A.Future_Future_closure.prototype = {
+    call$0() {
+      var e, s, exception, t1, t2, t3, computationResult = null;
+      try {
+        computationResult = this.computation.call$0();
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        t1 = e;
+        t2 = s;
+        t3 = A._interceptError(t1, t2);
+        t1 = new A.AsyncError(t1, t2);
+        this.result._completeErrorObject$1(t1);
+        return;
+      }
+      this.result._complete$1(computationResult);
+    },
+    $signature: 0
   };
   A.Future_Future$delayed_closure.prototype = {
     call$0() {
@@ -10619,10 +11854,64 @@
     },
     $signature: 0
   };
+  A.Future_wait_handleError.prototype = {
+    call$2(theError, theStackTrace) {
+      var t1, t2, _this = this;
+      A._asObject(theError);
+      type$.StackTrace._as(theStackTrace);
+      t1 = _this._box_0;
+      t2 = --t1.remaining;
+      if (t1.values != null) {
+        t1.values = null;
+        t1.error = theError;
+        t1.stackTrace = theStackTrace;
+        if (t2 === 0 || _this.eagerError)
+          _this._future._completeErrorObject$1(new A.AsyncError(theError, theStackTrace));
+      } else if (t2 === 0 && !_this.eagerError) {
+        t2 = t1.error;
+        t2.toString;
+        t1 = t1.stackTrace;
+        t1.toString;
+        _this._future._completeErrorObject$1(new A.AsyncError(t2, t1));
+      }
+    },
+    $signature: 5
+  };
+  A.Future_wait_closure.prototype = {
+    call$1(value) {
+      var remainingResults, valueList, t1, value0, t3, t4, _i, t5, _this = this,
+        t2 = _this.T;
+      t2._as(value);
+      t3 = _this._box_0;
+      remainingResults = --t3.remaining;
+      valueList = t3.values;
+      if (valueList != null) {
+        J.$indexSet$ax(valueList, _this.pos, value);
+        if (J.$eq$(remainingResults, 0)) {
+          t1 = A._setArrayType([], t2._eval$1("JSArray<0>"));
+          for (t3 = valueList, t4 = t3.length, _i = 0; _i < t3.length; t3.length === t4 || (0, A.throwConcurrentModificationError)(t3), ++_i) {
+            value0 = t3[_i];
+            t5 = value0;
+            if (t5 == null)
+              t5 = t2._as(t5);
+            J.add$1$ax(t1, t5);
+          }
+          _this._future._completeWithValue$1(t1);
+        }
+      } else if (J.$eq$(remainingResults, 0) && !_this.eagerError) {
+        t1 = t3.error;
+        t1.toString;
+        t3 = t3.stackTrace;
+        t3.toString;
+        _this._future._completeErrorObject$1(new A.AsyncError(t1, t3));
+      }
+    },
+    $signature() {
+      return this.T._eval$1("Null(0)");
+    }
+  };
   A._Completer.prototype = {
     completeError$2(error, stackTrace) {
-      A._asObject(error);
-      type$.nullable_StackTrace._as(stackTrace);
       if ((this.future._state & 30) !== 0)
         throw A.wrapException(A.StateError$("Future already completed"));
       this._completeErrorObject$1(A._interceptUserError(error, stackTrace));
@@ -10699,9 +11988,6 @@
       this._addListener$1(new A._FutureListener(result, t2, f, onError, t1._eval$1("@<1>")._bind$1($R)._eval$1("_FutureListener<1,2>")));
       return result;
     },
-    then$1(f) {
-      return this.then$1$2$onError(f, null, type$.dynamic);
-    },
     then$1$1(f, $R) {
       return this.then$1$2$onError(f, null, $R);
     },
@@ -10712,6 +11998,17 @@
       result = new A._Future($.Zone__current, $E._eval$1("_Future<0>"));
       this._addListener$1(new A._FutureListener(result, 19, f, onError, t1._eval$1("@<1>")._bind$1($E)._eval$1("_FutureListener<1,2>")));
       return result;
+    },
+    _ignore$0() {
+      var t1, source, t2;
+      if (((this._state |= 1) & 4) !== 0) {
+        t1 = type$._Future_dynamic;
+        source = this;
+        do
+          source = t1._as(source._resultOrListeners);
+        while (t2 = source._state, (t2 & 4) !== 0);
+        source._state = t2 | 1;
+      }
     },
     catchError$1(onError) {
       var t1 = this.$ti,
@@ -10944,7 +12241,7 @@
     call$1(__wc0_formal) {
       this.joinedResult._completeWithResultOf$1(this.originalSource);
     },
-    $signature: 2
+    $signature: 4
   };
   A._Future__propagateToListeners_handleWhenCompleteCallback_closure0.prototype = {
     call$2(e, s) {
@@ -10952,7 +12249,7 @@
       type$.StackTrace._as(s);
       this.joinedResult._completeErrorObject$1(new A.AsyncError(e, s));
     },
-    $signature: 60
+    $signature: 32
   };
   A._Future__propagateToListeners_handleValueCallback.prototype = {
     call$0() {
@@ -11018,7 +12315,122 @@
       t1.count = 0;
       this.listen$4$cancelOnError$onDone$onError(new A.Stream_length_closure(t1, this), true, new A.Stream_length_closure0(t1, future), future.get$_completeError());
       return future;
+    },
+    toList$0(_) {
+      var t1 = A._instanceType(this),
+        result = A._setArrayType([], t1._eval$1("JSArray<Stream.T>")),
+        future = new A._Future($.Zone__current, t1._eval$1("_Future<List<Stream.T>>"));
+      this.listen$4$cancelOnError$onDone$onError(new A.Stream_toList_closure(this, result), true, new A.Stream_toList_closure0(future, result), future.get$_completeError());
+      return future;
+    },
+    get$first(_) {
+      var future = new A._Future($.Zone__current, A._instanceType(this)._eval$1("_Future<Stream.T>")),
+        subscription = this.listen$4$cancelOnError$onDone$onError(null, true, new A.Stream_first_closure(future), future.get$_completeError());
+      subscription.onData$1(new A.Stream_first_closure0(this, subscription, future));
+      return future;
     }
+  };
+  A.Stream_Stream$fromIterable_closure.prototype = {
+    call$1(controller) {
+      var e, s, error, t2, exception, t3, zone, t1 = {};
+      this.T._eval$1("MultiStreamController<0>")._as(controller);
+      t1.iterator = null;
+      try {
+        t2 = this.elements;
+        t1.iterator = new J.ArrayIterator(t2, t2.length, A._arrayInstanceType(t2)._eval$1("ArrayIterator<1>"));
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        t1 = e;
+        t2 = s;
+        t3 = A._interceptError(t1, t2);
+        t1 = new A.AsyncError(t1, t2 == null ? A.AsyncError_defaultStackTrace(t1) : t2);
+        error = t1;
+        controller.addError$2(error.error, error.stackTrace);
+        controller.close$0(0);
+        return;
+      }
+      zone = $.Zone__current;
+      t1.isScheduled = true;
+      t2 = new A.Stream_Stream$fromIterable_closure_next(t1, controller, zone);
+      controller.set$onResume(0, new A.Stream_Stream$fromIterable__closure(t1, zone, t2));
+      A._rootScheduleMicrotask(null, null, zone, type$.void_Function._as(t2));
+    },
+    $signature() {
+      return this.T._eval$1("~(MultiStreamController<0>)");
+    }
+  };
+  A.Stream_Stream$fromIterable_closure_next.prototype = {
+    call$0() {
+      var hasNext, e, s, error, e0, s0, error0, t2, exception, t3, t4, _this = this,
+        t1 = _this.controller;
+      if ((t1._state & 1) !== 0)
+        t2 = (t1.get$_subscription()._state & 4) !== 0;
+      else
+        t2 = true;
+      if (t2) {
+        _this._box_0.isScheduled = false;
+        return;
+      }
+      hasNext = null;
+      try {
+        hasNext = _this._box_0.iterator.moveNext$0();
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        t2 = e;
+        t3 = s;
+        t4 = A._interceptError(t2, t3);
+        t2 = new A.AsyncError(t2, t3 == null ? A.AsyncError_defaultStackTrace(t2) : t3);
+        error = t2;
+        t1.addErrorSync$2(error.error, error.stackTrace);
+        t1.closeSync$0();
+        return;
+      }
+      if (hasNext) {
+        try {
+          t2 = _this._box_0.iterator;
+          t3 = t2._current;
+          t2 = t3 == null ? t2.$ti._precomputed1._as(t3) : t3;
+          t1.$ti._precomputed1._as(t2);
+          t3 = t1._state;
+          if (t3 >= 4)
+            A.throwExpression(t1._badEventState$0());
+          if ((t3 & 1) !== 0)
+            t1.get$_subscription()._add$1(0, t2);
+        } catch (exception) {
+          e0 = A.unwrapException(exception);
+          s0 = A.getTraceFromException(exception);
+          t2 = e0;
+          t3 = s0;
+          t4 = A._interceptError(t2, t3);
+          t2 = new A.AsyncError(t2, t3 == null ? A.AsyncError_defaultStackTrace(t2) : t3);
+          error0 = t2;
+          t1.addErrorSync$2(error0.error, error0.stackTrace);
+        }
+        if ((t1._state & 1) !== 0) {
+          t1 = t1.get$_subscription()._state;
+          t1 = (t1 & 4) === 0;
+        } else
+          t1 = false;
+        if (t1)
+          A._rootScheduleMicrotask(null, null, _this.zone, type$.void_Function._as(_this));
+        else
+          _this._box_0.isScheduled = false;
+      } else
+        t1.closeSync$0();
+    },
+    $signature: 0
+  };
+  A.Stream_Stream$fromIterable__closure.prototype = {
+    call$0() {
+      var t1 = this._box_0;
+      if (!t1.isScheduled) {
+        t1.isScheduled = true;
+        A._rootScheduleMicrotask(null, null, this.zone, type$.void_Function._as(this.next));
+      }
+    },
+    $signature: 0
   };
   A.Stream_length_closure.prototype = {
     call$1(__wc0_formal) {
@@ -11035,14 +12447,41 @@
     },
     $signature: 0
   };
-  A.StreamView.prototype = {
-    listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
-      return this._stream.listen$4$cancelOnError$onDone$onError(A._instanceType(this)._eval$1("~(StreamView.T)?")._as(onData), cancelOnError, type$.nullable_void_Function._as(onDone), onError);
+  A.Stream_toList_closure.prototype = {
+    call$1(data) {
+      B.JSArray_methods.add$1(this.result, A._instanceType(this.$this)._eval$1("Stream.T")._as(data));
     },
-    listen$3$onDone$onError(onData, onDone, onError) {
-      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    $signature() {
+      return A._instanceType(this.$this)._eval$1("~(Stream.T)");
     }
   };
+  A.Stream_toList_closure0.prototype = {
+    call$0() {
+      this.future._complete$1(this.result);
+    },
+    $signature: 0
+  };
+  A.Stream_first_closure.prototype = {
+    call$0() {
+      var t1,
+        stack = A.StackTrace_current(),
+        error = new A.StateError("No element");
+      A.Primitives_trySetStackTrace(error, stack);
+      t1 = A._interceptError(error, stack);
+      t1 = new A.AsyncError(error, stack);
+      this.future._completeErrorObject$1(t1);
+    },
+    $signature: 0
+  };
+  A.Stream_first_closure0.prototype = {
+    call$1(value) {
+      A._cancelAndValue(this.subscription, this.future, A._instanceType(this.$this)._eval$1("Stream.T")._as(value));
+    },
+    $signature() {
+      return A._instanceType(this.$this)._eval$1("~(Stream.T)");
+    }
+  };
+  A.StreamTransformerBase.prototype = {$isStreamTransformer: 1};
   A._StreamController.prototype = {
     get$_pendingEvents() {
       var t1, _this = this;
@@ -11080,6 +12519,26 @@
         t1 = this._doneFuture = (this._state & 2) !== 0 ? $.$get$Future__nullFuture() : new A._Future($.Zone__current, type$._Future_void);
       return t1;
     },
+    add$1(_, value) {
+      var _this = this;
+      A._instanceType(_this)._precomputed1._as(value);
+      if (_this._state >= 4)
+        throw A.wrapException(_this._badEventState$0());
+      _this._add$1(0, value);
+    },
+    addError$2(error, stackTrace) {
+      var _0_0, t1, _this = this;
+      if (_this._state >= 4)
+        throw A.wrapException(_this._badEventState$0());
+      _0_0 = A._interceptUserError(error, stackTrace);
+      error = _0_0.error;
+      stackTrace = _0_0.stackTrace;
+      t1 = _this._state;
+      if ((t1 & 1) !== 0)
+        _this._sendError$2(error, stackTrace);
+      else if ((t1 & 3) === 0)
+        _this._ensurePendingEvents$0().add$1(0, new A._DelayedError(error, stackTrace));
+    },
     close$0(_) {
       var _this = this,
         t1 = _this._state;
@@ -11093,7 +12552,7 @@
     _closeUnchecked$0() {
       var t1 = this._state |= 4;
       if ((t1 & 1) !== 0)
-        this.get$_subscription()._addPending$1(B.C__DelayedDone);
+        this._sendDone$0();
       else if ((t1 & 3) === 0)
         this._ensurePendingEvents$0().add$1(0, B.C__DelayedDone);
     },
@@ -11102,10 +12561,9 @@
         t1 = A._instanceType(_this);
       t1._precomputed1._as(value);
       t2 = _this._state;
-      if ((t2 & 1) !== 0) {
-        t1._precomputed1._as(value);
-        _this.get$_subscription()._addPending$1(new A._DelayedData(value, t1._eval$1("_DelayedData<1>")));
-      } else if ((t2 & 3) === 0)
+      if ((t2 & 1) !== 0)
+        _this._sendData$1(value);
+      else if ((t2 & 3) === 0)
         _this._ensurePendingEvents$0().add$1(0, new A._DelayedData(value, t1._eval$1("_DelayedData<1>")));
     },
     _subscribe$4(onData, onError, onDone, cancelOnError) {
@@ -11183,13 +12641,12 @@
     set$onResume(_, onResume) {
       this.onResume = type$.nullable_void_Function._as(onResume);
     },
-    set$onCancel(_, onCancel) {
-      this.onCancel = type$.nullable_void_Function._as(onCancel);
-    },
+    $isEventSink: 1,
     $isStreamController: 1,
     $is_StreamControllerLifecycle: 1,
     $is_EventSink: 1,
-    $is_EventDispatch: 1
+    $is_EventDispatch: 1,
+    $isSink: 1
   };
   A._StreamController__subscribe_closure.prototype = {
     call$0() {
@@ -11205,7 +12662,19 @@
     },
     $signature: 0
   };
-  A._AsyncStreamControllerDispatch.prototype = {};
+  A._AsyncStreamControllerDispatch.prototype = {
+    _sendData$1(data) {
+      var t1 = A._instanceType(this);
+      t1._precomputed1._as(data);
+      this.get$_subscription()._addPending$1(new A._DelayedData(data, t1._eval$1("_DelayedData<1>")));
+    },
+    _sendError$2(error, stackTrace) {
+      this.get$_subscription()._addPending$1(new A._DelayedError(error, stackTrace));
+    },
+    _sendDone$0() {
+      this.get$_subscription()._addPending$1(B.C__DelayedDone);
+    }
+  };
   A._AsyncStreamController.prototype = {};
   A._ControllerStream.prototype = {
     get$hashCode(_) {
@@ -11242,7 +12711,20 @@
         pendingEvents.schedule$1(_this);
       }
     },
-    pause$0(_) {
+    onData$1(handleData) {
+      var t1 = A._instanceType(this);
+      this._async$_onData = A._BufferingStreamSubscription__registerDataHandler(this._zone, t1._eval$1("~(_BufferingStreamSubscription.T)?")._as(handleData), t1._eval$1("_BufferingStreamSubscription.T"));
+    },
+    onError$1(_, handleError) {
+      var _this = this,
+        t1 = _this._state;
+      if (handleError == null)
+        _this._state = (t1 & 4294967263) >>> 0;
+      else
+        _this._state = (t1 | 32) >>> 0;
+      _this._onError = A._BufferingStreamSubscription__registerErrorHandler(_this._zone, handleError);
+    },
+    pause$1(_, resumeSignal) {
       var t2, t3, _this = this,
         t1 = _this._state;
       if ((t1 & 8) !== 0)
@@ -11257,6 +12739,9 @@
       }
       if ((t1 & 4) === 0 && (t2 & 64) === 0)
         _this._guardCallback$1(_this.get$_onPause());
+    },
+    pause$0(_) {
+      return this.pause$1(0, null);
     },
     resume$0(_) {
       var _this = this,
@@ -11480,11 +12965,14 @@
       type$.nullable_void_Function._as(onDone);
       return this._controller._subscribe$4(t1._eval$1("~(1)?")._as(onData), onError, onDone, cancelOnError === true);
     },
+    listen$3$onDone$onError(onData, onDone, onError) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    },
     listen$1(onData) {
       return this.listen$4$cancelOnError$onDone$onError(onData, null, null, null);
     },
-    listen$3$onDone$onError(onData, onDone, onError) {
-      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
     },
     listen$3$cancelOnError$onError(onData, cancelOnError, onError) {
       return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, null, onError);
@@ -11564,10 +13052,18 @@
     $signature: 0
   };
   A._DoneStreamSubscription.prototype = {
-    pause$0(_) {
+    onData$1(handleData) {
+      this.$ti._eval$1("~(1)?")._as(handleData);
+    },
+    onError$1(_, handleError) {
+    },
+    pause$1(_, resumeSignal) {
       var t1 = this._state;
       if (t1 >= 0)
         this._state = t1 + 2;
+    },
+    pause$0(_) {
+      return this.pause$1(0, null);
     },
     resume$0(_) {
       var _this = this,
@@ -11600,15 +13096,93 @@
     },
     $isStreamSubscription: 1
   };
-  A._StreamIterator.prototype = {};
-  A._EmptyStream.prototype = {
-    listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
-      var t1 = this.$ti;
-      t1._eval$1("~(1)?")._as(onData);
-      return A._DoneStreamSubscription$(type$.nullable_void_Function._as(onDone), t1._precomputed1);
+  A._StreamIterator.prototype = {
+    get$current(_) {
+      var _this = this;
+      if (_this._async$_hasValue)
+        return _this.$ti._precomputed1._as(_this._stateData);
+      return _this.$ti._precomputed1._as(null);
     },
-    listen$3$onDone$onError(onData, onDone, onError) {
-      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    moveNext$0() {
+      var future, _this = this,
+        subscription = _this._subscription;
+      if (subscription != null) {
+        if (_this._async$_hasValue) {
+          future = new A._Future($.Zone__current, type$._Future_bool);
+          _this._stateData = future;
+          _this._async$_hasValue = false;
+          subscription.resume$0(0);
+          return future;
+        }
+        throw A.wrapException(A.StateError$("Already waiting for next."));
+      }
+      return _this._initializeOrDone$0();
+    },
+    _initializeOrDone$0() {
+      var future, subscription, _this = this,
+        stateData = _this._stateData;
+      if (stateData != null) {
+        _this.$ti._eval$1("Stream<1>")._as(stateData);
+        future = new A._Future($.Zone__current, type$._Future_bool);
+        _this._stateData = future;
+        subscription = stateData.listen$4$cancelOnError$onDone$onError(_this.get$_async$_onData(), true, _this.get$_onDone(), _this.get$_onError());
+        if (_this._stateData != null)
+          _this._subscription = subscription;
+        return future;
+      }
+      return $.$get$Future__falseFuture();
+    },
+    cancel$0(_) {
+      var _this = this,
+        subscription = _this._subscription,
+        stateData = _this._stateData;
+      _this._stateData = null;
+      if (subscription != null) {
+        _this._subscription = null;
+        if (!_this._async$_hasValue)
+          type$._Future_bool._as(stateData)._asyncComplete$1(false);
+        else
+          _this._async$_hasValue = false;
+        return subscription.cancel$0(0);
+      }
+      return $.$get$Future__nullFuture();
+    },
+    _async$_onData$1(data) {
+      var moveNextFuture, t1, _this = this;
+      _this.$ti._precomputed1._as(data);
+      if (_this._subscription == null)
+        return;
+      moveNextFuture = type$._Future_bool._as(_this._stateData);
+      _this._stateData = data;
+      _this._async$_hasValue = true;
+      moveNextFuture._complete$1(true);
+      if (_this._async$_hasValue) {
+        t1 = _this._subscription;
+        if (t1 != null)
+          t1.pause$0(0);
+      }
+    },
+    _onError$2(error, stackTrace) {
+      var subscription, moveNextFuture, _this = this;
+      A._asObject(error);
+      type$.StackTrace._as(stackTrace);
+      subscription = _this._subscription;
+      moveNextFuture = type$._Future_bool._as(_this._stateData);
+      _this._stateData = _this._subscription = null;
+      if (subscription != null)
+        moveNextFuture._completeErrorObject$1(new A.AsyncError(error, stackTrace));
+      else
+        moveNextFuture._asyncCompleteErrorObject$1(new A.AsyncError(error, stackTrace));
+    },
+    _onDone$0() {
+      var _this = this,
+        subscription = _this._subscription,
+        moveNextFuture = type$._Future_bool._as(_this._stateData);
+      _this._stateData = _this._subscription = null;
+      if (subscription != null)
+        moveNextFuture._completeWithValue$1(false);
+      else
+        moveNextFuture._asyncCompleteWithValue$1(false);
     }
   };
   A._MultiStream.prototype = {
@@ -11623,6 +13197,9 @@
     },
     listen$3$onDone$onError(onData, onDone, onError) {
       return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    },
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
     }
   };
   A._MultiStream_listen_closure.prototype = {
@@ -11632,6 +13209,15 @@
     $signature: 0
   };
   A._MultiStreamController.prototype = {
+    addErrorSync$2(error, stackTrace) {
+      var t1 = this._state;
+      if (t1 >= 4)
+        throw A.wrapException(this._badEventState$0());
+      if ((t1 & 1) !== 0) {
+        t1 = this.get$_subscription();
+        t1._addError$2(error, stackTrace);
+      }
+    },
     closeSync$0() {
       var _this = this,
         t1 = _this._state;
@@ -11646,27 +13232,36 @@
     },
     $isMultiStreamController: 1
   };
+  A._cancelAndValue_closure.prototype = {
+    call$0() {
+      return this.future._complete$1(this.value);
+    },
+    $signature: 0
+  };
   A._ForwardingStream.prototype = {
     listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
-      var t2, t3, t4, t5, t6,
+      var t2, t3, t4, t5, t6, t7,
         t1 = this.$ti;
       t1._eval$1("~(_ForwardingStream.T)?")._as(onData);
       type$.nullable_void_Function._as(onDone);
       t2 = $.Zone__current;
       t3 = cancelOnError === true ? 1 : 0;
       t4 = onError != null ? 32 : 0;
-      type$.$env_1_1_void._bind$1(t1._eval$1("_ForwardingStream.T"))._eval$1("1(2)")._as(onData);
-      t5 = A._BufferingStreamSubscription__registerErrorHandler(t2, onError);
-      t6 = onDone == null ? A.async___nullDoneHandler$closure() : onDone;
-      t1 = new A._ForwardingStreamSubscription(this, onData, t5, type$.void_Function._as(t6), t2, t3 | t4, t1._eval$1("_ForwardingStreamSubscription<_ForwardingStream.S,_ForwardingStream.T>"));
-      t1._subscription = this._async$_source.listen$3$onDone$onError(t1.get$_handleData(), t1.get$_handleDone(), t1.get$_handleError());
+      t5 = A._BufferingStreamSubscription__registerDataHandler(t2, onData, t1._eval$1("_ForwardingStream.T"));
+      t6 = A._BufferingStreamSubscription__registerErrorHandler(t2, onError);
+      t7 = onDone == null ? A.async___nullDoneHandler$closure() : onDone;
+      t1 = new A._ForwardingStreamSubscription(this, t5, t6, type$.void_Function._as(t7), t2, t3 | t4, t1._eval$1("_ForwardingStreamSubscription<_ForwardingStream.S,_ForwardingStream.T>"));
+      t1._subscription = this._source.listen$3$onDone$onError(t1.get$_handleData(), t1.get$_handleDone(), t1.get$_handleError());
       return t1;
+    },
+    listen$3$onDone$onError(onData, onDone, onError) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
     },
     listen$1(onData) {
       return this.listen$4$cancelOnError$onDone$onError(onData, null, null, null);
     },
-    listen$3$onDone$onError(onData, onDone, onError) {
-      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
     }
   };
   A._ForwardingStreamSubscription.prototype = {
@@ -11732,6 +13327,183 @@
       }
       if (satisfies)
         sink._add$1(0, inputEvent);
+    }
+  };
+  A._EventSinkWrapper.prototype = {
+    add$1(_, data) {
+      var t1 = this._async$_sink;
+      data = t1.$ti._rest[1]._as(this.$ti._precomputed1._as(data));
+      if ((t1._state & 2) !== 0)
+        A.throwExpression(A.StateError$("Stream is already closed"));
+      t1.super$_BufferingStreamSubscription$_add(0, data);
+    },
+    addError$2(error, stackTrace) {
+      var t1 = this._async$_sink,
+        t2 = stackTrace == null ? A.AsyncError_defaultStackTrace(error) : stackTrace;
+      if ((t1._state & 2) !== 0)
+        A.throwExpression(A.StateError$("Stream is already closed"));
+      t1.super$_BufferingStreamSubscription$_addError(error, t2);
+    },
+    close$0(_) {
+      var t1 = this._async$_sink;
+      if ((t1._state & 2) !== 0)
+        A.throwExpression(A.StateError$("Stream is already closed"));
+      t1.super$_BufferingStreamSubscription$_close();
+    },
+    $isEventSink: 1,
+    $isSink: 1
+  };
+  A._SinkTransformerStreamSubscription.prototype = {
+    _onPause$0() {
+      var t1 = this._subscription;
+      if (t1 != null)
+        t1.pause$0(0);
+    },
+    _onResume$0() {
+      var t1 = this._subscription;
+      if (t1 != null)
+        t1.resume$0(0);
+    },
+    _onCancel$0() {
+      var subscription = this._subscription;
+      if (subscription != null) {
+        this._subscription = null;
+        return subscription.cancel$0(0);
+      }
+      return null;
+    },
+    _handleData$1(data) {
+      var e, s, t1, exception, t2, _this = this;
+      _this.$ti._precomputed1._as(data);
+      try {
+        t1 = _this.___SinkTransformerStreamSubscription__transformerSink_A;
+        t1 === $ && A.throwLateFieldNI("_transformerSink");
+        t1.add$1(0, data);
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        t1 = A._asObject(e);
+        t2 = type$.StackTrace._as(s);
+        if ((_this._state & 2) !== 0)
+          A.throwExpression(A.StateError$("Stream is already closed"));
+        _this.super$_BufferingStreamSubscription$_addError(t1, t2);
+      }
+    },
+    _handleError$2(error, stackTrace) {
+      var e, s, t1, t2, exception, _this = this,
+        _s24_ = "Stream is already closed";
+      A._asObject(error);
+      t1 = type$.StackTrace;
+      t1._as(stackTrace);
+      try {
+        t2 = _this.___SinkTransformerStreamSubscription__transformerSink_A;
+        t2 === $ && A.throwLateFieldNI("_transformerSink");
+        t2.addError$2(error, stackTrace);
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        if (e === error) {
+          if ((_this._state & 2) !== 0)
+            A.throwExpression(A.StateError$(_s24_));
+          _this.super$_BufferingStreamSubscription$_addError(error, stackTrace);
+        } else {
+          t2 = A._asObject(e);
+          t1 = t1._as(s);
+          if ((_this._state & 2) !== 0)
+            A.throwExpression(A.StateError$(_s24_));
+          _this.super$_BufferingStreamSubscription$_addError(t2, t1);
+        }
+      }
+    },
+    _handleDone$0() {
+      var e, s, t1, exception, t2, _this = this;
+      try {
+        _this._subscription = null;
+        t1 = _this.___SinkTransformerStreamSubscription__transformerSink_A;
+        t1 === $ && A.throwLateFieldNI("_transformerSink");
+        t1.close$0(0);
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        t1 = A._asObject(e);
+        t2 = type$.StackTrace._as(s);
+        if ((_this._state & 2) !== 0)
+          A.throwExpression(A.StateError$("Stream is already closed"));
+        _this.super$_BufferingStreamSubscription$_addError(t1, t2);
+      }
+    }
+  };
+  A._StreamSinkTransformer.prototype = {
+    bind$1(stream) {
+      var t1 = this.$ti;
+      return new A._BoundSinkStream(this._sinkMapper, t1._eval$1("Stream<1>")._as(stream), t1._eval$1("_BoundSinkStream<1,2>"));
+    }
+  };
+  A._BoundSinkStream.prototype = {
+    listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
+      var t2, t3, t4, t5, t6, subscription,
+        t1 = this.$ti;
+      t1._eval$1("~(2)?")._as(onData);
+      type$.nullable_void_Function._as(onDone);
+      t2 = $.Zone__current;
+      t3 = cancelOnError === true ? 1 : 0;
+      t4 = onError != null ? 32 : 0;
+      t5 = A._BufferingStreamSubscription__registerDataHandler(t2, onData, t1._rest[1]);
+      t6 = A._BufferingStreamSubscription__registerErrorHandler(t2, onError);
+      subscription = new A._SinkTransformerStreamSubscription(t5, t6, type$.void_Function._as(onDone), t2, t3 | t4, t1._eval$1("_SinkTransformerStreamSubscription<1,2>"));
+      subscription.___SinkTransformerStreamSubscription__transformerSink_A = t1._eval$1("EventSink<1>")._as(this._sinkMapper.call$1(new A._EventSinkWrapper(subscription, t1._eval$1("_EventSinkWrapper<2>"))));
+      subscription._subscription = this._stream.listen$3$onDone$onError(subscription.get$_handleData(), subscription.get$_handleDone(), subscription.get$_handleError());
+      return subscription;
+    },
+    listen$3$onDone$onError(onData, onDone, onError) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    },
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
+    }
+  };
+  A._HandlerEventSink.prototype = {
+    add$1(_, data) {
+      var sink;
+      this.$ti._precomputed1._as(data);
+      sink = this._async$_sink;
+      if (sink == null)
+        throw A.wrapException(A.StateError$("Sink is closed"));
+      this._handleData.call$2(data, sink);
+    },
+    addError$2(error, stackTrace) {
+      var sink = this._async$_sink;
+      if (sink == null)
+        throw A.wrapException(A.StateError$("Sink is closed"));
+      sink.addError$2(error, stackTrace);
+    },
+    close$0(_) {
+      var t1,
+        sink = this._async$_sink;
+      if (sink == null)
+        return;
+      this._async$_sink = null;
+      t1 = sink._async$_sink;
+      if ((t1._state & 2) !== 0)
+        A.throwExpression(A.StateError$("Stream is already closed"));
+      t1.super$_BufferingStreamSubscription$_close();
+    },
+    $isEventSink: 1,
+    $isSink: 1
+  };
+  A._StreamHandlerTransformer.prototype = {
+    bind$1(stream) {
+      return this.super$_StreamSinkTransformer$bind(this.$ti._eval$1("Stream<1>")._as(stream));
+    }
+  };
+  A._StreamHandlerTransformer_closure.prototype = {
+    call$1(outputSink) {
+      var _this = this,
+        t1 = _this.T;
+      return new A._HandlerEventSink(_this.handleData, _this.handleError, _this.handleDone, t1._eval$1("EventSink<0>")._as(outputSink), _this.S._eval$1("@<0>")._bind$1(t1)._eval$1("_HandlerEventSink<1,2>"));
+    },
+    $signature() {
+      return this.S._eval$1("@<0>")._bind$1(this.T)._eval$1("_HandlerEventSink<1,2>(EventSink<2>)");
     }
   };
   A._Zone.prototype = {$isZone: 1};
@@ -11836,187 +13608,6 @@
       return this.T._eval$1("~(0)");
     }
   };
-  A._HashMap.prototype = {
-    get$length(_) {
-      return this._collection$_length;
-    },
-    get$isEmpty(_) {
-      return this._collection$_length === 0;
-    },
-    get$keys(_) {
-      return new A._HashMapKeyIterable(this, this.$ti._eval$1("_HashMapKeyIterable<1>"));
-    },
-    containsKey$1(_, key) {
-      var strings, nums;
-      if (typeof key == "string" && key !== "__proto__") {
-        strings = this._collection$_strings;
-        return strings == null ? false : strings[key] != null;
-      } else if (typeof key == "number" && (key & 1073741823) === key) {
-        nums = this._collection$_nums;
-        return nums == null ? false : nums[key] != null;
-      } else
-        return this._containsKey$1(key);
-    },
-    _containsKey$1(key) {
-      var rest = this._collection$_rest;
-      if (rest == null)
-        return false;
-      return this._findBucketIndex$2(this._getBucket$2(rest, key), key) >= 0;
-    },
-    $index(_, key) {
-      var strings, t1, nums;
-      if (typeof key == "string" && key !== "__proto__") {
-        strings = this._collection$_strings;
-        t1 = strings == null ? null : A._HashMap__getTableEntry(strings, key);
-        return t1;
-      } else if (typeof key == "number" && (key & 1073741823) === key) {
-        nums = this._collection$_nums;
-        t1 = nums == null ? null : A._HashMap__getTableEntry(nums, key);
-        return t1;
-      } else
-        return this._get$1(0, key);
-    },
-    _get$1(_, key) {
-      var bucket, index,
-        rest = this._collection$_rest;
-      if (rest == null)
-        return null;
-      bucket = this._getBucket$2(rest, key);
-      index = this._findBucketIndex$2(bucket, key);
-      return index < 0 ? null : bucket[index + 1];
-    },
-    $indexSet(_, key, value) {
-      var rest, hash, bucket, index, _this = this,
-        t1 = _this.$ti;
-      t1._precomputed1._as(key);
-      t1._rest[1]._as(value);
-      rest = _this._collection$_rest;
-      if (rest == null)
-        rest = _this._collection$_rest = A._HashMap__newHashTable();
-      hash = A.objectHashCode(key) & 1073741823;
-      bucket = rest[hash];
-      if (bucket == null) {
-        A._HashMap__setTableEntry(rest, hash, [key, value]);
-        ++_this._collection$_length;
-        _this._collection$_keys = null;
-      } else {
-        index = _this._findBucketIndex$2(bucket, key);
-        if (index >= 0)
-          bucket[index + 1] = value;
-        else {
-          bucket.push(key, value);
-          ++_this._collection$_length;
-          _this._collection$_keys = null;
-        }
-      }
-    },
-    forEach$1(_, action) {
-      var keys, $length, t2, i, key, t3, _this = this,
-        t1 = _this.$ti;
-      t1._eval$1("~(1,2)")._as(action);
-      keys = _this._computeKeys$0();
-      for ($length = keys.length, t2 = t1._precomputed1, t1 = t1._rest[1], i = 0; i < $length; ++i) {
-        key = keys[i];
-        t2._as(key);
-        t3 = _this.$index(0, key);
-        action.call$2(key, t3 == null ? t1._as(t3) : t3);
-        if (keys !== _this._collection$_keys)
-          throw A.wrapException(A.ConcurrentModificationError$(_this));
-      }
-    },
-    _computeKeys$0() {
-      var strings, index, names, entries, i, nums, rest, bucket, $length, i0, _this = this,
-        result = _this._collection$_keys;
-      if (result != null)
-        return result;
-      result = A.List_List$filled(_this._collection$_length, null, false, type$.dynamic);
-      strings = _this._collection$_strings;
-      index = 0;
-      if (strings != null) {
-        names = Object.getOwnPropertyNames(strings);
-        entries = names.length;
-        for (i = 0; i < entries; ++i) {
-          result[index] = names[i];
-          ++index;
-        }
-      }
-      nums = _this._collection$_nums;
-      if (nums != null) {
-        names = Object.getOwnPropertyNames(nums);
-        entries = names.length;
-        for (i = 0; i < entries; ++i) {
-          result[index] = +names[i];
-          ++index;
-        }
-      }
-      rest = _this._collection$_rest;
-      if (rest != null) {
-        names = Object.getOwnPropertyNames(rest);
-        entries = names.length;
-        for (i = 0; i < entries; ++i) {
-          bucket = rest[names[i]];
-          $length = bucket.length;
-          for (i0 = 0; i0 < $length; i0 += 2) {
-            result[index] = bucket[i0];
-            ++index;
-          }
-        }
-      }
-      return _this._collection$_keys = result;
-    },
-    _getBucket$2(table, key) {
-      return table[A.objectHashCode(key) & 1073741823];
-    }
-  };
-  A._IdentityHashMap.prototype = {
-    _findBucketIndex$2(bucket, key) {
-      var $length, i, t1;
-      if (bucket == null)
-        return -1;
-      $length = bucket.length;
-      for (i = 0; i < $length; i += 2) {
-        t1 = bucket[i];
-        if (t1 == null ? key == null : t1 === key)
-          return i;
-      }
-      return -1;
-    }
-  };
-  A._HashMapKeyIterable.prototype = {
-    get$length(_) {
-      return this._collection$_map._collection$_length;
-    },
-    get$isEmpty(_) {
-      return this._collection$_map._collection$_length === 0;
-    },
-    get$iterator(_) {
-      var t1 = this._collection$_map;
-      return new A._HashMapKeyIterator(t1, t1._computeKeys$0(), this.$ti._eval$1("_HashMapKeyIterator<1>"));
-    }
-  };
-  A._HashMapKeyIterator.prototype = {
-    get$current(_) {
-      var t1 = this._collection$_current;
-      return t1 == null ? this.$ti._precomputed1._as(t1) : t1;
-    },
-    moveNext$0() {
-      var _this = this,
-        keys = _this._collection$_keys,
-        offset = _this._offset,
-        t1 = _this._collection$_map;
-      if (keys !== t1._collection$_keys)
-        throw A.wrapException(A.ConcurrentModificationError$(t1));
-      else if (offset >= keys.length) {
-        _this._collection$_current = null;
-        return false;
-      } else {
-        _this._collection$_current = keys[offset];
-        _this._offset = offset + 1;
-        return true;
-      }
-    },
-    $isIterator: 1
-  };
   A._LinkedCustomHashMap.prototype = {
     $index(_, key) {
       if (!this._validKey.call$1(key))
@@ -12031,6 +13622,11 @@
       if (!this._validKey.call$1(key))
         return false;
       return this.super$JsLinkedHashMap$internalContainsKey(key);
+    },
+    remove$1(_, key) {
+      if (!this._validKey.call$1(key))
+        return null;
+      return this.super$JsLinkedHashMap$internalRemove(key);
     },
     internalComputeHashCode$1(key) {
       return this._hashCode.call$1(this.$ti._precomputed1._as(key)) & 1073741823;
@@ -12050,7 +13646,7 @@
     call$1(v) {
       return this.K._is(v);
     },
-    $signature: 56
+    $signature: 74
   };
   A._LinkedHashSet.prototype = {
     get$iterator(_) {
@@ -12123,8 +13719,13 @@
       return true;
     },
     remove$1(_, object) {
-      var t1 = this._remove$1(0, object);
-      return t1;
+      var _this = this;
+      if (typeof object == "string" && object !== "__proto__")
+        return _this._collection$_removeHashTableEntry$2(_this._collection$_strings, object);
+      else if (typeof object == "number" && (object & 1073741823) === object)
+        return _this._collection$_removeHashTableEntry$2(_this._collection$_nums, object);
+      else
+        return _this._remove$1(0, object);
     },
     _remove$1(_, object) {
       var hash, bucket, index, cell, _this = this,
@@ -12139,7 +13740,7 @@
       cell = bucket.splice(index, 1)[0];
       if (0 === bucket.length)
         delete rest[hash];
-      _this._unlinkCell$1(cell);
+      _this._collection$_unlinkCell$1(cell);
       return true;
     },
     _collection$_addHashTableEntry$2(table, element) {
@@ -12147,6 +13748,17 @@
       if (type$.nullable__LinkedHashSetCell._as(table[element]) != null)
         return false;
       table[element] = this._collection$_newLinkedCell$1(element);
+      return true;
+    },
+    _collection$_removeHashTableEntry$2(table, element) {
+      var cell;
+      if (table == null)
+        return false;
+      cell = type$.nullable__LinkedHashSetCell._as(table[element]);
+      if (cell == null)
+        return false;
+      this._collection$_unlinkCell$1(cell);
+      delete table[element];
       return true;
     },
     _collection$_modified$0() {
@@ -12167,7 +13779,7 @@
       _this._collection$_modified$0();
       return cell;
     },
-    _unlinkCell$1(cell) {
+    _collection$_unlinkCell$1(cell) {
       var _this = this,
         previous = cell._collection$_previous,
         next = cell._collection$_next;
@@ -12223,7 +13835,7 @@
     call$2(k, v) {
       this.result.$indexSet(0, this.K._as(k), this.V._as(v));
     },
-    $signature: 55
+    $signature: 21
   };
   A.ListBase.prototype = {
     get$iterator(receiver) {
@@ -12232,8 +13844,23 @@
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
     },
+    get$isEmpty(receiver) {
+      return this.get$length(receiver) === 0;
+    },
     get$isNotEmpty(receiver) {
       return this.get$length(receiver) !== 0;
+    },
+    get$first(receiver) {
+      if (this.get$length(receiver) === 0)
+        throw A.wrapException(A.IterableElementError_noElement());
+      return this.$index(receiver, 0);
+    },
+    join$1(receiver, separator) {
+      var t1;
+      if (this.get$length(receiver) === 0)
+        return "";
+      t1 = A.StringBuffer__writeAll("", receiver, separator);
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
     map$1$1(receiver, f, $T) {
       var t1 = A.instanceType(receiver);
@@ -12241,6 +13868,9 @@
     },
     skip$1(receiver, count) {
       return A.SubListIterable$(receiver, count, null, A.instanceType(receiver)._eval$1("ListBase.E"));
+    },
+    take$1(receiver, count) {
+      return A.SubListIterable$(receiver, 0, A.checkNotNullable(count, "count", type$.int), A.instanceType(receiver)._eval$1("ListBase.E"));
     },
     toList$1$growable(receiver, growable) {
       var t1, first, result, i, _this = this;
@@ -12264,10 +13894,28 @@
       this.set$length(receiver, t1 + 1);
       this.$indexSet(receiver, t1, element);
     },
+    addAll$1(receiver, iterable) {
+      var i, _i;
+      A.instanceType(receiver)._eval$1("Iterable<ListBase.E>")._as(iterable);
+      i = this.get$length(receiver);
+      for (_i = 0; false; ++_i) {
+        this.add$1(receiver, iterable[_i]);
+        ++i;
+      }
+    },
     sort$1(receiver, compare) {
       var t1 = A.instanceType(receiver);
       t1._eval$1("int(ListBase.E,ListBase.E)?")._as(compare);
       A.Sort__doSort(receiver, 0, this.get$length(receiver) - 1, compare, t1._eval$1("ListBase.E"));
+    },
+    sublist$2(receiver, start, end) {
+      var t1,
+        listLength = this.get$length(receiver);
+      A.RangeError_checkValidRange(start, end, listLength);
+      A.RangeError_checkValidRange(start, end, this.get$length(receiver));
+      t1 = A.instanceType(receiver)._eval$1("ListBase.E");
+      t1 = A.List_List$_of(A.SubListIterable$(receiver, start, end, t1), t1);
+      return t1;
     },
     fillRange$3(receiver, start, end, fill) {
       var i;
@@ -12319,6 +13967,22 @@
         action.call$2(key, t3 == null ? t1._as(t3) : t3);
       }
     },
+    map$2$1(receiver, transform, $K2, $V2) {
+      var result, t2, key, t3, entry,
+        t1 = A.instanceType(receiver);
+      t1._bind$1($K2)._bind$1($V2)._eval$1("MapEntry<1,2>(MapBase.K,MapBase.V)")._as(transform);
+      result = A.LinkedHashMap_LinkedHashMap$_empty($K2, $V2);
+      for (t2 = J.get$iterator$ax(this.get$keys(receiver)), t1 = t1._eval$1("MapBase.V"); t2.moveNext$0();) {
+        key = t2.get$current(t2);
+        t3 = this.$index(receiver, key);
+        entry = transform.call$2(key, t3 == null ? t1._as(t3) : t3);
+        result.$indexSet(0, entry.key, entry.value);
+      }
+      return result;
+    },
+    containsKey$1(receiver, key) {
+      return J.contains$1$asx(this.get$keys(receiver), key);
+    },
     get$length(receiver) {
       return J.get$length$asx(this.get$keys(receiver));
     },
@@ -12343,12 +14007,15 @@
       t2 = A.S(v);
       t1._contents += t2;
     },
-    $signature: 20
+    $signature: 22
   };
   A._UnmodifiableMapMixin.prototype = {};
   A.MapView.prototype = {
     $index(_, key) {
       return this._collection$_map.$index(0, key);
+    },
+    containsKey$1(_, key) {
+      return this._collection$_map.containsKey$1(0, key);
     },
     forEach$1(_, action) {
       this._collection$_map.forEach$1(0, A._instanceType(this)._eval$1("~(1,2)")._as(action));
@@ -12360,10 +14027,6 @@
     get$length(_) {
       var t1 = this._collection$_map;
       return t1.get$length(t1);
-    },
-    get$keys(_) {
-      var t1 = this._collection$_map;
-      return t1.get$keys(t1);
     },
     toString$0(_) {
       return this._collection$_map.toString$0(0);
@@ -12377,12 +14040,35 @@
       for (t1 = J.get$iterator$ax(A._instanceType(this)._eval$1("Iterable<1>")._as(elements)); t1.moveNext$0();)
         this.add$1(0, t1.get$current(t1));
     },
-    map$1$1(_, f, $T) {
-      var t1 = A._instanceType(this);
-      return new A.EfficientLengthMappedIterable(this, t1._bind$1($T)._eval$1("1(2)")._as(f), t1._eval$1("@<1>")._bind$1($T)._eval$1("EfficientLengthMappedIterable<1,2>"));
-    },
     toString$0(_) {
       return A.Iterable_iterableToFullString(this, "{", "}");
+    },
+    join$1(_, separator) {
+      var t1, first, t2, t3,
+        iterator = A._LinkedHashSetIterator$(this, this._collection$_modifications, A._instanceType(this)._precomputed1);
+      if (!iterator.moveNext$0())
+        return "";
+      t1 = iterator._collection$_current;
+      first = J.toString$0$(t1 == null ? iterator.$ti._precomputed1._as(t1) : t1);
+      if (!iterator.moveNext$0())
+        return first;
+      t1 = iterator.$ti._precomputed1;
+      if (separator.length === 0) {
+        t2 = first;
+        do {
+          t3 = iterator._collection$_current;
+          t2 += A.S(t3 == null ? t1._as(t3) : t3);
+        } while (iterator.moveNext$0());
+        t1 = t2;
+      } else {
+        t2 = first;
+        do {
+          t3 = iterator._collection$_current;
+          t2 = t2 + separator + A.S(t3 == null ? t1._as(t3) : t3);
+        } while (iterator.moveNext$0());
+        t1 = t2;
+      }
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
     skip$1(_, n) {
       return A.SkipIterable_SkipIterable(this, n, A._instanceType(this)._precomputed1);
@@ -12398,7 +14084,7 @@
       var result,
         t1 = this._processed;
       if (t1 == null)
-        return this._data.$index(0, key);
+        return this._convert$_data.$index(0, key);
       else if (typeof key != "string")
         return null;
       else {
@@ -12407,7 +14093,7 @@
       }
     },
     get$length(_) {
-      return this._processed == null ? this._data._length : this._convert$_computeKeys$0().length;
+      return this._processed == null ? this._convert$_data._length : this._computeKeys$0().length;
     },
     get$isEmpty(_) {
       return this.get$length(0) === 0;
@@ -12415,17 +14101,22 @@
     get$keys(_) {
       var t1;
       if (this._processed == null) {
-        t1 = this._data;
+        t1 = this._convert$_data;
         return new A.LinkedHashMapKeysIterable(t1, A._instanceType(t1)._eval$1("LinkedHashMapKeysIterable<1>"));
       }
       return new A._JsonMapKeyIterable(this);
+    },
+    containsKey$1(_, key) {
+      if (this._processed == null)
+        return this._convert$_data.containsKey$1(0, key);
+      return Object.prototype.hasOwnProperty.call(this._original, key);
     },
     forEach$1(_, f) {
       var keys, i, key, value, _this = this;
       type$.void_Function_String_dynamic._as(f);
       if (_this._processed == null)
-        return _this._data.forEach$1(0, f);
-      keys = _this._convert$_computeKeys$0();
+        return _this._convert$_data.forEach$1(0, f);
+      keys = _this._computeKeys$0();
       for (i = 0; i < keys.length; ++i) {
         key = keys[i];
         value = _this._processed[key];
@@ -12434,14 +14125,14 @@
           _this._processed[key] = value;
         }
         f.call$2(key, value);
-        if (keys !== _this._data)
+        if (keys !== _this._convert$_data)
           throw A.wrapException(A.ConcurrentModificationError$(_this));
       }
     },
-    _convert$_computeKeys$0() {
-      var keys = type$.nullable_List_dynamic._as(this._data);
+    _computeKeys$0() {
+      var keys = type$.nullable_List_dynamic._as(this._convert$_data);
       if (keys == null)
-        keys = this._data = A._setArrayType(Object.keys(this._original), type$.JSArray_String);
+        keys = this._convert$_data = A._setArrayType(Object.keys(this._original), type$.JSArray_String);
       return keys;
     },
     _process$1(key) {
@@ -12461,7 +14152,7 @@
       if (t1._processed == null)
         t1 = t1.get$keys(0).elementAt$1(0, index);
       else {
-        t1 = t1._convert$_computeKeys$0();
+        t1 = t1._computeKeys$0();
         if (!(index >= 0 && index < t1.length))
           return A.ioore(t1, index);
         t1 = t1[index];
@@ -12474,10 +14165,25 @@
         t1 = t1.get$keys(0);
         t1 = t1.get$iterator(t1);
       } else {
-        t1 = t1._convert$_computeKeys$0();
+        t1 = t1._computeKeys$0();
         t1 = new J.ArrayIterator(t1, t1.length, A._arrayInstanceType(t1)._eval$1("ArrayIterator<1>"));
       }
       return t1;
+    },
+    contains$1(_, key) {
+      return this._parent.containsKey$1(0, key);
+    }
+  };
+  A._JsonDecoderSink.prototype = {
+    close$0(_) {
+      var t1, t2, _this = this;
+      _this.super$_StringSinkConversionSink$close(0);
+      t1 = _this._stringSink;
+      t2 = t1._contents;
+      t1._contents = "";
+      t1 = _this._sink;
+      t1.add$1(0, A._parseJson(t2.charCodeAt(0) == 0 ? t2 : t2, _this._reviver));
+      t1.close$0(0);
     }
   };
   A._Utf8Decoder__decoder_closure.prototype = {
@@ -12490,7 +14196,7 @@
       }
       return null;
     },
-    $signature: 21
+    $signature: 23
   };
   A._Utf8Decoder__decoderNonfatal_closure.prototype = {
     call$0() {
@@ -12502,7 +14208,7 @@
       }
       return null;
     },
-    $signature: 21
+    $signature: 23
   };
   A.AsciiCodec.prototype = {
     get$name(_) {
@@ -12520,10 +14226,11 @@
   };
   A._UnicodeSubsetEncoder.prototype = {
     convert$1(string) {
-      var t1, i, codeUnit,
-        stringLength = string.length,
-        end = A.RangeError_checkValidRange(0, null, stringLength),
-        result = new Uint8Array(end);
+      var stringLength, end, result, t1, i, codeUnit;
+      A._asString(string);
+      stringLength = string.length;
+      end = A.RangeError_checkValidRange(0, null, stringLength);
+      result = new Uint8Array(end);
       for (t1 = ~this._subsetMask, i = 0; i < end; ++i) {
         if (!(i < stringLength))
           return A.ioore(string, i);
@@ -12535,9 +14242,35 @@
         result[i] = codeUnit;
       }
       return result;
+    },
+    startChunkedConversion$1(sink) {
+      type$.Sink_List_int._as(sink);
+      return new A._UnicodeSubsetEncoderSink(new A._ByteAdapterSink(sink), this._subsetMask);
     }
   };
   A.AsciiEncoder.prototype = {};
+  A._UnicodeSubsetEncoderSink.prototype = {
+    close$0(_) {
+      this._sink._sink.close$0(0);
+    },
+    addSlice$4(source, start, end, isLast) {
+      var t2, i, codeUnit,
+        t1 = source.length;
+      A.RangeError_checkValidRange(start, end, t1);
+      for (t2 = ~this._subsetMask, i = start; i < end; ++i) {
+        if (!(i < t1))
+          return A.ioore(source, i);
+        codeUnit = source.charCodeAt(i);
+        if ((codeUnit & t2) !== 0)
+          throw A.wrapException(A.ArgumentError$("Source contains invalid character with code point: " + codeUnit + ".", null));
+      }
+      t1 = new A.CodeUnits(source);
+      t2 = this._sink._sink;
+      t2.add$1(0, type$.List_int._as(t1.sublist$2(t1, start, end)));
+      if (isLast)
+        t2.close$0(0);
+    }
+  };
   A._UnicodeSubsetDecoder.prototype = {
     convert$1(bytes) {
       var t1, end, t2, i, byte;
@@ -12568,11 +14301,58 @@
       return t3.charCodeAt(0) == 0 ? t3 : t3;
     }
   };
-  A.AsciiDecoder.prototype = {};
+  A.AsciiDecoder.prototype = {
+    startChunkedConversion$1(sink) {
+      var stringSink;
+      type$.Sink_String._as(sink);
+      stringSink = type$.StringConversionSink._is(sink) ? sink : new A._StringAdapterSink(sink);
+      if (this._allowInvalid)
+        return new A._ErrorHandlingAsciiDecoderSink(stringSink.asUtf8Sink$1(false));
+      else
+        return new A._SimpleAsciiDecoderSink(stringSink);
+    }
+  };
+  A._ErrorHandlingAsciiDecoderSink.prototype = {
+    close$0(_) {
+      this._utf8Sink.close$0(0);
+    },
+    add$1(_, source) {
+      type$.List_int._as(source);
+      this.addSlice$4(source, 0, J.get$length$asx(source), false);
+    },
+    addSlice$4(source, start, end, isLast) {
+      var t1, t2, i;
+      type$.List_int._as(source);
+      t1 = J.getInterceptor$asx(source);
+      A.RangeError_checkValidRange(start, end, t1.get$length(source));
+      for (t2 = this._utf8Sink, i = start; i < end; ++i)
+        if ((t1.$index(source, i) & 4294967168) >>> 0 !== 0) {
+          if (i > start)
+            t2.addSlice$4(source, start, i, false);
+          t2.add$1(0, B.List_239_191_189);
+          start = i + 1;
+        }
+      if (start < end)
+        t2.addSlice$4(source, start, end, false);
+    }
+  };
+  A._SimpleAsciiDecoderSink.prototype = {
+    close$0(_) {
+      this._sink.close$0(0);
+    },
+    add$1(_, source) {
+      var t1, i;
+      type$.List_int._as(source);
+      for (t1 = J.getInterceptor$asx(source), i = 0; i < t1.get$length(source); ++i)
+        if ((t1.$index(source, i) & 4294967168) >>> 0 !== 0)
+          throw A.wrapException(A.FormatException$("Source contains non-ASCII bytes.", null, null));
+      this._sink.add$1(0, A.String_String$fromCharCodes(source, 0, null));
+    }
+  };
   A.Base64Codec.prototype = {
     normalize$3(_, source, start, end) {
       var inverseAlphabet, t2, i, sliceStart, buffer, firstPadding, firstPaddingSourceIndex, paddingCount, i0, char, i1, digit1, t3, digit2, char0, value, t4, endLength, $length,
-        _s64_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+        _s64_ = string$.ABCDEF,
         _s31_ = "Invalid base64 encoding length ",
         t1 = source.length;
       end = A.RangeError_checkValidRange(start, end, t1);
@@ -12673,8 +14453,86 @@
       return source;
     }
   };
-  A.Base64Encoder.prototype = {};
-  A.ByteConversionSink.prototype = {};
+  A.Base64Encoder.prototype = {
+    convert$1(input) {
+      var t1;
+      type$.List_int._as(input);
+      t1 = input.length;
+      if (t1 === 0)
+        return "";
+      t1 = new A._Base64Encoder(string$.ABCDEF).encode$4(input, 0, t1, true);
+      t1.toString;
+      return A.String_String$fromCharCodes(t1, 0, null);
+    },
+    startChunkedConversion$1(sink) {
+      var _s64_ = string$.ABCDEF;
+      type$.Sink_String._as(sink);
+      if (type$.StringConversionSink._is(sink))
+        return new A._Utf8Base64EncoderSink(new A._Utf8StringSinkAdapter(new A._Utf8Decoder(false), sink, sink._stringSink), new A._Base64Encoder(_s64_));
+      return new A._AsciiBase64EncoderSink(sink, new A._BufferCachingBase64Encoder(_s64_));
+    }
+  };
+  A._Base64Encoder.prototype = {
+    createBuffer$1(_, bufferLength) {
+      return new Uint8Array(bufferLength);
+    },
+    encode$4(bytes, start, end, isLast) {
+      var byteCount, fullChunks, bufferLength, output, _this = this;
+      type$.List_int._as(bytes);
+      byteCount = (_this._convert$_state & 3) + (end - start);
+      fullChunks = B.JSInt_methods._tdivFast$1(byteCount, 3);
+      bufferLength = fullChunks * 4;
+      if (isLast && byteCount - fullChunks * 3 > 0)
+        bufferLength += 4;
+      output = _this.createBuffer$1(0, bufferLength);
+      _this._convert$_state = A._Base64Encoder_encodeChunk(_this._alphabet, bytes, start, end, isLast, output, 0, _this._convert$_state);
+      if (bufferLength > 0)
+        return output;
+      return null;
+    }
+  };
+  A._BufferCachingBase64Encoder.prototype = {
+    createBuffer$1(_, bufferLength) {
+      var buffer = this.bufferCache;
+      if (buffer == null || buffer.length < bufferLength)
+        buffer = this.bufferCache = new Uint8Array(bufferLength);
+      return J.asUint8List$2$x(B.NativeUint8List_methods.get$buffer(buffer), buffer.byteOffset, bufferLength);
+    }
+  };
+  A._Base64EncoderSink.prototype = {
+    add$1(_, source) {
+      type$.List_int._as(source);
+      this._convert$_add$4(0, source, 0, J.get$length$asx(source), false);
+    },
+    close$0(_) {
+      this._convert$_add$4(0, B.List_empty1, 0, 0, true);
+    }
+  };
+  A._AsciiBase64EncoderSink.prototype = {
+    _convert$_add$4(_, source, start, end, isLast) {
+      var buffer = this._encoder.encode$4(type$.List_int._as(source), start, end, isLast);
+      if (buffer != null)
+        this._sink.add$1(0, A.String_String$fromCharCodes(buffer, 0, null));
+      if (isLast)
+        this._sink.close$0(0);
+    }
+  };
+  A._Utf8Base64EncoderSink.prototype = {
+    _convert$_add$4(_, source, start, end, isLast) {
+      var buffer = this._encoder.encode$4(type$.List_int._as(source), start, end, isLast);
+      if (buffer != null)
+        this._sink.addSlice$4(buffer, 0, buffer.length, isLast);
+    }
+  };
+  A.ByteConversionSink.prototype = {$isSink: 1};
+  A._ByteAdapterSink.prototype = {
+    add$1(_, chunk) {
+      this._sink.add$1(0, type$.List_int._as(chunk));
+    },
+    close$0(_) {
+      this._sink.close$0(0);
+    }
+  };
   A._ByteCallbackSink.prototype = {
     add$1(_, chunk) {
       var t1, t2, t3, v, grown, _this = this;
@@ -12703,8 +14561,51 @@
       this._callback.call$1(B.NativeUint8List_methods.sublist$2(this._convert$_buffer, 0, this._bufferIndex));
     }
   };
+  A.ChunkedConversionSink.prototype = {$isSink: 1};
+  A._ConverterStreamEventSink.prototype = {
+    add$1(_, o) {
+      this._chunkedSink.add$1(0, this.$ti._precomputed1._as(o));
+    },
+    addError$2(error, stackTrace) {
+      A.checkNotNullable(error, "error", type$.Object);
+      this._eventSink.addError$2(error, stackTrace);
+    },
+    close$0(_) {
+      this._chunkedSink.close$0(0);
+    },
+    $isEventSink: 1,
+    $isSink: 1
+  };
   A.Codec.prototype = {};
-  A.Converter.prototype = {};
+  A.Converter.prototype = {
+    fuse$1$1(other, $TT) {
+      var t1 = A._instanceType(this);
+      return new A._FusedConverter(this, t1._bind$1($TT)._eval$1("Converter<Converter.T,1>")._as(other), t1._eval$1("@<Converter.S,Converter.T>")._bind$1($TT)._eval$1("_FusedConverter<1,2,3>"));
+    },
+    startChunkedConversion$1(sink) {
+      A._instanceType(this)._eval$1("Sink<Converter.T>")._as(sink);
+      throw A.wrapException(A.UnsupportedError$("This converter does not support chunked conversions: " + this.toString$0(0)));
+    },
+    bind$1(stream) {
+      var t1 = A._instanceType(this);
+      return new A._BoundSinkStream(new A.Converter_bind_closure(this), t1._eval$1("Stream<Converter.S>")._as(stream), type$.$env_1_1_dynamic._bind$1(t1._eval$1("Converter.T"))._eval$1("_BoundSinkStream<1,2>"));
+    },
+    $isStreamTransformer: 1
+  };
+  A.Converter_bind_closure.prototype = {
+    call$1(sink) {
+      return new A._ConverterStreamEventSink(sink, this.$this.startChunkedConversion$1(sink), type$._ConverterStreamEventSink_dynamic_dynamic);
+    },
+    $signature: 70
+  };
+  A._FusedConverter.prototype = {
+    convert$1(input) {
+      return A._parseJson(A._asString(this._convert$_first.convert$1(this.$ti._precomputed1._as(input))), this._second._reviver);
+    },
+    startChunkedConversion$1(sink) {
+      return this._convert$_first.startChunkedConversion$1(new A._JsonDecoderSink(this._second._reviver, this.$ti._eval$1("Sink<3>")._as(sink), new A.StringBuffer("")));
+    }
+  };
   A.Encoding.prototype = {};
   A.JsonUnsupportedObjectError.prototype = {
     toString$0(_) {
@@ -12723,8 +14624,15 @@
       return t1;
     },
     encode$2$toEncodable(value, toEncodable) {
-      var t1 = A._JsonStringStringifier_stringify(value, this.get$encoder()._toEncodable, null);
-      return t1;
+      type$.nullable_nullable_Object_Function_dynamic._as(toEncodable);
+      if (toEncodable == null)
+        toEncodable = null;
+      if (toEncodable == null)
+        return A._JsonStringStringifier_stringify(value, this.get$encoder()._toEncodable, null);
+      return A._JsonStringStringifier_stringify(value, toEncodable, null);
+    },
+    encode$1(value) {
+      return this.encode$2$toEncodable(value, null);
     },
     get$encoder() {
       return B.JsonEncoder_null;
@@ -12733,107 +14641,124 @@
       return B.JsonDecoder_null;
     }
   };
-  A.JsonEncoder.prototype = {};
-  A.JsonDecoder.prototype = {};
+  A.JsonEncoder.prototype = {
+    convert$1(object) {
+      var t1,
+        output = new A.StringBuffer("");
+      A._JsonStringStringifier_printOn(object, output, this._toEncodable, null);
+      t1 = output._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    startChunkedConversion$1(sink) {
+      var t1;
+      type$.Sink_String._as(sink);
+      t1 = type$.StringConversionSink._is(sink) ? sink : new A._StringAdapterSink(sink);
+      return new A._JsonEncoderSink(null, this._toEncodable, t1);
+    }
+  };
+  A._JsonEncoderSink.prototype = {
+    add$1(_, o) {
+      var stringSink, _this = this;
+      if (_this._isDone)
+        throw A.wrapException(A.StateError$("Only one call to add allowed"));
+      _this._isDone = true;
+      stringSink = _this._sink.asStringSink$0();
+      A._JsonStringStringifier_printOn(o, stringSink, _this._toEncodable, _this._indent);
+      stringSink.close$0(0);
+    },
+    close$0(_) {
+    }
+  };
+  A.JsonDecoder.prototype = {
+    startChunkedConversion$1(sink) {
+      return new A._JsonDecoderSink(this._reviver, sink, new A.StringBuffer(""));
+    },
+    convert$1(input) {
+      return A._parseJson(A._asString(input), this._reviver);
+    }
+  };
   A._JsonStringifier.prototype = {
     writeStringContent$1(s) {
-      var t1, offset, i, charCode, t2, t3,
+      var offset, i, charCode, t1, t2, _this = this,
         $length = s.length;
-      for (t1 = this._sink, offset = 0, i = 0; i < $length; ++i) {
+      for (offset = 0, i = 0; i < $length; ++i) {
         charCode = s.charCodeAt(i);
         if (charCode > 92) {
           if (charCode >= 55296) {
-            t2 = charCode & 64512;
-            if (t2 === 55296) {
-              t3 = i + 1;
-              t3 = !(t3 < $length && (s.charCodeAt(t3) & 64512) === 56320);
+            t1 = charCode & 64512;
+            if (t1 === 55296) {
+              t2 = i + 1;
+              t2 = !(t2 < $length && (s.charCodeAt(t2) & 64512) === 56320);
             } else
-              t3 = false;
-            if (!t3)
-              if (t2 === 56320) {
-                t2 = i - 1;
-                t2 = !(t2 >= 0 && (s.charCodeAt(t2) & 64512) === 55296);
+              t2 = false;
+            if (!t2)
+              if (t1 === 56320) {
+                t1 = i - 1;
+                t1 = !(t1 >= 0 && (s.charCodeAt(t1) & 64512) === 55296);
               } else
-                t2 = false;
+                t1 = false;
             else
-              t2 = true;
-            if (t2) {
+              t1 = true;
+            if (t1) {
               if (i > offset)
-                t1._contents += B.JSString_methods.substring$2(s, offset, i);
+                _this.writeStringSlice$3(s, offset, i);
               offset = i + 1;
-              t2 = A.Primitives_stringFromCharCode(92);
-              t1._contents += t2;
-              t2 = A.Primitives_stringFromCharCode(117);
-              t1._contents += t2;
-              t2 = A.Primitives_stringFromCharCode(100);
-              t1._contents += t2;
-              t2 = charCode >>> 8 & 15;
-              t2 = A.Primitives_stringFromCharCode(t2 < 10 ? 48 + t2 : 87 + t2);
-              t1._contents += t2;
-              t2 = charCode >>> 4 & 15;
-              t2 = A.Primitives_stringFromCharCode(t2 < 10 ? 48 + t2 : 87 + t2);
-              t1._contents += t2;
-              t2 = charCode & 15;
-              t2 = A.Primitives_stringFromCharCode(t2 < 10 ? 48 + t2 : 87 + t2);
-              t1._contents += t2;
+              _this.writeCharCode$1(92);
+              _this.writeCharCode$1(117);
+              _this.writeCharCode$1(100);
+              t1 = charCode >>> 8 & 15;
+              _this.writeCharCode$1(t1 < 10 ? 48 + t1 : 87 + t1);
+              t1 = charCode >>> 4 & 15;
+              _this.writeCharCode$1(t1 < 10 ? 48 + t1 : 87 + t1);
+              t1 = charCode & 15;
+              _this.writeCharCode$1(t1 < 10 ? 48 + t1 : 87 + t1);
             }
           }
           continue;
         }
         if (charCode < 32) {
           if (i > offset)
-            t1._contents += B.JSString_methods.substring$2(s, offset, i);
+            _this.writeStringSlice$3(s, offset, i);
           offset = i + 1;
-          t2 = A.Primitives_stringFromCharCode(92);
-          t1._contents += t2;
+          _this.writeCharCode$1(92);
           switch (charCode) {
             case 8:
-              t2 = A.Primitives_stringFromCharCode(98);
-              t1._contents += t2;
+              _this.writeCharCode$1(98);
               break;
             case 9:
-              t2 = A.Primitives_stringFromCharCode(116);
-              t1._contents += t2;
+              _this.writeCharCode$1(116);
               break;
             case 10:
-              t2 = A.Primitives_stringFromCharCode(110);
-              t1._contents += t2;
+              _this.writeCharCode$1(110);
               break;
             case 12:
-              t2 = A.Primitives_stringFromCharCode(102);
-              t1._contents += t2;
+              _this.writeCharCode$1(102);
               break;
             case 13:
-              t2 = A.Primitives_stringFromCharCode(114);
-              t1._contents += t2;
+              _this.writeCharCode$1(114);
               break;
             default:
-              t2 = A.Primitives_stringFromCharCode(117);
-              t1._contents += t2;
-              t2 = A.Primitives_stringFromCharCode(48);
-              t1._contents = (t1._contents += t2) + t2;
-              t2 = charCode >>> 4 & 15;
-              t2 = A.Primitives_stringFromCharCode(t2 < 10 ? 48 + t2 : 87 + t2);
-              t1._contents += t2;
-              t2 = charCode & 15;
-              t2 = A.Primitives_stringFromCharCode(t2 < 10 ? 48 + t2 : 87 + t2);
-              t1._contents += t2;
+              _this.writeCharCode$1(117);
+              _this.writeCharCode$1(48);
+              _this.writeCharCode$1(48);
+              t1 = charCode >>> 4 & 15;
+              _this.writeCharCode$1(t1 < 10 ? 48 + t1 : 87 + t1);
+              t1 = charCode & 15;
+              _this.writeCharCode$1(t1 < 10 ? 48 + t1 : 87 + t1);
               break;
           }
         } else if (charCode === 34 || charCode === 92) {
           if (i > offset)
-            t1._contents += B.JSString_methods.substring$2(s, offset, i);
+            _this.writeStringSlice$3(s, offset, i);
           offset = i + 1;
-          t2 = A.Primitives_stringFromCharCode(92);
-          t1._contents += t2;
-          t2 = A.Primitives_stringFromCharCode(charCode);
-          t1._contents += t2;
+          _this.writeCharCode$1(92);
+          _this.writeCharCode$1(charCode);
         }
       }
       if (offset === 0)
-        t1._contents += s;
+        _this.writeString$1(s);
       else if (offset < $length)
-        t1._contents += B.JSString_methods.substring$2(s, offset, $length);
+        _this.writeStringSlice$3(s, offset, $length);
     },
     _checkCycle$1(object) {
       var t1, t2, i, t3;
@@ -12870,22 +14795,21 @@
       if (typeof object == "number") {
         if (!isFinite(object))
           return false;
-        _this._sink._contents += B.JSNumber_methods.toString$0(object);
+        _this.writeNumber$1(object);
         return true;
       } else if (object === true) {
-        _this._sink._contents += "true";
+        _this.writeString$1("true");
         return true;
       } else if (object === false) {
-        _this._sink._contents += "false";
+        _this.writeString$1("false");
         return true;
       } else if (object == null) {
-        _this._sink._contents += "null";
+        _this.writeString$1("null");
         return true;
       } else if (typeof object == "string") {
-        t1 = _this._sink;
-        t1._contents += '"';
+        _this.writeString$1('"');
         _this.writeStringContent$1(object);
-        t1._contents += '"';
+        _this.writeString$1('"');
         return true;
       } else if (type$.List_dynamic._is(object)) {
         _this._checkCycle$1(object);
@@ -12907,24 +14831,23 @@
         return false;
     },
     writeList$1(list) {
-      var t2, i,
-        t1 = this._sink;
-      t1._contents += "[";
-      t2 = J.getInterceptor$asx(list);
-      if (t2.get$isNotEmpty(list)) {
-        this.writeObject$1(t2.$index(list, 0));
-        for (i = 1; i < t2.get$length(list); ++i) {
-          t1._contents += ",";
-          this.writeObject$1(t2.$index(list, i));
+      var t1, i, _this = this;
+      _this.writeString$1("[");
+      t1 = J.getInterceptor$asx(list);
+      if (t1.get$isNotEmpty(list)) {
+        _this.writeObject$1(t1.$index(list, 0));
+        for (i = 1; i < t1.get$length(list); ++i) {
+          _this.writeString$1(",");
+          _this.writeObject$1(t1.$index(list, i));
         }
       }
-      t1._contents += "]";
+      _this.writeString$1("]");
     },
     writeMap$1(map) {
-      var t2, keyValueList, i, separator, t3, _this = this, _box_0 = {},
+      var t2, keyValueList, i, separator, _this = this, _box_0 = {},
         t1 = J.getInterceptor$asx(map);
       if (t1.get$isEmpty(map)) {
-        _this._sink._contents += "{}";
+        _this.writeString$1("{}");
         return true;
       }
       t2 = t1.get$length(map) * 2;
@@ -12934,18 +14857,17 @@
       t1.forEach$1(map, new A._JsonStringifier_writeMap_closure(_box_0, keyValueList));
       if (!_box_0.allStringKeys)
         return false;
-      t1 = _this._sink;
-      t1._contents += "{";
+      _this.writeString$1("{");
       for (separator = '"'; i < t2; i += 2, separator = ',"') {
-        t1._contents += separator;
+        _this.writeString$1(separator);
         _this.writeStringContent$1(A._asString(keyValueList[i]));
-        t1._contents += '":';
-        t3 = i + 1;
-        if (!(t3 < t2))
-          return A.ioore(keyValueList, t3);
-        _this.writeObject$1(keyValueList[t3]);
+        _this.writeString$1('":');
+        t1 = i + 1;
+        if (!(t1 < t2))
+          return A.ioore(keyValueList, t1);
+        _this.writeObject$1(keyValueList[t1]);
       }
-      t1._contents += "}";
+      _this.writeString$1("}");
       return true;
     }
   };
@@ -12959,12 +14881,24 @@
       B.JSArray_methods.$indexSet(t1, t2.i++, key);
       B.JSArray_methods.$indexSet(t1, t2.i++, value);
     },
-    $signature: 20
+    $signature: 22
   };
   A._JsonStringStringifier.prototype = {
     get$_partialResult() {
-      var t1 = this._sink._contents;
-      return t1.charCodeAt(0) == 0 ? t1 : t1;
+      var t1 = this._sink;
+      return t1 instanceof A.StringBuffer ? t1.toString$0(0) : null;
+    },
+    writeNumber$1(number) {
+      this._sink.write$1(0, B.JSNumber_methods.toString$0(number));
+    },
+    writeString$1(string) {
+      this._sink.write$1(0, string);
+    },
+    writeStringSlice$3(string, start, end) {
+      this._sink.write$1(0, B.JSString_methods.substring$2(string, start, end));
+    },
+    writeCharCode$1(charCode) {
+      this._sink.writeCharCode$1(charCode);
     }
   };
   A.Latin1Codec.prototype = {
@@ -12982,14 +14916,223 @@
     }
   };
   A.Latin1Encoder.prototype = {};
-  A.Latin1Decoder.prototype = {};
+  A.Latin1Decoder.prototype = {
+    startChunkedConversion$1(sink) {
+      var stringSink;
+      type$.Sink_String._as(sink);
+      stringSink = type$.StringConversionSink._is(sink) ? sink : new A._StringAdapterSink(sink);
+      if (!this._allowInvalid)
+        return new A._Latin1DecoderSink(stringSink);
+      return new A._Latin1AllowInvalidDecoderSink(stringSink);
+    }
+  };
+  A._Latin1DecoderSink.prototype = {
+    close$0(_) {
+      this._sink.close$0(0);
+      this._sink = null;
+    },
+    add$1(_, source) {
+      type$.List_int._as(source);
+      this.addSlice$4(source, 0, J.get$length$asx(source), false);
+    },
+    _addSliceToSink$4(source, start, end, isLast) {
+      var t1;
+      type$.List_int._as(source);
+      t1 = this._sink;
+      t1.toString;
+      t1.add$1(0, A.String_String$fromCharCodes(source, start, end));
+    },
+    addSlice$4(source, start, end, isLast) {
+      type$.List_int._as(source);
+      A.RangeError_checkValidRange(start, end, J.get$length$asx(source));
+      if (start === end)
+        return;
+      if (!type$.Uint8List._is(source))
+        A._Latin1DecoderSink__checkValidLatin1(source, start, end);
+      this._addSliceToSink$4(source, start, end, false);
+    }
+  };
+  A._Latin1AllowInvalidDecoderSink.prototype = {
+    addSlice$4(source, start, end, isLast) {
+      var t2, i, char, t3,
+        t1 = type$.List_int;
+      t1._as(source);
+      t2 = J.getInterceptor$asx(source);
+      A.RangeError_checkValidRange(start, end, t2.get$length(source));
+      for (i = start; i < end; ++i) {
+        char = t2.$index(source, i);
+        if (char > 255 || char < 0) {
+          if (i > start) {
+            t3 = this._sink;
+            t3.toString;
+            t3.add$1(0, A.String_String$fromCharCodes(source, start, i));
+          }
+          t1._as(B.List_65533);
+          t3 = this._sink;
+          t3.toString;
+          t3.add$1(0, A.String_String$fromCharCodes(B.List_65533, 0, 1));
+          start = i + 1;
+        }
+      }
+      if (start < end)
+        this._addSliceToSink$4(source, start, end, false);
+    }
+  };
+  A.StringConversionSink.prototype = {
+    add$1(_, str) {
+      A._asString(str);
+      this.addSlice$4(str, 0, str.length, false);
+    },
+    asUtf8Sink$1(allowMalformed) {
+      return new A._Utf8ConversionSink(new A._Utf8Decoder(allowMalformed), this, new A.StringBuffer(""));
+    },
+    asStringSink$0() {
+      return new A._StringConversionSinkAsStringSinkAdapter(new A.StringBuffer(""), this);
+    },
+    $isSink: 1
+  };
+  A._ClosableStringSink.prototype = {
+    close$0(_) {
+      this._callback.call$0();
+    },
+    writeCharCode$1(charCode) {
+      var t1 = this._sink,
+        t2 = A.Primitives_stringFromCharCode(charCode);
+      t1._contents += t2;
+    },
+    write$1(_, o) {
+      this._sink._contents += o;
+    },
+    $isStringSink: 1
+  };
+  A._StringConversionSinkAsStringSinkAdapter.prototype = {
+    close$0(_) {
+      if (this._convert$_buffer._contents.length !== 0)
+        this._flush$0();
+      this._chunkedSink.close$0(0);
+    },
+    writeCharCode$1(charCode) {
+      var t1 = this._convert$_buffer,
+        t2 = A.Primitives_stringFromCharCode(charCode);
+      if ((t1._contents += t2).length > 16)
+        this._flush$0();
+    },
+    write$1(_, o) {
+      if (this._convert$_buffer._contents.length !== 0)
+        this._flush$0();
+      this._chunkedSink.add$1(0, o);
+    },
+    _flush$0() {
+      var t1 = this._convert$_buffer,
+        t2 = t1._contents;
+      t1._contents = "";
+      this._chunkedSink.add$1(0, t2.charCodeAt(0) == 0 ? t2 : t2);
+    },
+    $isStringSink: 1
+  };
+  A._StringSinkConversionSink.prototype = {
+    close$0(_) {
+    },
+    addSlice$4(str, start, end, isLast) {
+      var t1, t2, i, t3;
+      if (start !== 0 || end !== str.length)
+        for (t1 = this._stringSink, t2 = str.length, i = start; i < end; ++i) {
+          if (!(i < t2))
+            return A.ioore(str, i);
+          t3 = A.Primitives_stringFromCharCode(str.charCodeAt(i));
+          t1._contents += t3;
+        }
+      else
+        this._stringSink._contents += str;
+      if (isLast)
+        this.close$0(0);
+    },
+    add$1(_, str) {
+      this._stringSink._contents += A._asString(str);
+    },
+    asUtf8Sink$1(allowMalformed) {
+      return new A._Utf8StringSinkAdapter(new A._Utf8Decoder(allowMalformed), this, this._stringSink);
+    },
+    asStringSink$0() {
+      return new A._ClosableStringSink(this.get$close(this), this._stringSink);
+    }
+  };
+  A._StringAdapterSink.prototype = {
+    add$1(_, str) {
+      this._sink.add$1(0, A._asString(str));
+    },
+    addSlice$4(str, start, end, isLast) {
+      var t1 = start === 0 && end === str.length,
+        t2 = this._sink;
+      if (t1)
+        t2.add$1(0, str);
+      else
+        t2.add$1(0, B.JSString_methods.substring$2(str, start, end));
+      if (isLast)
+        t2.close$0(0);
+    },
+    close$0(_) {
+      this._sink.close$0(0);
+    }
+  };
+  A._Utf8StringSinkAdapter.prototype = {
+    close$0(_) {
+      this._decoder.flush$1(0, this._stringSink);
+      this._sink.close$0(0);
+    },
+    add$1(_, chunk) {
+      type$.List_int._as(chunk);
+      this.addSlice$4(chunk, 0, J.get$length$asx(chunk), false);
+    },
+    addSlice$4(codeUnits, startIndex, endIndex, isLast) {
+      var t1 = this._stringSink,
+        t2 = this._decoder._convertGeneral$4(type$.List_int._as(codeUnits), startIndex, endIndex, false);
+      t1._contents += t2;
+      if (isLast)
+        this.close$0(0);
+    }
+  };
+  A._Utf8ConversionSink.prototype = {
+    close$0(_) {
+      var t2, t3, accumulated,
+        t1 = this._convert$_buffer;
+      this._decoder.flush$1(0, t1);
+      t2 = t1._contents;
+      t3 = this._chunkedSink;
+      if (t2.length !== 0) {
+        accumulated = t2.charCodeAt(0) == 0 ? t2 : t2;
+        t1._contents = "";
+        t3.addSlice$4(accumulated, 0, accumulated.length, true);
+      } else
+        t3.close$0(0);
+    },
+    add$1(_, chunk) {
+      type$.List_int._as(chunk);
+      this.addSlice$4(chunk, 0, J.get$length$asx(chunk), false);
+    },
+    addSlice$4(chunk, startIndex, endIndex, isLast) {
+      var accumulated,
+        t1 = this._convert$_buffer,
+        t2 = this._decoder._convertGeneral$4(type$.List_int._as(chunk), startIndex, endIndex, false);
+      t2 = t1._contents += t2;
+      if (t2.length !== 0) {
+        accumulated = t2.charCodeAt(0) == 0 ? t2 : t2;
+        this._chunkedSink.addSlice$4(accumulated, 0, accumulated.length, false);
+        t1._contents = "";
+        return;
+      }
+    }
+  };
   A.Utf8Codec.prototype = {
     get$name(_) {
       return "utf-8";
     },
-    decode$1(_, codeUnits) {
+    decode$2$allowMalformed(_, codeUnits, allowMalformed) {
       type$.List_int._as(codeUnits);
-      return B.Utf8Decoder_false.convert$1(codeUnits);
+      return (allowMalformed === true ? B.Utf8Decoder_true : B.Utf8Decoder_false).convert$1(codeUnits);
+    },
+    decode$1(_, codeUnits) {
+      return this.decode$2$allowMalformed(0, codeUnits, null);
     },
     encode$1(string) {
       return B.C_Utf8Encoder.convert$1(string);
@@ -12997,9 +15140,10 @@
   };
   A.Utf8Encoder.prototype = {
     convert$1(string) {
-      var t1, encoder, t2,
-        stringLength = string.length,
-        end = A.RangeError_checkValidRange(0, null, stringLength);
+      var stringLength, end, t1, encoder, t2;
+      A._asString(string);
+      stringLength = string.length;
+      end = A.RangeError_checkValidRange(0, null, stringLength);
       if (end === 0)
         return new Uint8Array(0);
       t1 = new Uint8Array(end * 3);
@@ -13011,6 +15155,10 @@
         encoder._writeReplacementCharacter$0();
       }
       return B.NativeUint8List_methods.sublist$2(t1, 0, encoder._bufferIndex);
+    },
+    startChunkedConversion$1(sink) {
+      type$.Sink_List_int._as(sink);
+      return new A._Utf8EncoderSink(new A._ByteAdapterSink(sink), new Uint8Array(1024));
     }
   };
   A._Utf8Encoder.prototype = {
@@ -13134,9 +15282,77 @@
       return stringIndex;
     }
   };
+  A._Utf8EncoderSink.prototype = {
+    close$0(_) {
+      if (this._carry !== 0) {
+        this.addSlice$4("", 0, 0, true);
+        return;
+      }
+      this._sink._sink.close$0(0);
+    },
+    addSlice$4(str, start, end, isLast) {
+      var t1, t2, nextCodeUnit, t3, t4, t5, t6, isLastSlice, t7, _this = this;
+      _this._bufferIndex = 0;
+      t1 = start === end;
+      if (t1 && !isLast)
+        return;
+      t2 = _this._carry;
+      if (t2 !== 0) {
+        if (!t1) {
+          if (!(start < str.length))
+            return A.ioore(str, start);
+          nextCodeUnit = str.charCodeAt(start);
+        } else
+          nextCodeUnit = 0;
+        if (_this._writeSurrogate$2(t2, nextCodeUnit))
+          ++start;
+        _this._carry = 0;
+      }
+      t1 = _this._sink;
+      t2 = _this._convert$_buffer;
+      t3 = type$.List_int;
+      t4 = end - 1;
+      t5 = str.length;
+      t6 = t2.length - 3;
+      do {
+        start = _this._fillBuffer$3(str, start, end);
+        isLastSlice = isLast && start === end;
+        if (start === t4) {
+          if (!(start < t5))
+            return A.ioore(str, start);
+          t7 = (str.charCodeAt(start) & 64512) === 55296;
+        } else
+          t7 = false;
+        if (t7) {
+          if (isLast && _this._bufferIndex < t6)
+            _this._writeReplacementCharacter$0();
+          else {
+            if (!(start < t5))
+              return A.ioore(str, start);
+            _this._carry = str.charCodeAt(start);
+          }
+          ++start;
+        }
+        t7 = _this._bufferIndex;
+        t1.add$1(0, B.NativeUint8List_methods.sublist$2(t3._as(t2), 0, t7));
+        if (isLastSlice)
+          t1.close$0(0);
+        _this._bufferIndex = 0;
+      } while (start < end);
+      if (isLast)
+        _this.close$0(0);
+    },
+    $isSink: 1
+  };
   A.Utf8Decoder.prototype = {
     convert$1(codeUnits) {
       return new A._Utf8Decoder(this._allowMalformed)._convertGeneral$4(type$.List_int._as(codeUnits), 0, null, true);
+    },
+    startChunkedConversion$1(sink) {
+      var stringSink;
+      type$.Sink_String._as(sink);
+      stringSink = type$.StringConversionSink._is(sink) ? sink : new A._StringAdapterSink(sink);
+      return stringSink.asUtf8Sink$1(this._allowMalformed);
     }
   };
   A._Utf8Decoder.prototype = {
@@ -13156,7 +15372,7 @@
         errorOffset = start;
         start = 0;
       }
-      if (end - start >= 15) {
+      if (single && end - start >= 15) {
         t1 = _this.allowMalformed;
         result = A._Utf8Decoder__convertInterceptedUint8List(t1, bytes, start, end);
         if (result != null) {
@@ -13166,7 +15382,7 @@
             return result;
         }
       }
-      result = _this._decodeRecursive$4(bytes, start, end, true);
+      result = _this._decodeRecursive$4(bytes, start, end, single);
       t1 = _this._convert$_state;
       if ((t1 & 1) !== 0) {
         message = A._Utf8Decoder_errorDescription(t1);
@@ -13185,6 +15401,18 @@
         return s1 + _this._decodeRecursive$4(bytes, mid, end, single);
       }
       return _this.decodeGeneral$4(bytes, start, end, single);
+    },
+    flush$1(_, sink) {
+      var t1,
+        state = this._convert$_state;
+      this._convert$_state = 0;
+      if (state <= 32)
+        return;
+      if (this.allowMalformed) {
+        t1 = A.Primitives_stringFromCharCode(65533);
+        sink._contents += t1;
+      } else
+        throw A.wrapException(A.FormatException$(A._Utf8Decoder_errorDescription(77), null, null));
     },
     decodeGeneral$4(bytes, start, end, single) {
       var byte, t2, type, t3, i0, markEnd, i1, m, _this = this,
@@ -13301,6 +15529,8 @@
       return t1.charCodeAt(0) == 0 ? t1 : t1;
     }
   };
+  A.__Utf8EncoderSink__Utf8Encoder_StringConversionSink.prototype = {};
+  A._WeakReferenceWrapper.prototype = {};
   A._Uri__makeQueryFromParameters_closure.prototype = {
     call$2(key, value) {
       var t1, t2;
@@ -13320,22 +15550,24 @@
             A._asStringQ(value);
         }
     },
-    $signature: 4
+    $signature: 2
   };
   A.DateTime.prototype = {
     $eq(_, other) {
+      var t1;
       if (other == null)
         return false;
-      return other instanceof A.DateTime && this._value === other._value && this._microsecond === other._microsecond && this.isUtc === other.isUtc;
+      t1 = false;
+      if (other instanceof A.DateTime)
+        if (this._core$_value === other._core$_value)
+          t1 = this._microsecond === other._microsecond;
+      return t1;
     },
     get$hashCode(_) {
-      return A.Object_hash(this._value, this._microsecond, B.C_SentinelValue, B.C_SentinelValue);
+      return A.Object_hash(this._core$_value, this._microsecond, B.C_SentinelValue, B.C_SentinelValue);
     },
     toLocal$0() {
-      var _this = this;
-      if (_this.isUtc)
-        return new A.DateTime(_this._value, _this._microsecond, false);
-      return _this;
+      return this;
     },
     toString$0(_) {
       var _this = this,
@@ -13348,11 +15580,7 @@
         ms = A.DateTime__threeDigits(A.Primitives_getMilliseconds(_this)),
         t1 = _this._microsecond,
         us = t1 === 0 ? "" : A.DateTime__threeDigits(t1);
-      t1 = y + "-" + m;
-      if (_this.isUtc)
-        return t1 + "-" + d + " " + h + ":" + min + ":" + sec + "." + ms + us + "Z";
-      else
-        return t1 + "-" + d + " " + h + ":" + min + ":" + sec + "." + ms + us;
+      return y + "-" + m + "-" + d + " " + h + ":" + min + ":" + sec + "." + ms + us;
     }
   };
   A.Duration.prototype = {
@@ -13365,16 +15593,24 @@
       return B.JSInt_methods.get$hashCode(this._duration);
     },
     toString$0(_) {
-      var minutes, minutesPadding, seconds, secondsPadding,
+      var sign, minutes, minutesPadding, seconds, secondsPadding,
         microseconds = this._duration,
-        hours = B.JSInt_methods._tdivFast$1(microseconds, 3600000000);
-      microseconds %= 3600000000;
+        hours = B.JSInt_methods._tdivFast$1(microseconds, 3600000000),
+        microseconds0 = microseconds % 3600000000;
+      if (microseconds < 0) {
+        hours = 0 - hours;
+        microseconds = 0 - microseconds0;
+        sign = "-";
+      } else {
+        microseconds = microseconds0;
+        sign = "";
+      }
       minutes = B.JSInt_methods._tdivFast$1(microseconds, 60000000);
       microseconds %= 60000000;
       minutesPadding = minutes < 10 ? "0" : "";
       seconds = B.JSInt_methods._tdivFast$1(microseconds, 1000000);
       secondsPadding = seconds < 10 ? "0" : "";
-      return "" + hours + ":" + minutesPadding + minutes + ":" + secondsPadding + seconds + "." + B.JSString_methods.padLeft$2(B.JSInt_methods.toString$0(microseconds % 1000000), 6, "0");
+      return sign + hours + ":" + minutesPadding + minutes + ":" + secondsPadding + seconds + "." + B.JSString_methods.padLeft$2(B.JSInt_methods.toString$0(microseconds % 1000000), 6, "0");
     }
   };
   A._Enum.prototype = {
@@ -13588,13 +15824,30 @@
     }
   };
   A.Iterable.prototype = {
-    map$1$1(_, toElement, $T) {
-      var t1 = A._instanceType(this);
-      return A.MappedIterable_MappedIterable(this, t1._bind$1($T)._eval$1("1(Iterable.E)")._as(toElement), t1._eval$1("Iterable.E"), $T);
-    },
     where$1(_, test) {
       var t1 = A._instanceType(this);
       return new A.WhereIterable(this, t1._eval$1("bool(Iterable.E)")._as(test), t1._eval$1("WhereIterable<Iterable.E>"));
+    },
+    join$1(_, separator) {
+      var first, t1,
+        iterator = this.get$iterator(this);
+      if (!iterator.moveNext$0())
+        return "";
+      first = J.toString$0$(iterator.get$current(iterator));
+      if (!iterator.moveNext$0())
+        return first;
+      if (separator.length === 0) {
+        t1 = first;
+        do
+          t1 += J.toString$0$(iterator.get$current(iterator));
+        while (iterator.moveNext$0());
+      } else {
+        t1 = first;
+        do
+          t1 = t1 + separator + J.toString$0$(iterator.get$current(iterator));
+        while (iterator.moveNext$0());
+      }
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
     },
     toList$1$growable(_, growable) {
       var t1 = A._instanceType(this)._eval$1("Iterable.E");
@@ -13681,9 +15934,44 @@
     },
     $isStackTrace: 1
   };
+  A.Stopwatch.prototype = {
+    get$elapsedMicroseconds() {
+      var ticks,
+        t1 = this._stop;
+      if (t1 == null)
+        t1 = $.Primitives_timerTicks.call$0();
+      ticks = t1 - this._core$_start;
+      if ($.$get$Stopwatch__frequency() === 1000000)
+        return ticks;
+      return ticks * 1000;
+    },
+    start$0(_) {
+      var _this = this,
+        $stop = _this._stop;
+      if ($stop != null) {
+        _this._core$_start = _this._core$_start + ($.Primitives_timerTicks.call$0() - $stop);
+        _this._stop = null;
+      }
+    },
+    reset$0(_) {
+      var t1 = this._stop;
+      this._core$_start = t1 == null ? $.Primitives_timerTicks.call$0() : t1;
+    }
+  };
   A.StringBuffer.prototype = {
     get$length(_) {
       return this._contents.length;
+    },
+    write$1(_, obj) {
+      var t1 = A.S(obj);
+      this._contents += t1;
+    },
+    writeCharCode$1(charCode) {
+      var t1 = A.Primitives_stringFromCharCode(charCode);
+      this._contents += t1;
+    },
+    writeln$1(obj) {
+      this._contents += obj + "\n";
     },
     toString$0(_) {
       var t1 = this._contents;
@@ -13695,7 +15983,7 @@
     call$2(msg, position) {
       throw A.wrapException(A.FormatException$("Illegal IPv6 address, " + msg, this.host, position));
     },
-    $signature: 47
+    $signature: 62
   };
   A._Uri.prototype = {
     get$_text() {
@@ -13789,8 +16077,8 @@
         return false;
       return A._caseInsensitiveCompareStart(scheme, thisScheme, 0) >= 0;
     },
-    replace$2$queryParameters$scheme(_, queryParameters, scheme) {
-      var scheme0, schemeChanged, isFile, userInfo, port, host, currentPath, t1, path, query, _this = this;
+    replace$3$path$queryParameters$scheme(_, path, queryParameters, scheme) {
+      var scheme0, schemeChanged, isFile, userInfo, port, host, hasAuthority, t1, currentPath, query, _this = this;
       type$.nullable_Map_String_dynamic._as(queryParameters);
       scheme0 = _this.scheme;
       if (scheme != null) {
@@ -13808,14 +16096,20 @@
       host = _this._host;
       if (!(host != null))
         host = userInfo.length !== 0 || port != null || isFile ? "" : null;
-      currentPath = _this.path;
-      if (!isFile)
-        t1 = host != null && currentPath.length !== 0;
-      else
-        t1 = true;
-      if (t1 && !B.JSString_methods.startsWith$1(currentPath, "/"))
-        currentPath = "/" + currentPath;
-      path = currentPath;
+      hasAuthority = host != null;
+      if (path != null) {
+        t1 = path.length;
+        path = A._Uri__makePath(path, 0, t1, null, scheme, hasAuthority);
+      } else {
+        currentPath = _this.path;
+        if (!isFile)
+          t1 = hasAuthority && currentPath.length !== 0;
+        else
+          t1 = true;
+        if (t1 && !B.JSString_methods.startsWith$1(currentPath, "/"))
+          currentPath = "/" + currentPath;
+        path = currentPath;
+      }
       if (queryParameters != null)
         query = A._Uri__makeQuery(null, 0, 0, queryParameters);
       else
@@ -13823,10 +16117,21 @@
       return A._Uri$_internal(scheme, userInfo, host, port, path, query, _this._fragment);
     },
     replace$1$scheme(_, scheme) {
-      return this.replace$2$queryParameters$scheme(0, null, scheme);
+      return this.replace$3$path$queryParameters$scheme(0, null, null, scheme);
+    },
+    replace$1$path(_, path) {
+      return this.replace$3$path$queryParameters$scheme(0, path, null, null);
     },
     replace$1$queryParameters(_, queryParameters) {
-      return this.replace$2$queryParameters$scheme(0, queryParameters, null);
+      return this.replace$3$path$queryParameters$scheme(0, null, queryParameters, null);
+    },
+    normalizePath$0() {
+      var _this = this,
+        t1 = _this.path,
+        path = A._Uri__normalizePath(t1, _this.scheme, _this._host != null);
+      if (path === t1)
+        return _this;
+      return _this.replace$1$path(0, path);
     },
     _mergePaths$2(base, reference) {
       var backCount, refStart, baseEnd, t1, newEnd, delta, t2, t3, t4;
@@ -14004,7 +16309,7 @@
         t1._contents += t2;
       }
     },
-    $signature: 54
+    $signature: 58
   };
   A._Uri__makeQueryFromParametersDefault_closure.prototype = {
     call$2(key, value) {
@@ -14016,7 +16321,7 @@
         for (t1 = J.get$iterator$ax(type$.Iterable_dynamic._as(value)), t2 = this.writeParameter; t1.moveNext$0();)
           t2.call$2(key, A._asString(t1.get$current(t1)));
     },
-    $signature: 4
+    $signature: 2
   };
   A.UriData.prototype = {
     get$uri() {
@@ -14123,6 +16428,9 @@
     _isPort$1(port) {
       var portDigitStart = this._portStart + 1;
       return portDigitStart + port.length === this._pathStart && B.JSString_methods.startsWith$2(this._uri, port, portDigitStart);
+    },
+    normalizePath$0() {
+      return this;
     },
     removeFragment$0() {
       var _this = this,
@@ -14431,11 +16739,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -14522,11 +16840,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -14662,7 +16990,7 @@
         fragment = t1;
       }
       if (contextElement !== $.Element__parseDocument.body)
-        J.remove$0$ax(contextElement);
+        J.remove$0$x(contextElement);
       treeSanitizer.sanitizeTree$1(fragment);
       document.adoptNode(fragment).toString;
       return fragment;
@@ -14686,7 +17014,7 @@
     call$1(e) {
       return type$.Element._is(type$.Node._as(e));
     },
-    $signature: 38
+    $signature: 55
   };
   A.Event.prototype = {$isEvent: 1};
   A.EventTarget.prototype = {
@@ -14727,11 +17055,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -14778,11 +17116,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -14815,7 +17163,7 @@
       else
         t3.completeError$1(e);
     },
-    $signature: 29
+    $signature: 53
   };
   A.HttpRequestEventTarget.prototype = {};
   A.Location.prototype = {
@@ -14840,6 +17188,9 @@
     }
   };
   A.MidiInputMap.prototype = {
+    containsKey$1(receiver, key) {
+      return A.convertNativeToDart_Dictionary(receiver.get(key)) != null;
+    },
     $index(receiver, key) {
       return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
     },
@@ -14879,9 +17230,12 @@
     call$2(k, v) {
       return B.JSArray_methods.add$1(this.keys, k);
     },
-    $signature: 4
+    $signature: 2
   };
   A.MidiOutputMap.prototype = {
+    containsKey$1(receiver, key) {
+      return A.convertNativeToDart_Dictionary(receiver.get(key)) != null;
+    },
     $index(receiver, key) {
       return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
     },
@@ -14921,7 +17275,7 @@
     call$2(k, v) {
       return B.JSArray_methods.add$1(this.keys, k);
     },
-    $signature: 4
+    $signature: 2
   };
   A.MimeType.prototype = {$isMimeType: 1};
   A.MimeTypeArray.prototype = {
@@ -14947,11 +17301,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -14959,6 +17323,12 @@
   };
   A.MouseEvent.prototype = {$isMouseEvent: 1};
   A._ChildNodeListLazy.prototype = {
+    get$first(_) {
+      var result = this._this.firstChild;
+      if (result == null)
+        throw A.wrapException(A.StateError$("No elements"));
+      return result;
+    },
     get$single(_) {
       var t1 = this._this,
         l = t1.childNodes.length;
@@ -15064,11 +17434,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15103,11 +17483,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15115,6 +17505,9 @@
   };
   A.ProgressEvent.prototype = {$isProgressEvent: 1};
   A.RtcStatsReport.prototype = {
+    containsKey$1(receiver, key) {
+      return A.convertNativeToDart_Dictionary(receiver.get(key)) != null;
+    },
     $index(receiver, key) {
       return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
     },
@@ -15154,7 +17547,7 @@
     call$2(k, v) {
       return B.JSArray_methods.add$1(this.keys, k);
     },
-    $signature: 4
+    $signature: 2
   };
   A.SelectElement.prototype = {
     get$length(receiver) {
@@ -15185,11 +17578,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15219,11 +17622,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15236,6 +17649,9 @@
     $isSpeechRecognitionResult: 1
   };
   A.Storage.prototype = {
+    containsKey$1(receiver, key) {
+      return receiver.getItem(key) != null;
+    },
     $index(receiver, key) {
       return receiver.getItem(A._asString(key));
     },
@@ -15270,7 +17686,7 @@
     call$2(k, v) {
       return B.JSArray_methods.add$1(this.keys, k);
     },
-    $signature: 25
+    $signature: 27
   };
   A.StyleSheet.prototype = {$isStyleSheet: 1};
   A.TableElement.prototype = {
@@ -15356,11 +17772,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15389,11 +17815,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15430,11 +17866,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15482,11 +17928,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15585,11 +18041,17 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      if (receiver.length > 0)
+        return receiver[0];
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15618,11 +18080,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15651,11 +18123,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15684,11 +18166,21 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1;
+      if (receiver.length > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       if (!(index >= 0 && index < receiver.length))
         return A.ioore(receiver, index);
       return receiver[index];
     },
+    $isJSIndexable: 1,
     $isEfficientLengthIterable: 1,
     $isJavaScriptIndexingBehavior: 1,
     $isIterable: 1,
@@ -15726,6 +18218,11 @@
     }
   };
   A._ElementAttributeMap.prototype = {
+    containsKey$1(_, key) {
+      var t1 = this._html$_element.hasAttribute(key);
+      t1.toString;
+      return t1;
+    },
     $index(_, key) {
       return this._html$_element.getAttribute(A._asString(key));
     },
@@ -15734,7 +18231,7 @@
     }
   };
   A.EventStreamProvider.prototype = {};
-  A._EventStream.prototype = {
+  A._EventStream0.prototype = {
     listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
       var t1 = A._instanceType(this);
       t1._eval$1("~(1)?")._as(onData);
@@ -15743,10 +18240,13 @@
     },
     listen$3$onDone$onError(onData, onDone, onError) {
       return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    },
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
     }
   };
   A._ElementEventStreamImpl.prototype = {};
-  A._EventStreamSubscription.prototype = {
+  A._EventStreamSubscription0.prototype = {
     cancel$0(_) {
       var _this = this;
       if (_this._target == null)
@@ -15755,11 +18255,26 @@
       _this._onData = _this._target = null;
       return $.$get$nullFuture();
     },
-    pause$0(_) {
+    onData$1(handleData) {
+      var t1, _this = this;
+      _this.$ti._eval$1("~(1)?")._as(handleData);
+      if (_this._target == null)
+        throw A.wrapException(A.StateError$("Subscription has been canceled."));
+      _this._unlisten$0();
+      t1 = A._wrapZone(new A._EventStreamSubscription_onData_closure(handleData), type$.Event);
+      _this._onData = t1;
+      _this._tryResume$0();
+    },
+    onError$1(_, handleError) {
+    },
+    pause$1(_, resumeSignal) {
       if (this._target == null)
         return;
       ++this._pauseCount;
       this._unlisten$0();
+    },
+    pause$0(_) {
+      return this.pause$1(0, null);
     },
     resume$0(_) {
       var _this = this;
@@ -15788,11 +18303,17 @@
     },
     $isStreamSubscription: 1
   };
-  A._EventStreamSubscription_closure.prototype = {
+  A._EventStreamSubscription_closure0.prototype = {
     call$1(e) {
       return this.onData.call$1(type$.Event._as(e));
     },
-    $signature: 27
+    $signature: 28
+  };
+  A._EventStreamSubscription_onData_closure.prototype = {
+    call$1(e) {
+      return this.handleData.call$1(type$.Event._as(e));
+    },
+    $signature: 28
   };
   A._Html5NodeValidator.prototype = {
     _Html5NodeValidator$1$uriPolicy(uriPolicy) {
@@ -15843,13 +18364,13 @@
     call$1(v) {
       return type$.NodeValidator._as(v).allowsElement$1(this.element);
     },
-    $signature: 26
+    $signature: 29
   };
   A.NodeValidatorBuilder_allowsAttribute_closure.prototype = {
     call$1(v) {
       return type$.NodeValidator._as(v).allowsAttribute$3(this.element, this.attributeName, this.value);
     },
-    $signature: 26
+    $signature: 29
   };
   A._SimpleNodeValidator.prototype = {
     _SimpleNodeValidator$4$allowedAttributes$allowedElements$allowedUriAttributes(uriPolicy, allowedAttributes, allowedElements, allowedUriAttributes) {
@@ -15896,13 +18417,13 @@
     call$1(x) {
       return !B.JSArray_methods.contains$1(B.List_ql7, A._asString(x));
     },
-    $signature: 7
+    $signature: 11
   };
   A._SimpleNodeValidator_closure0.prototype = {
     call$1(x) {
       return B.JSArray_methods.contains$1(B.List_ql7, A._asString(x));
     },
-    $signature: 7
+    $signature: 11
   };
   A._TemplatingNodeValidator.prototype = {
     allowsAttribute$3(element, attributeName, value) {
@@ -15973,7 +18494,7 @@
     _removeNode$2(node, $parent) {
       ++this.numTreeModifications;
       if ($parent == null || $parent !== node.parentNode)
-        J.remove$0$ax(node);
+        J.remove$0$x(node);
       else
         $parent.removeChild(node).toString;
     },
@@ -16153,7 +18674,7 @@
         child = nextChild;
       }
     },
-    $signature: 30
+    $signature: 45
   };
   A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase.prototype = {};
   A._DomRectList_JavaScriptObject_ListMixin.prototype = {};
@@ -16194,52 +18715,6 @@
   A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
   A.__StyleSheetList_JavaScriptObject_ListMixin.prototype = {};
   A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin.prototype = {};
-  A.NullRejectionException.prototype = {
-    toString$0(_) {
-      return "Promise was rejected with a value of `" + (this.isUndefined ? "undefined" : "null") + "`.";
-    },
-    $isException: 1
-  };
-  A.jsify__convert.prototype = {
-    call$1(o) {
-      var t1, convertedMap, t2, key, convertedList;
-      if (A._noJsifyRequired(o))
-        return o;
-      t1 = this._convertedObjects;
-      if (t1.containsKey$1(0, o))
-        return t1.$index(0, o);
-      if (type$.Map_dynamic_dynamic._is(o)) {
-        convertedMap = {};
-        t1.$indexSet(0, o, convertedMap);
-        for (t1 = J.getInterceptor$x(o), t2 = J.get$iterator$ax(t1.get$keys(o)); t2.moveNext$0();) {
-          key = t2.get$current(t2);
-          convertedMap[key] = this.call$1(t1.$index(o, key));
-        }
-        return convertedMap;
-      } else if (type$.Iterable_dynamic._is(o)) {
-        convertedList = [];
-        t1.$indexSet(0, o, convertedList);
-        B.JSArray_methods.addAll$1(convertedList, J.map$1$1$ax(o, this, type$.dynamic));
-        return convertedList;
-      } else
-        return o;
-    },
-    $signature: 31
-  };
-  A.promiseToFuture_closure.prototype = {
-    call$1(r) {
-      return this.completer.complete$1(0, this.T._eval$1("0/?")._as(r));
-    },
-    $signature: 6
-  };
-  A.promiseToFuture_closure0.prototype = {
-    call$1(e) {
-      if (e == null)
-        return this.completer.completeError$1(new A.NullRejectionException(e === undefined));
-      return this.completer.completeError$1(e);
-    },
-    $signature: 6
-  };
   A._JSSecureRandom.prototype = {
     _JSSecureRandom$0() {
       var $crypto = self.crypto;
@@ -16300,6 +18775,16 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1 = receiver.length;
+      t1.toString;
+      if (t1 > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
     },
@@ -16331,6 +18816,16 @@
     },
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$first(receiver) {
+      var t1 = receiver.length;
+      t1.toString;
+      if (t1 > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
     },
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
@@ -16368,6 +18863,16 @@
     },
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$first(receiver) {
+      var t1 = receiver.length;
+      t1.toString;
+      if (t1 > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
     },
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
@@ -16428,6 +18933,16 @@
     set$length(receiver, newLength) {
       throw A.wrapException(A.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first(receiver) {
+      var t1 = receiver.length;
+      t1.toString;
+      if (t1 > 0) {
+        t1 = receiver[0];
+        t1.toString;
+        return t1;
+      }
+      throw A.wrapException(A.StateError$("No elements"));
+    },
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
     },
@@ -16449,6 +18964,9 @@
     }
   };
   A.AudioParamMap.prototype = {
+    containsKey$1(receiver, key) {
+      return A.convertNativeToDart_Dictionary(receiver.get(key)) != null;
+    },
     $index(receiver, key) {
       return A.convertNativeToDart_Dictionary(receiver.get(A._asString(key)));
     },
@@ -16488,7 +19006,7 @@
     call$2(k, v) {
       return B.JSArray_methods.add$1(this.keys, k);
     },
-    $signature: 4
+    $signature: 2
   };
   A.AudioTrackList.prototype = {
     get$length(receiver) {
@@ -16502,6 +19020,102 @@
     }
   };
   A._AudioParamMap_JavaScriptObject_MapMixin.prototype = {};
+  A.CancelableOperation.prototype = {};
+  A.CancelableCompleter.prototype = {
+    complete$1(_, value) {
+      var _this = this,
+        t1 = _this.$ti;
+      t1._eval$1("1/?")._as(value);
+      if (!_this._mayComplete)
+        throw A.wrapException(A.StateError$("Operation already completed"));
+      _this._mayComplete = false;
+      if (!t1._eval$1("Future<1>")._is(value)) {
+        t1 = _this._completeNow$0();
+        if (t1 != null)
+          t1.complete$1(0, value);
+        return;
+      }
+      if (_this._inner == null) {
+        value._ignore$0();
+        return;
+      }
+      value.then$1$2$onError(new A.CancelableCompleter_complete_closure(_this), new A.CancelableCompleter_complete_closure0(_this), type$.Null);
+    },
+    _completeNow$0() {
+      var inner = this._inner;
+      if (inner == null)
+        return null;
+      this._cancelCompleter = null;
+      return inner;
+    },
+    _cancelable_operation$_cancel$0() {
+      var _this = this,
+        cancelCompleter = _this._cancelCompleter;
+      if (cancelCompleter == null)
+        return A.Future_Future$value(null, type$.void);
+      if (_this._inner != null) {
+        _this._inner = null;
+        cancelCompleter.complete$1(0, _this._invokeCancelCallbacks$0());
+      }
+      return cancelCompleter.future;
+    },
+    _invokeCancelCallbacks$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.nullable_Object),
+        $async$returnValue, t1;
+      var $async$_invokeCancelCallbacks$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = A._setArrayType([], type$.JSArray_Future_nullable_Object);
+              $async$goto = t1.length !== 0 ? 3 : 4;
+              break;
+            case 3:
+              // then
+              $async$goto = 5;
+              return A._asyncAwait(A.Future_wait(t1, type$.nullable_Object), $async$_invokeCancelCallbacks$0);
+            case 5:
+              // returning from await.
+            case 4:
+              // join
+              $async$returnValue = null;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_invokeCancelCallbacks$0, $async$completer);
+    }
+  };
+  A.CancelableCompleter_complete_closure.prototype = {
+    call$1(result) {
+      var t1 = this.$this;
+      t1.$ti._precomputed1._as(result);
+      t1 = t1._completeNow$0();
+      if (t1 != null)
+        t1.complete$1(0, result);
+    },
+    $signature() {
+      return this.$this.$ti._eval$1("Null(1)");
+    }
+  };
+  A.CancelableCompleter_complete_closure0.prototype = {
+    call$2(error, stackTrace) {
+      var t1;
+      A._asObject(error);
+      type$.StackTrace._as(stackTrace);
+      t1 = this.$this._completeNow$0();
+      if (t1 != null)
+        t1.completeError$2(error, stackTrace);
+    },
+    $signature: 32
+  };
   A.CanonicalizedMap.prototype = {
     $index(_, key) {
       var pair, _this = this;
@@ -16533,12 +19147,6 @@
     },
     get$isEmpty(_) {
       return this._base._length === 0;
-    },
-    get$keys(_) {
-      var t1 = this._base,
-        t2 = A._instanceType(t1)._eval$1("LinkedHashMapValuesIterable<2>"),
-        t3 = this.$ti._eval$1("CanonicalizedMap.K");
-      return A.MappedIterable_MappedIterable(new A.LinkedHashMapValuesIterable(t1, t2), t2._bind$1(t3)._eval$1("1(Iterable.E)")._as(new A.CanonicalizedMap_keys_closure(this)), t2._eval$1("Iterable.E"), t3);
     },
     get$length(_) {
       return this._base._length;
@@ -16575,60 +19183,135 @@
       return this.$this.$ti._eval$1("~(CanonicalizedMap.C,MapEntry<CanonicalizedMap.K,CanonicalizedMap.V>)");
     }
   };
-  A.CanonicalizedMap_keys_closure.prototype = {
-    call$1(pair) {
-      return this.$this.$ti._eval$1("MapEntry<CanonicalizedMap.K,CanonicalizedMap.V>")._as(pair).key;
+  A.ResponseBody.prototype = {
+    close$0(_) {
+      return null;
     },
-    $signature() {
-      return this.$this.$ti._eval$1("CanonicalizedMap.K(MapEntry<CanonicalizedMap.K,CanonicalizedMap.V>)");
+    set$stream(_, stream) {
+      this.stream = type$.Stream_Uint8List._as(stream);
+    },
+    set$headers(_, headers) {
+      this.headers = type$.Map_of_String_and_List_String._as(headers);
     }
   };
-  A.RequestAbortedException.prototype = {};
-  A.BaseClient.prototype = {};
-  A.BaseRequest.prototype = {
-    finalize$0() {
-      if (this._finalized)
-        throw A.wrapException(A.StateError$("Can't finalize a finalized Request."));
-      this._finalized = true;
-      return B.ByteStream__EmptyStream;
-    },
+  A.DioExceptionType.prototype = {
+    _enumToString$0() {
+      return "DioExceptionType." + this._name;
+    }
+  };
+  A.DioException.prototype = {
     toString$0(_) {
-      return this.method + " " + this.url.toString$0(0);
-    }
-  };
-  A.BaseRequest_closure.prototype = {
-    call$2(key1, key2) {
-      return A._asString(key1).toLowerCase() === A._asString(key2).toLowerCase();
-    },
-    $signature: 32
-  };
-  A.BaseRequest_closure0.prototype = {
-    call$1(key) {
-      return B.JSString_methods.get$hashCode(A._asString(key).toLowerCase());
-    },
-    $signature: 33
-  };
-  A.BaseResponse.prototype = {
-    BaseResponse$7$contentLength$headers$isRedirect$persistentConnection$reasonPhrase$request(statusCode, contentLength, headers, isRedirect, persistentConnection, reasonPhrase, request) {
-      var t1 = this.statusCode;
-      if (t1 < 100)
-        throw A.wrapException(A.ArgumentError$("Invalid status code " + t1 + ".", null));
-      else {
-        t1 = this.contentLength;
-        if (t1 != null && t1 < 0)
-          throw A.wrapException(A.ArgumentError$("Invalid content length " + A.S(t1) + ".", null));
+      var e, s, t1, exception;
+      try {
+        t1 = A.defaultDioExceptionReadableStringBuilder(this);
+        return t1;
+      } catch (exception) {
+        e = A.unwrapException(exception);
+        s = A.getTraceFromException(exception);
+        J.toString$0$(e);
+        return A.defaultDioExceptionReadableStringBuilder(this);
       }
-    }
-  };
-  A.BrowserClient.prototype = {
-    send$1(_, request) {
-      return this.send$body$BrowserClient(0, request);
     },
-    send$body$BrowserClient(_, request) {
+    $isException: 1
+  };
+  A.DioMixin.prototype = {
+    request$1$6$cancelToken$data$onReceiveProgress$onSendProgress$options(_, path, cancelToken, data, onReceiveProgress, onSendProgress, options, $T) {
+      return this.request$body$DioMixin(0, path, cancelToken, data, onReceiveProgress, onSendProgress, options, $T, $T._eval$1("Response0<0>"));
+    },
+    request$body$DioMixin(_, path, cancelToken, data, onReceiveProgress, onSendProgress, options, $T, $async$type) {
       var $async$goto = 0,
-        $async$completer = A._makeAsyncAwaitCompleter(type$.StreamedResponse),
-        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$next = [], $async$self = this, abortController, bodyBytes, _0_0, _0_2, _0_2_isSet, abortTrigger, t1, _1_0, contentLength, header, response, contentLengthHeader, contentLength0, headers, e, st, t2, t3, t4, t5, _this, t6, t7, t8, result, exception, $async$exception;
-      var $async$send$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        $async$completer = A._makeAsyncAwaitCompleter($async$type),
+        $async$returnValue, $async$self = this, t2, t3, t4, query, t5, headers, contentType, extra, method, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, requestOptions, t1;
+      var $async$request$1$6$cancelToken$data$onReceiveProgress$onSendProgress$options = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = $async$self.DioMixin___DioMixin_options_A;
+              t1 === $ && A.throwLateFieldNI("options");
+              t2 = A.StackTrace_current();
+              t3 = type$.String;
+              t4 = type$.dynamic;
+              query = A.LinkedHashMap_LinkedHashMap$_empty(t3, t4);
+              t5 = t1.OptionsMixin___OptionsMixin_queryParameters_A;
+              t5 === $ && A.throwLateFieldNI("queryParameters");
+              query.addAll$1(0, t5);
+              t5 = t1.___RequestConfig__headers_A;
+              t5 === $ && A.throwLateFieldNI("_headers");
+              headers = A.caseInsensitiveKeyMap(t5, t4);
+              t5 = options.headers;
+              if (t5 != null)
+                headers.addAll$1(0, t5);
+              contentType = A._asStringQ(headers.$index(0, "content-type"));
+              t5 = t1.___RequestConfig_extra_A;
+              t5 === $ && A.throwLateFieldNI("extra");
+              extra = A.LinkedHashMap_LinkedHashMap$from(t5, t3, t4);
+              t3 = options.method;
+              if (t3 == null) {
+                t3 = t1.___RequestConfig_method_A;
+                t3 === $ && A.throwLateFieldNI("method");
+              }
+              method = t3.toUpperCase();
+              t3 = t1.OptionsMixin___OptionsMixin__baseUrl_A;
+              t3 === $ && A.throwLateFieldNI("_baseUrl");
+              t4 = t1.___RequestConfig_preserveHeaderCase_A;
+              t4 === $ && A.throwLateFieldNI("preserveHeaderCase");
+              t5 = t1.OptionsMixin__connectTimeout;
+              t6 = t1._sendTimeout;
+              t7 = t1._receiveTimeout;
+              t8 = options.responseType;
+              if (t8 == null) {
+                t8 = t1.___RequestConfig_responseType_A;
+                t8 === $ && A.throwLateFieldNI("responseType");
+              }
+              t9 = options.validateStatus;
+              if (t9 == null) {
+                t9 = t1.___RequestConfig_validateStatus_A;
+                t9 === $ && A.throwLateFieldNI("validateStatus");
+              }
+              t10 = t1.___RequestConfig_receiveDataWhenStatusError_A;
+              t10 === $ && A.throwLateFieldNI("receiveDataWhenStatusError");
+              t11 = t1.___RequestConfig_followRedirects_A;
+              t11 === $ && A.throwLateFieldNI("followRedirects");
+              t12 = t1.___RequestConfig_maxRedirects_A;
+              t12 === $ && A.throwLateFieldNI("maxRedirects");
+              t13 = t1.___RequestConfig_persistentConnection_A;
+              t13 === $ && A.throwLateFieldNI("persistentConnection");
+              t14 = t1.requestEncoder;
+              t15 = t1.responseDecoder;
+              t16 = t1.___RequestConfig_listFormat_A;
+              t16 === $ && A.throwLateFieldNI("listFormat");
+              t17 = contentType == null ? null : contentType;
+              t1 = t17 == null ? A._asStringQ(t1.___RequestConfig__headers_A.$index(0, "content-type")) : t17;
+              requestOptions = new A.RequestOptions(data, path, cancelToken, onReceiveProgress, onSendProgress, $, $, null, method, t4, t6, t7, t8, t9, t10, extra, t11, t12, t13, t14, t15, t16);
+              requestOptions._RequestConfig$16$contentType$extra$followRedirects$headers$listFormat$maxRedirects$method$persistentConnection$preserveHeaderCase$receiveDataWhenStatusError$receiveTimeout$requestEncoder$responseDecoder$responseType$sendTimeout$validateStatus(t1, extra, t11, headers, t16, t12, method, t13, t4, t10, t7, t14, t15, t8, t6, t9);
+              requestOptions.sourceStackTrace = t2;
+              requestOptions.OptionsMixin___OptionsMixin_queryParameters_A = type$.Map_String_dynamic._as(query);
+              requestOptions.set$baseUrl(t3);
+              requestOptions.set$connectTimeout(t5);
+              if ($async$self.DioMixin__closed)
+                throw A.wrapException(A.DioException_DioException$connectionError("Dio can't establish a new connection after it was closed.", requestOptions));
+              $async$returnValue = $async$self.fetch$1$1(0, requestOptions, $T);
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$request$1$6$cancelToken$data$onReceiveProgress$onSendProgress$options, $async$completer);
+    },
+    fetch$1$1(_, requestOptions, $T) {
+      return this.fetch$body$DioMixin(0, requestOptions, $T, $T._eval$1("Response0<0>"));
+    },
+    fetch$body$DioMixin(_, requestOptions, $T, $async$type) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter($async$type),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, future, data, e, isState, t1, requestInterceptorWrapper, responseInterceptorWrapper, errorInterceptorWrapper, t2, t3, t4, t5, t6, fun, exception, _box_0, $async$exception;
+      var $async$fetch$1$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$errorStack.push($async$result);
           $async$goto = $async$handler;
@@ -16637,110 +19320,87 @@
           switch ($async$goto) {
             case 0:
               // Function start
-              if ($async$self._isClosed)
-                throw A.wrapException(A.ClientException$("HTTP request failed. Client is already closed.", request.url));
-              t2 = init.G;
-              abortController = A._asJSObject(new t2.AbortController());
-              t3 = $async$self._openRequestAbortControllers;
-              B.JSArray_methods.add$1(t3, abortController);
-              request.super$BaseRequest$finalize();
-              t4 = type$._AsyncStreamController_List_int;
-              t5 = new A._AsyncStreamController(null, null, null, null, t4);
-              t5._add$1(0, request._bodyBytes);
-              t5._closeUnchecked$0();
-              $async$goto = 3;
-              return A._asyncAwait(new A.ByteStream(new A._ControllerStream(t5, t4._eval$1("_ControllerStream<1>"))).toBytes$0(), $async$send$1);
-            case 3:
-              // returning from await.
-              bodyBytes = $async$result;
-              $async$handler = 5;
-              _0_0 = request;
-              _0_2 = null;
-              _0_2_isSet = false;
-              abortTrigger = null;
-              t4 = request.url;
-              _this = t4.toString$0(0);
-              t5 = J.get$length$asx(bodyBytes) !== 0 ? bodyBytes : null;
-              t6 = type$.String;
-              t1 = A.LinkedHashMap_LinkedHashMap$_empty(t6, type$.Object);
-              _1_0 = request._bodyBytes.length;
-              contentLength = null;
-              if (_1_0 != null) {
-                contentLength = _1_0;
-                J.$indexSet$ax(t1, "content-length", contentLength);
+              _box_0 = {};
+              _box_0.requestOptions = requestOptions;
+              if (A.createRuntimeType($T) !== B.Type_dynamic_wn9) {
+                t1 = requestOptions.___RequestConfig_responseType_A;
+                t1 === $ && A.throwLateFieldNI("responseType");
+                t1 = !(t1 === B.ResponseType_3 || t1 === B.ResponseType_1);
+              } else
+                t1 = false;
+              if (t1)
+                if (A.createRuntimeType($T) === B.Type_String_AXU)
+                  requestOptions.___RequestConfig_responseType_A = B.ResponseType_2;
+                else
+                  requestOptions.___RequestConfig_responseType_A = B.ResponseType_0;
+              requestInterceptorWrapper = new A.DioMixin_fetch_requestInterceptorWrapper(_box_0);
+              responseInterceptorWrapper = new A.DioMixin_fetch_responseInterceptorWrapper(_box_0);
+              errorInterceptorWrapper = new A.DioMixin_fetch_errorInterceptorWrapper(_box_0);
+              t1 = type$.dynamic;
+              future = A.Future_Future(new A.DioMixin_fetch_closure(_box_0), t1);
+              for (t2 = $async$self.DioMixin__interceptors, t3 = A._instanceType(t2), t4 = t3._eval$1("ListIterator<ListBase.E>"), t5 = new A.ListIterator(t2, t2.get$length(0), t4), t3 = t3._eval$1("ListBase.E"); t5.moveNext$0();) {
+                t6 = t5.__internal$_current;
+                fun = (t6 == null ? t3._as(t6) : t6).get$onRequest();
+                future = future.then$1$1(requestInterceptorWrapper.call$1(fun), t1);
               }
-              for (t7 = request.headers, t7 = new A.LinkedHashMapEntriesIterable(t7, A._instanceType(t7)._eval$1("LinkedHashMapEntriesIterable<1,2>")).get$iterator(0); t7.moveNext$0();) {
-                t8 = t7.__js_helper$_current;
-                t8.toString;
-                header = t8;
-                J.$indexSet$ax(t1, header.key, header.value);
+              future = future.then$1$1(requestInterceptorWrapper.call$1(new A.DioMixin_fetch_closure0(_box_0, $async$self, $T)), t1);
+              for (t5 = new A.ListIterator(t2, t2.get$length(0), t4); t5.moveNext$0();) {
+                t6 = t5.__internal$_current;
+                fun = (t6 == null ? t3._as(t6) : t6).get$onResponse();
+                future = future.then$1$1(responseInterceptorWrapper.call$1(fun), t1);
               }
-              t1 = A.jsify(t1);
-              t1.toString;
-              A._asJSObject(t1);
-              t7 = A._asJSObject(abortController.signal);
-              $async$goto = 8;
-              return A._asyncAwait(A.promiseToFuture(A._asJSObject(t2.fetch(_this, {method: request.method, headers: t1, body: t5, credentials: "same-origin", redirect: "follow", signal: t7})), type$.JSObject), $async$send$1);
-            case 8:
-              // returning from await.
-              response = $async$result;
-              contentLengthHeader = A._asStringQ(A._asJSObject(response.headers).get("content-length"));
-              contentLength0 = contentLengthHeader != null ? A.Primitives_parseInt(contentLengthHeader, null) : null;
-              if (contentLength0 == null && contentLengthHeader != null) {
-                t1 = A.ClientException$("Invalid content-length header [" + contentLengthHeader + "].", t4);
-                throw A.wrapException(t1);
+              for (t1 = new A.ListIterator(t2, t2.get$length(0), t4); t1.moveNext$0();) {
+                t2 = t1.__internal$_current;
+                if (t2 == null)
+                  t2 = t3._as(t2);
+                fun = t2.get$onError(t2);
+                future = future.catchError$1(errorInterceptorWrapper.call$1(fun));
               }
-              headers = A.LinkedHashMap_LinkedHashMap$_empty(t6, t6);
-              t1 = A._asJSObject(response.headers);
-              t2 = new A.BrowserClient_send_closure(headers);
-              if (typeof t2 == "function")
-                A.throwExpression(A.ArgumentError$("Attempting to rewrap a JS function.", null));
-              result = function(_call, f) {
-                return function(arg1, arg2, arg3) {
-                  return _call(f, arg1, arg2, arg3, arguments.length);
-                };
-              }(A._callDartFunctionFast3, t2);
-              result[$.$get$DART_CLOSURE_PROPERTY_NAME()] = t2;
-              t1.forEach(result);
-              t1 = A._bodyToStream(request, response);
-              t2 = A._asInt(response.status);
-              t4 = headers;
-              t5 = contentLength0;
-              A.Uri_parse(A._asString(response.url));
-              t6 = A._asString(response.statusText);
-              t1 = new A.StreamedResponseV2(A.toByteStream(t1), request, t2, t6, t5, t4, false, true);
-              t1.BaseResponse$7$contentLength$headers$isRedirect$persistentConnection$reasonPhrase$request(t2, t5, t4, false, true, t6, request);
-              $async$returnValue = t1;
-              $async$next = [1];
-              // goto finally
-              $async$goto = 6;
-              break;
-              $async$next.push(7);
-              // goto finally
-              $async$goto = 6;
-              break;
-            case 5:
-              // catch
               $async$handler = 4;
-              $async$exception = $async$errorStack.pop();
-              e = A.unwrapException($async$exception);
-              st = A.getTraceFromException($async$exception);
-              A._rethrowAsClientException(e, st, request);
-              $async$next.push(7);
-              // goto finally
+              $async$goto = 7;
+              return A._asyncAwait(future, $async$fetch$1$1);
+            case 7:
+              // returning from await.
+              data = $async$result;
+              t1 = data instanceof A.InterceptorState ? data.data : data;
+              if (t1 == null)
+                t1 = A._asObject(t1);
+              t1 = A.DioMixin_assureResponse(t1, _box_0.requestOptions, $T);
+              $async$returnValue = t1;
+              // goto return
+              $async$goto = 1;
+              break;
+              $async$handler = 2;
+              // goto after finally
               $async$goto = 6;
               break;
             case 4:
-              // uncaught
-              $async$next = [2];
-            case 6:
-              // finally
-              $async$handler = 2;
-              B.JSArray_methods.remove$1(t3, abortController);
-              // goto the next finally handler
-              $async$goto = $async$next.pop();
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              e = A.unwrapException($async$exception);
+              isState = e instanceof A.InterceptorState;
+              if (isState)
+                if (e.type === B.InterceptorResultType_1) {
+                  t1 = e.data;
+                  $async$returnValue = A.DioMixin_assureResponse(t1, _box_0.requestOptions, $T);
+                  // goto return
+                  $async$goto = 1;
+                  break;
+                }
+              t1 = isState ? e.data : e;
+              if (t1 == null)
+                t1 = A._asObject(t1);
+              throw A.wrapException(A.DioMixin_assureDioException(t1, _box_0.requestOptions));
+              // goto after finally
+              $async$goto = 6;
               break;
-            case 7:
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
               // after finally
             case 1:
               // return
@@ -16750,53 +19410,16 @@
               return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
           }
       });
-      return A._asyncStartSync($async$send$1, $async$completer);
+      return A._asyncStartSync($async$fetch$1$1, $async$completer);
     },
-    close$0(_) {
-      var t1, t2, _i;
-      for (t1 = this._openRequestAbortControllers, t2 = t1.length, _i = 0; _i < t1.length; t1.length === t2 || (0, A.throwConcurrentModificationError)(t1), ++_i)
-        t1[_i].abort();
-      this._isClosed = true;
-    }
-  };
-  A.BrowserClient_send_closure.prototype = {
-    call$3(value, header, _) {
-      A._asString(value);
-      this.headers.$indexSet(0, A._asString(header).toLowerCase(), value);
+    _dispatchRequest$1$1(reqOpt, $T) {
+      return this._dispatchRequest$body$DioMixin(reqOpt, $T);
     },
-    call$2(value, header) {
-      return this.call$3(value, header, null);
-    },
-    "call*": "call$3",
-    $requiredArgCount: 2,
-    $defaultValues() {
-      return [null];
-    },
-    $signature: 34
-  };
-  A._bodyToStream_closure.prototype = {
-    call$1(listener) {
-      return A._readStreamBody(this.request, this.response, type$.MultiStreamController_List_int._as(listener));
-    },
-    $signature: 35
-  };
-  A._readStreamBody_closure.prototype = {
-    call$0() {
-      var t1 = this._box_0,
-        _0_0 = t1.resumeSignal;
-      if (_0_0 != null) {
-        t1.resumeSignal = null;
-        _0_0.complete$0(0);
-      }
-    },
-    $signature: 0
-  };
-  A._readStreamBody_closure0.prototype = {
-    call$0() {
+    _dispatchRequest$body$DioMixin(reqOpt, $T) {
       var $async$goto = 0,
-        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$handler = 1, $async$errorStack = [], $async$self = this, e, s, exception, $async$exception;
-      var $async$call$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        $async$completer = A._makeAsyncAwaitCompleter(type$.Response_dynamic),
+        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$self = this, stream, operation, operationWeakReference, responseBody, headers, ret, statusOk, data, e, t1, t2, value, t3, t4, message, buffer, exception, cancelToken, $async$exception;
+      var $async$_dispatchRequest$1$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$errorStack.push($async$result);
           $async$goto = $async$handler;
@@ -16805,12 +19428,395 @@
           switch ($async$goto) {
             case 0:
               // Function start
-              $async$handler = 3;
-              $async$self._box_0.cancelled = true;
+              cancelToken = reqOpt.cancelToken;
+              $async$handler = 4;
+              $async$goto = 7;
+              return A._asyncAwait($async$self._transformData$1(reqOpt), $async$_dispatchRequest$1$1);
+            case 7:
+              // returning from await.
+              stream = $async$result;
+              t1 = $async$self.DioMixin___DioMixin_httpClientAdapter_A;
+              t1 === $ && A.throwLateFieldNI("httpClientAdapter");
+              t2 = cancelToken;
+              t2 = t2 == null ? null : t2.get$whenCancel();
+              t2 = t1.fetch$3(0, reqOpt, stream, t2);
+              t1 = $.Zone__current;
+              t1 = new A.CancelableCompleter(new A._AsyncCompleter(new A._Future(t1, type$._Future_ResponseBody), type$._AsyncCompleter_ResponseBody), new A._AsyncCompleter(new A._Future(t1, type$._Future_nullable_Object), type$._AsyncCompleter_nullable_Object), null, type$.CancelableCompleter_ResponseBody);
+              t1.complete$1(0, t2);
+              value = t1.__CancelableCompleter_operation_FI;
+              operation = value === $ ? t1.__CancelableCompleter_operation_FI = new A.CancelableOperation(t1, type$.CancelableOperation_ResponseBody) : value;
+              operationWeakReference = new A._WeakReferenceWrapper(new ($.$get$_WeakReferenceWrapper__weakRefConstructor())(operation), type$._WeakReferenceWrapper_CancelableOperation_ResponseBody);
+              t1 = cancelToken;
+              if (t1 != null)
+                t1.get$whenCancel().whenComplete$1(new A.DioMixin__dispatchRequest_closure(operationWeakReference));
+              t1 = operation;
+              t2 = t1._cancelable_operation$_completer._inner;
+              t2 = t2 == null ? null : t2.future;
+              $async$goto = 8;
+              return A._asyncAwait(t2 == null ? new A._Future($.Zone__current, t1.$ti._eval$1("_Future<1>")) : t2, $async$_dispatchRequest$1$1);
+            case 8:
+              // returning from await.
+              responseBody = $async$result;
+              t1 = responseBody.headers;
+              t2 = reqOpt.___RequestConfig_preserveHeaderCase_A;
+              t2 === $ && A.throwLateFieldNI("preserveHeaderCase");
+              headers = A.Headers$fromMap(t1, t2);
+              J.set$headers$x(responseBody, headers._headers$_map);
+              responseBody.toString;
+              t1 = A._setArrayType([], type$.JSArray_RedirectRecord);
+              t2 = responseBody.isRedirect;
+              t3 = responseBody.statusCode;
+              t4 = responseBody.statusMessage;
+              ret = A.Response$(null, responseBody.extra, headers, t2, t1, reqOpt, t3, t4, type$.dynamic);
+              statusOk = reqOpt.validateStatus$1(responseBody.statusCode);
+              if (!statusOk) {
+                t1 = reqOpt.___RequestConfig_receiveDataWhenStatusError_A;
+                t1 === $ && A.throwLateFieldNI("receiveDataWhenStatusError");
+              } else
+                t1 = true;
+              $async$goto = t1 ? 9 : 11;
+              break;
+            case 9:
+              // then
+              J.set$stream$x(responseBody, A.handleResponseStream(reqOpt, responseBody));
+              $async$goto = 12;
+              return A._asyncAwait($async$self.DioMixin_transformer.transformResponse$2(reqOpt, responseBody), $async$_dispatchRequest$1$1);
+            case 12:
+              // returning from await.
+              data = $async$result;
+              t1 = false;
+              if (typeof data == "string")
+                if (data.length === 0)
+                  if (A.createRuntimeType($T) !== B.Type_dynamic_wn9)
+                    if (A.createRuntimeType($T) !== B.Type_String_AXU) {
+                      t1 = reqOpt.___RequestConfig_responseType_A;
+                      t1 === $ && A.throwLateFieldNI("responseType");
+                      t1 = t1 === B.ResponseType_0;
+                    }
+              if (t1)
+                data = null;
+              J.set$data$z(ret, data);
+              // goto join
+              $async$goto = 10;
+              break;
+            case 11:
+              // else
+              J.close$0$x(responseBody);
+            case 10:
+              // join
+              if (statusOk) {
+                $async$returnValue = ret;
+                // goto return
+                $async$goto = 1;
+                break;
+              } else {
+                t1 = responseBody.statusCode;
+                if (t1 >= 100 && t1 < 200)
+                  message = "This is an informational response - the request was received, continuing processing";
+                else if (t1 >= 200 && t1 < 300)
+                  message = "The request was successfully received, understood, and accepted";
+                else if (t1 >= 300 && t1 < 400)
+                  message = "Redirection: further action needs to be taken in order to complete the request";
+                else if (t1 >= 400 && t1 < 500)
+                  message = "Client error - the request contains bad syntax or cannot be fulfilled";
+                else
+                  message = t1 >= 500 && t1 < 600 ? "Server error - the server failed to fulfil an apparently valid request" : "A response with a status code that is not within the range of inclusive 100 to exclusive 600is a non-standard response, possibly due to the server's software";
+                buffer = A.StringBuffer$("");
+                t1 = "" + t1;
+                buffer.writeln$1("This exception was thrown because the response has a status code of " + t1 + " and RequestOptions.validateStatus was configured to throw for this status code.");
+                buffer.writeln$1("The status code of " + t1 + ' has the following meaning: "' + message + '"');
+                buffer.writeln$1("Read more about status codes at https://developer.mozilla.org/en-US/docs/Web/HTTP/Status");
+                buffer.writeln$1("In order to resolve this exception you typically have either to verify and fix your request code or you have to fix the server code.");
+                t1 = A.DioException$(null, buffer.toString$0(0), reqOpt, ret, null, B.DioExceptionType_4);
+                throw A.wrapException(t1);
+              }
+              $async$handler = 2;
+              // goto after finally
               $async$goto = 6;
-              return A._asyncAwait(A.promiseToFuture(A._asJSObject($async$self.reader.cancel()), type$.nullable_Object), $async$call$0);
+              break;
+            case 4:
+              // catch
+              $async$handler = 3;
+              $async$exception = $async$errorStack.pop();
+              e = A.unwrapException($async$exception);
+              t1 = A.DioMixin_assureDioException(e, reqOpt);
+              throw A.wrapException(t1);
+              // goto after finally
+              $async$goto = 6;
+              break;
+            case 3:
+              // uncaught
+              // goto rethrow
+              $async$goto = 2;
+              break;
+            case 6:
+              // after finally
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+            case 2:
+              // rethrow
+              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_dispatchRequest$1$1, $async$completer);
+    },
+    _isValidToken$1(token) {
+      var t1, t2, t3,
+        _s128_ = "                                 ! #$%&'  *+ -. 0123456789       ABCDEFGHIJKLMNOPQRSTUVWXYZ   ^_`abcdefghijklmnopqrstuvwxyz | ~ ";
+      for (t1 = new A.CodeUnits(token), t2 = type$.CodeUnits, t1 = new A.ListIterator(t1, t1.get$length(0), t2._eval$1("ListIterator<ListBase.E>")), t2 = t2._eval$1("ListBase.E"); t1.moveNext$0();) {
+        t3 = t1.__internal$_current;
+        if (t3 == null)
+          t3 = t2._as(t3);
+        if (!(t3 >= 128)) {
+          if (t3 >>> 0 !== t3 || t3 >= 128)
+            return A.ioore(_s128_, t3);
+          t3 = _s128_.charCodeAt(t3) === 32;
+        } else
+          t3 = true;
+        if (t3)
+          return false;
+      }
+      return true;
+    },
+    _transformData$1(options) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.nullable_Stream_Uint8List),
+        $async$returnValue, $async$self = this, _box_0, transformed, bytes, $length, group, groupCount, i, start, stream, t1;
+      var $async$_transformData$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = options.___RequestConfig_method_A;
+              t1 === $ && A.throwLateFieldNI("method");
+              if (!$async$self._isValidToken$1(t1))
+                throw A.wrapException(A.ArgumentError$value(options.get$method(0), "method", null));
+              $async$goto = options.data != null ? 3 : 4;
+              break;
+            case 3:
+              // then
+              _box_0 = {};
+              _box_0.length = null;
+              $async$goto = 5;
+              return A._asyncAwait($async$self.DioMixin_transformer.transformRequest$1(options), $async$_transformData$1);
+            case 5:
+              // returning from await.
+              transformed = $async$result;
+              bytes = B.C_Utf8Encoder.convert$1(transformed);
+              $length = bytes.length;
+              _box_0.length = $length;
+              t1 = options.___RequestConfig__headers_A;
+              t1 === $ && A.throwLateFieldNI("_headers");
+              t1.$indexSet(0, "content-length", B.JSInt_methods.toString$0($length));
+              group = A._setArrayType([], type$.JSArray_List_int);
+              groupCount = B.JSNumber_methods.ceil$0(bytes.length / 1024);
+              for (i = 0; i < groupCount; ++i) {
+                start = i * 1024;
+                B.JSArray_methods.add$1(group, B.NativeUint8List_methods.sublist$2(bytes, start, Math.min(start + 1024, bytes.length)));
+              }
+              stream = A.Stream_Stream$fromIterable(group, type$.List_int);
+              $async$returnValue = A.addProgress(stream, _box_0.length, options);
+              // goto return
+              $async$goto = 1;
+              break;
+            case 4:
+              // join
+              $async$returnValue = null;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_transformData$1, $async$completer);
+    }
+  };
+  A.DioMixin_fetch_requestInterceptorWrapper.prototype = {
+    call$1(cb) {
+      return new A.DioMixin_fetch_requestInterceptorWrapper_closure(this._box_0, type$.void_Function_RequestOptions_RequestInterceptorHandler._as(cb));
+    },
+    $signature: 44
+  };
+  A.DioMixin_fetch_requestInterceptorWrapper_closure.prototype = {
+    call$1(incomingState) {
+      var t1;
+      type$.InterceptorState_dynamic._as(incomingState);
+      if (incomingState.type === B.InterceptorResultType_0) {
+        t1 = type$.dynamic;
+        return A.DioMixin_listenCancelForAsyncTask(this._box_0.requestOptions.cancelToken, A.Future_Future(new A.DioMixin_fetch_requestInterceptorWrapper__closure(this.cb, incomingState), t1), t1);
+      }
+      return incomingState;
+    },
+    $signature: 34
+  };
+  A.DioMixin_fetch_requestInterceptorWrapper__closure.prototype = {
+    call$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.InterceptorState_dynamic),
+        $async$returnValue, $async$self = this, t1;
+      var $async$call$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = new A._Future($.Zone__current, type$._Future_InterceptorState_dynamic);
+              $async$self.cb.call$2(type$.RequestOptions._as($async$self.state.data), new A.RequestInterceptorHandler(new A._AsyncCompleter(t1, type$._AsyncCompleter_InterceptorState_dynamic)));
+              $async$returnValue = t1;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$call$0, $async$completer);
+    },
+    $signature: 14
+  };
+  A.DioMixin_fetch_responseInterceptorWrapper.prototype = {
+    call$1(cb) {
+      return new A.DioMixin_fetch_responseInterceptorWrapper_closure(this._box_0, type$.void_Function_2_Response_dynamic_and_ResponseInterceptorHandler._as(cb));
+    },
+    $signature: 36
+  };
+  A.DioMixin_fetch_responseInterceptorWrapper_closure.prototype = {
+    call$1(incomingState) {
+      var t1;
+      type$.InterceptorState_dynamic._as(incomingState);
+      t1 = incomingState.type;
+      if (t1 === B.InterceptorResultType_0 || t1 === B.InterceptorResultType_2) {
+        t1 = type$.dynamic;
+        return A.DioMixin_listenCancelForAsyncTask(this._box_0.requestOptions.cancelToken, A.Future_Future(new A.DioMixin_fetch_responseInterceptorWrapper__closure(this.cb, incomingState), t1), t1);
+      }
+      return incomingState;
+    },
+    $signature: 34
+  };
+  A.DioMixin_fetch_responseInterceptorWrapper__closure.prototype = {
+    call$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.InterceptorState_dynamic),
+        $async$returnValue, $async$self = this, t1;
+      var $async$call$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = new A._Future($.Zone__current, type$._Future_InterceptorState_dynamic);
+              $async$self.cb.call$2(type$.Response_dynamic._as($async$self.state.data), new A.ResponseInterceptorHandler(new A._AsyncCompleter(t1, type$._AsyncCompleter_InterceptorState_dynamic)));
+              $async$returnValue = t1;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$call$0, $async$completer);
+    },
+    $signature: 14
+  };
+  A.DioMixin_fetch_errorInterceptorWrapper.prototype = {
+    call$1(cb) {
+      return new A.DioMixin_fetch_errorInterceptorWrapper_closure(this._box_0, type$.void_Function_DioException_ErrorInterceptorHandler._as(cb));
+    },
+    $signature: 37
+  };
+  A.DioMixin_fetch_errorInterceptorWrapper_closure.prototype = {
+    call$1(error) {
+      var state, t1, t2;
+      if (error instanceof A.InterceptorState)
+        state = error;
+      else {
+        t1 = error == null ? A._asObject(error) : error;
+        state = new A.InterceptorState(A.DioMixin_assureDioException(t1, this._box_0.requestOptions), B.InterceptorResultType_0, type$.InterceptorState_DioException);
+      }
+      t1 = new A.DioMixin_fetch_errorInterceptorWrapper_closure_handleError(this.cb, state);
+      t2 = state.data;
+      if (t2 instanceof A.DioException && t2.type === B.DioExceptionType_5)
+        return t1.call$0();
+      t2 = state.type;
+      if (t2 === B.InterceptorResultType_0 || t2 === B.InterceptorResultType_4) {
+        t2 = type$.dynamic;
+        return A.DioMixin_listenCancelForAsyncTask(this._box_0.requestOptions.cancelToken, A.Future_Future(t1, t2), t2);
+      }
+      throw A.wrapException(error == null ? A._asObject(error) : error);
+    },
+    $signature: 38
+  };
+  A.DioMixin_fetch_errorInterceptorWrapper_closure_handleError.prototype = {
+    call$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.InterceptorState_dynamic),
+        $async$returnValue, $async$self = this, t1;
+      var $async$call$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = new A._Future($.Zone__current, type$._Future_InterceptorState_dynamic);
+              $async$self.cb.call$2(type$.DioException._as($async$self.state.data), new A.ErrorInterceptorHandler(new A._AsyncCompleter(t1, type$._AsyncCompleter_InterceptorState_dynamic)));
+              $async$returnValue = t1;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$call$0, $async$completer);
+    },
+    $signature: 14
+  };
+  A.DioMixin_fetch_closure.prototype = {
+    call$0() {
+      return new A.InterceptorState(this._box_0.requestOptions, B.InterceptorResultType_0, type$.InterceptorState_RequestOptions);
+    },
+    $signature: 39
+  };
+  A.DioMixin_fetch_closure0.prototype = {
+    call$2(reqOpt, handler) {
+      return this.$call$body$DioMixin_fetch_closure(reqOpt, handler);
+    },
+    $call$body$DioMixin_fetch_closure(reqOpt, handler) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$handler = 1, $async$errorStack = [], $async$self = this, value, e, t1, t2, exception, $async$exception;
+      var $async$call$2 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1) {
+          $async$errorStack.push($async$result);
+          $async$goto = $async$handler;
+        }
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              $async$self._box_0.requestOptions = reqOpt;
+              $async$handler = 3;
+              $async$goto = 6;
+              return A._asyncAwait($async$self.$this._dispatchRequest$1$1(reqOpt, $async$self.T), $async$call$2);
             case 6:
               // returning from await.
+              value = $async$result;
+              t1 = type$.Response_dynamic._as(value);
+              t2 = handler._completer;
+              if ((t2.future._state & 30) !== 0)
+                A.throwExpression(A.StateError$(string$.The__h));
+              t2.complete$1(0, new A.InterceptorState(t1, B.InterceptorResultType_2, type$.InterceptorState_Response_dynamic));
               $async$handler = 1;
               // goto after finally
               $async$goto = 5;
@@ -16819,10 +19825,16 @@
               // catch
               $async$handler = 2;
               $async$exception = $async$errorStack.pop();
-              e = A.unwrapException($async$exception);
-              s = A.getTraceFromException($async$exception);
-              if (!$async$self._box_0.hadError)
-                A._rethrowAsClientException(e, s, $async$self.request);
+              t1 = A.unwrapException($async$exception);
+              if (t1 instanceof A.DioException) {
+                e = t1;
+                t1 = type$.DioException._as(e);
+                t2 = handler._completer;
+                if ((t2.future._state & 30) !== 0)
+                  A.throwExpression(A.StateError$(string$.The__h));
+                t2.completeError$2(new A.InterceptorState(t1, B.InterceptorResultType_4, type$.InterceptorState_DioException), t1.stackTrace);
+              } else
+                throw $async$exception;
               // goto after finally
               $async$goto = 5;
               break;
@@ -16840,31 +19852,892 @@
               return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
           }
       });
-      return A._asyncStartSync($async$call$0, $async$completer);
+      return A._asyncStartSync($async$call$2, $async$completer);
     },
-    $signature: 23
+    $signature: 40
   };
-  A.ByteStream.prototype = {
-    toBytes$0() {
-      var t1 = new A._Future($.Zone__current, type$._Future_Uint8List),
-        completer = new A._AsyncCompleter(t1, type$._AsyncCompleter_Uint8List),
-        sink = new A._ByteCallbackSink(new A.ByteStream_toBytes_closure(completer), new Uint8Array(1024));
-      this.listen$4$cancelOnError$onDone$onError(type$.void_Function_List_int._as(sink.get$add(sink)), true, sink.get$close(sink), completer.get$completeError());
-      return t1;
+  A.DioMixin__dispatchRequest_closure.prototype = {
+    call$0() {
+      var t1 = this.operationWeakReference._weakRef.deref();
+      if (t1 != null)
+        t1._cancelable_operation$_completer._cancelable_operation$_cancel$0();
+    },
+    $signature: 1
+  };
+  A.InterceptorResultType.prototype = {
+    _enumToString$0() {
+      return "InterceptorResultType." + this._name;
     }
   };
-  A.ByteStream_toBytes_closure.prototype = {
-    call$1(bytes) {
-      return this.completer.complete$1(0, new Uint8Array(A._ensureNativeList(type$.List_int._as(bytes))));
-    },
-    $signature: 36
-  };
-  A.ClientException.prototype = {
+  A.InterceptorState.prototype = {
     toString$0(_) {
-      var t1 = this.uri.toString$0(0);
-      return "ClientException: " + this.message + ", uri=" + t1;
+      return "InterceptorState<" + A.createRuntimeType(this.$ti._precomputed1).toString$0(0) + ">(type: " + this.type.toString$0(0) + ", data: " + this.data.toString$0(0) + ")";
+    }
+  };
+  A._BaseHandler.prototype = {};
+  A.RequestInterceptorHandler.prototype = {};
+  A.ResponseInterceptorHandler.prototype = {};
+  A.ErrorInterceptorHandler.prototype = {};
+  A.Interceptor0.prototype = {
+    onResponse$2(response, handler) {
+      var t1 = handler._completer;
+      if ((t1.future._state & 30) !== 0)
+        A.throwExpression(A.StateError$(string$.The__h));
+      t1.complete$1(0, new A.InterceptorState(response, B.InterceptorResultType_0, type$.InterceptorState_Response_dynamic));
     },
-    $isException: 1
+    onError$2(_, err, handler) {
+      var t1 = handler._completer;
+      if ((t1.future._state & 30) !== 0)
+        A.throwExpression(A.StateError$(string$.The__h));
+      t1.completeError$2(new A.InterceptorState(err, B.InterceptorResultType_0, type$.InterceptorState_DioException), err.stackTrace);
+    }
+  };
+  A.Interceptors.prototype = {
+    get$length(_) {
+      return this._list.length;
+    },
+    set$length(_, newLength) {
+      B.JSArray_methods.set$length(this._list, newLength);
+    },
+    $index(_, index) {
+      var t1 = this._list;
+      if (!(index >= 0 && index < t1.length))
+        return A.ioore(t1, index);
+      t1 = t1[index];
+      t1.toString;
+      return t1;
+    },
+    $indexSet(_, index, value) {
+      var t1;
+      type$.Interceptor._as(value);
+      t1 = this._list;
+      if (t1.length === index)
+        B.JSArray_methods.add$1(t1, value);
+      else
+        B.JSArray_methods.$indexSet(t1, index, value);
+    }
+  };
+  A.Headers.prototype = {
+    forEach$1(_, f) {
+      var t1, t2, t3, t4;
+      type$.void_Function_2_String_and_List_String._as(f);
+      for (t1 = this._headers$_map, t2 = new A.LinkedHashMapKeyIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapKeyIterator<1>")); t2.moveNext$0();) {
+        t3 = t2.__js_helper$_current;
+        t4 = t1.$index(0, B.JSString_methods.trim$0(t3));
+        t4.toString;
+        f.call$2(t3, t4);
+      }
+    },
+    toString$0(_) {
+      var t1,
+        stringBuffer = new A.StringBuffer("");
+      this._headers$_map.forEach$1(0, new A.Headers_toString_closure(stringBuffer));
+      t1 = stringBuffer._contents;
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    }
+  };
+  A.Headers$fromMap_closure.prototype = {
+    call$2(k, v) {
+      A._asString(k);
+      type$.List_String._as(v);
+      return new A.MapEntry(B.JSString_methods.trim$0(k), v, type$.MapEntry_of_String_and_List_String);
+    },
+    $signature: 43
+  };
+  A.Headers_toString_closure.prototype = {
+    call$2(key, value) {
+      var t1, t2, t3, t4;
+      A._asString(key);
+      for (t1 = J.get$iterator$ax(type$.List_String._as(value)), t2 = this.stringBuffer, t3 = key + ": "; t1.moveNext$0();) {
+        t4 = t3 + t1.get$current(t1) + "\n";
+        t2._contents += t4;
+      }
+    },
+    $signature: 33
+  };
+  A.ImplyContentTypeInterceptor.prototype = {
+    onRequest$2(options, handler) {
+      var t1;
+      if (options.data != null) {
+        t1 = options.___RequestConfig__headers_A;
+        t1 === $ && A.throwLateFieldNI("_headers");
+        t1 = A._asStringQ(t1.$index(0, "content-type")) == null;
+      } else
+        t1 = false;
+      if (t1)
+        options.set$contentType(0, "application/json");
+      t1 = handler._completer;
+      if ((t1.future._state & 30) !== 0)
+        A.throwExpression(A.StateError$(string$.The__h));
+      t1.complete$1(0, new A.InterceptorState(options, B.InterceptorResultType_0, type$.InterceptorState_RequestOptions));
+    }
+  };
+  A.ResponseType.prototype = {
+    _enumToString$0() {
+      return "ResponseType." + this._name;
+    }
+  };
+  A.ListFormat.prototype = {
+    _enumToString$0() {
+      return "ListFormat." + this._name;
+    }
+  };
+  A.OptionsMixin.prototype = {
+    set$baseUrl(value) {
+      this.OptionsMixin___OptionsMixin__baseUrl_A = value;
+    },
+    set$connectTimeout(value) {
+      this.OptionsMixin__connectTimeout = value;
+    }
+  };
+  A.BaseOptions.prototype = {};
+  A.Options.prototype = {};
+  A.RequestOptions.prototype = {
+    get$uri() {
+      var t1, s, t2, query, _this = this,
+        url = _this.path;
+      if (!B.JSString_methods.startsWith$1(url, A.RegExp_RegExp("https?:"))) {
+        t1 = _this.OptionsMixin___OptionsMixin__baseUrl_A;
+        t1 === $ && A.throwLateFieldNI("_baseUrl");
+        url = t1 + url;
+        s = url.split(":/");
+        t1 = s.length;
+        if (t1 === 2) {
+          if (0 >= t1)
+            return A.ioore(s, 0);
+          t2 = s[0];
+          if (1 >= t1)
+            return A.ioore(s, 1);
+          t1 = s[1];
+          url = t2 + ":/" + A.stringReplaceAllUnchecked(t1, "//", "/");
+        }
+      }
+      t1 = _this.OptionsMixin___OptionsMixin_queryParameters_A;
+      t1 === $ && A.throwLateFieldNI("queryParameters");
+      t2 = _this.___RequestConfig_listFormat_A;
+      t2 === $ && A.throwLateFieldNI("listFormat");
+      query = A.Transformer_urlEncodeQueryMap(t1, t2);
+      if (query.length !== 0)
+        url += (B.JSString_methods.contains$1(url, "?") ? "&" : "?") + query;
+      return A.Uri_parse(url).normalizePath$0();
+    }
+  };
+  A._RequestConfig.prototype = {
+    _RequestConfig$16$contentType$extra$followRedirects$headers$listFormat$maxRedirects$method$persistentConnection$preserveHeaderCase$receiveDataWhenStatusError$receiveTimeout$requestEncoder$responseDecoder$responseType$sendTimeout$validateStatus(contentType, extra, followRedirects, headers, listFormat, maxRedirects, method, persistentConnection, preserveHeaderCase, receiveDataWhenStatusError, receiveTimeout, requestEncoder, responseDecoder, responseType, sendTimeout, validateStatus) {
+      var hasContentTypeHeader, _this = this,
+        _s12_ = "content-type",
+        t1 = type$.Map_String_dynamic._as(A.caseInsensitiveKeyMap(type$.nullable_Map_String_dynamic._as(headers), type$.dynamic));
+      _this.___RequestConfig__headers_A = t1;
+      if (!t1.containsKey$1(0, _s12_) && _this._defaultContentType != null)
+        _this.___RequestConfig__headers_A.$indexSet(0, _s12_, _this._defaultContentType);
+      hasContentTypeHeader = _this.___RequestConfig__headers_A.containsKey$1(0, _s12_);
+      if (contentType != null && hasContentTypeHeader && !J.$eq$(_this.___RequestConfig__headers_A.$index(0, _s12_), contentType))
+        throw A.wrapException(A.ArgumentError$value(contentType, "contentType", "Unable to set different values for `contentType` and the content-type header."));
+      if (!hasContentTypeHeader)
+        _this.set$contentType(0, contentType);
+    },
+    get$method(_) {
+      var t1 = this.___RequestConfig_method_A;
+      t1 === $ && A.throwLateFieldNI("method");
+      return t1;
+    },
+    set$contentType(_, contentType) {
+      var t1,
+        _s8_ = "_headers",
+        _s12_ = "content-type",
+        newContentType = contentType == null ? null : B.JSString_methods.trim$0(contentType);
+      this._defaultContentType = newContentType;
+      t1 = this.___RequestConfig__headers_A;
+      if (newContentType != null) {
+        t1 === $ && A.throwLateFieldNI(_s8_);
+        t1.$indexSet(0, _s12_, newContentType);
+      } else {
+        t1 === $ && A.throwLateFieldNI(_s8_);
+        t1.remove$1(0, _s12_);
+      }
+    },
+    get$validateStatus() {
+      var t1 = this.___RequestConfig_validateStatus_A;
+      t1 === $ && A.throwLateFieldNI("validateStatus");
+      return t1;
+    },
+    validateStatus$1(arg0) {
+      return this.get$validateStatus().call$1(arg0);
+    }
+  };
+  A._BaseOptions__RequestConfig_OptionsMixin.prototype = {};
+  A._RequestOptions__RequestConfig_OptionsMixin.prototype = {};
+  A.Response0.prototype = {
+    toString$0(_) {
+      var t1 = this.data;
+      if (type$.Map_dynamic_dynamic._is(t1))
+        return B.C_JsonCodec.encode$1(t1);
+      return J.toString$0$(t1);
+    },
+    set$data(_, data) {
+      this.data = this.$ti._eval$1("1?")._as(data);
+    }
+  };
+  A.handleResponseStream_stopWatchReceiveTimeout.prototype = {
+    call$0() {
+      var t1 = this._box_0,
+        t2 = t1.receiveTimer;
+      if (t2 != null)
+        t2.cancel$0(0);
+      t1.receiveTimer = null;
+      t1 = this.receiveStopwatch;
+      if (t1._stop == null)
+        t1._stop = $.Primitives_timerTicks.call$0();
+      t1.reset$0(0);
+    },
+    $signature: 0
+  };
+  A.handleResponseStream_watchReceiveTimeout.prototype = {
+    call$0() {
+      var t2, t3, _this = this,
+        t1 = _this.receiveTimeout;
+      if (t1._duration <= 0)
+        return;
+      t2 = _this._box_0;
+      t3 = t2.receiveTimer;
+      if (t3 != null)
+        t3.cancel$0(0);
+      t3 = _this.receiveStopwatch;
+      t3.reset$0(0);
+      t3.start$0(0);
+      t2.receiveTimer = A.Timer_Timer(t1, new A.handleResponseStream_watchReceiveTimeout_closure(_this.stopWatchReceiveTimeout, _this.response, _this.responseSubscription, _this.responseSink, t1, _this.options));
+    },
+    $signature: 0
+  };
+  A.handleResponseStream_watchReceiveTimeout_closure.prototype = {
+    call$0() {
+      var _this = this;
+      _this.stopWatchReceiveTimeout.call$0();
+      _this.response.close$0(0);
+      J.cancel$0$z(_this.responseSubscription._readLocal$0());
+      A._extension_0_addErrorAndClose(_this.responseSink, A.DioException_DioException$receiveTimeout(_this.options, _this.receiveTimeout), null);
+    },
+    $signature: 0
+  };
+  A.handleResponseStream_closure.prototype = {
+    call$1(data) {
+      var _this = this;
+      type$.Uint8List._as(data);
+      _this.watchReceiveTimeout.call$0();
+      if (A.Duration$(_this.receiveStopwatch.get$elapsedMicroseconds(), 0)._duration <= _this.receiveTimeout._duration)
+        _this.responseSink.add$1(0, data);
+    },
+    $signature: 46
+  };
+  A.handleResponseStream_closure1.prototype = {
+    call$2(error, stackTrace) {
+      var t1;
+      this.stopWatchReceiveTimeout.call$0();
+      t1 = error == null ? A._asObject(error) : error;
+      A._extension_0_addErrorAndClose(this.responseSink, t1, type$.nullable_StackTrace._as(stackTrace));
+    },
+    $signature: 47
+  };
+  A.handleResponseStream_closure0.prototype = {
+    call$0() {
+      this.stopWatchReceiveTimeout.call$0();
+      J.cancel$0$z(this.responseSubscription._readLocal$0());
+      this.responseSink.close$0(0);
+    },
+    $signature: 0
+  };
+  A.Transformer.prototype = {};
+  A.Transformer_urlEncodeQueryMap_closure.prototype = {
+    call$2(key, value) {
+      if (value == null)
+        return key;
+      return key + "=" + A.S(value);
+    },
+    $signature: 48
+  };
+  A.FusedTransformer.prototype = {
+    transformRequest$1(options) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.String),
+        $async$returnValue;
+      var $async$transformRequest$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              $async$returnValue = A.Transformer_defaultTransformRequest(options, A.convert__jsonEncode$closure());
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$transformRequest$1, $async$completer);
+    },
+    transformResponse$2(options, responseBody) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.dynamic),
+        $async$returnValue, $async$self = this, t2, isJsonContent, responseBytes, t1;
+      var $async$transformResponse$2 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = options.___RequestConfig_responseType_A;
+              t1 === $ && A.throwLateFieldNI("responseType");
+              if (t1 === B.ResponseType_1) {
+                $async$returnValue = responseBody;
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              if (t1 === B.ResponseType_3) {
+                $async$returnValue = A.consolidateBytes(responseBody.stream);
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              t2 = responseBody.headers.$index(0, "content-type");
+              isJsonContent = A.Transformer_isJsonMimeType(t2 == null ? null : J.get$first$ax(t2)) && t1 === B.ResponseType_0;
+              if (isJsonContent) {
+                $async$returnValue = $async$self._fastUtf8JsonDecode$2(options, responseBody);
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$goto = 3;
+              return A._asyncAwait(A.consolidateBytes(responseBody.stream), $async$transformResponse$2);
+            case 3:
+              // returning from await.
+              responseBytes = $async$result;
+              t1 = B.C_Utf8Codec.decode$2$allowMalformed(0, responseBytes, true);
+              $async$returnValue = t1;
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$transformResponse$2, $async$completer);
+    },
+    _fastUtf8JsonDecode$2(options, responseBody) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.nullable_Object),
+        $async$returnValue, $async$self = this, responseBytes, contentLength, t1, streamWithNullFallback, decoded, contentLengthHeader;
+      var $async$_fastUtf8JsonDecode$2 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              contentLengthHeader = responseBody.headers.$index(0, "content-length");
+              $async$goto = !(contentLengthHeader != null && J.get$isNotEmpty$asx(contentLengthHeader)) ? 3 : 5;
+              break;
+            case 3:
+              // then
+              $async$goto = 6;
+              return A._asyncAwait(A.consolidateBytes(responseBody.stream), $async$_fastUtf8JsonDecode$2);
+            case 6:
+              // returning from await.
+              responseBytes = $async$result;
+              contentLength = responseBytes.length;
+              // goto join
+              $async$goto = 4;
+              break;
+            case 5:
+              // else
+              contentLength = A.int_parse(J.get$first$ax(contentLengthHeader));
+              responseBytes = null;
+            case 4:
+              // join
+              $async$goto = contentLength >= $async$self.contentLengthIsolateThreshold ? 7 : 9;
+              break;
+            case 7:
+              // then
+              $async$goto = responseBytes == null ? 10 : 12;
+              break;
+            case 10:
+              // then
+              $async$goto = 13;
+              return A._asyncAwait(A.consolidateBytes(responseBody.stream), $async$_fastUtf8JsonDecode$2);
+            case 13:
+              // returning from await.
+              // goto join
+              $async$goto = 11;
+              break;
+            case 12:
+              // else
+              $async$result = responseBytes;
+            case 11:
+              // join
+              t1 = $async$result;
+              $async$returnValue = A.compute_impl__compute$closure().call$2$2(A.fused_transformer_FusedTransformer__decodeUtf8ToJson$closure(), t1, type$.Uint8List, type$.nullable_Object);
+              // goto return
+              $async$goto = 1;
+              break;
+              // goto join
+              $async$goto = 8;
+              break;
+            case 9:
+              // else
+              $async$goto = responseBytes != null ? 14 : 16;
+              break;
+            case 14:
+              // then
+              if (responseBytes.length === 0) {
+                $async$returnValue = null;
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              t1 = $.$get$FusedTransformer__utf8JsonDecoder();
+              $async$returnValue = A._parseJson(A._asString(t1._convert$_first.convert$1(t1.$ti._precomputed1._as(responseBytes))), t1._second._reviver);
+              // goto return
+              $async$goto = 1;
+              break;
+              // goto join
+              $async$goto = 15;
+              break;
+            case 16:
+              // else
+              t1 = responseBody.stream;
+              streamWithNullFallback = A._instanceType(t1)._eval$1("StreamTransformer<Stream.T,Uint8List>")._as(B.C_DefaultNullIfEmptyStreamTransformer).bind$1(t1);
+              $async$goto = 17;
+              return A._asyncAwait($.$get$FusedTransformer__utf8JsonDecoder().bind$1(streamWithNullFallback).toList$0(0), $async$_fastUtf8JsonDecode$2);
+            case 17:
+              // returning from await.
+              decoded = $async$result;
+              t1 = J.getInterceptor$asx(decoded);
+              if (t1.get$isEmpty(decoded)) {
+                $async$returnValue = null;
+                // goto return
+                $async$goto = 1;
+                break;
+              }
+              $async$returnValue = t1.get$first(decoded);
+              // goto return
+              $async$goto = 1;
+              break;
+            case 15:
+              // join
+            case 8:
+              // join
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_fastUtf8JsonDecode$2, $async$completer);
+    }
+  };
+  A.DefaultNullIfEmptyStreamTransformer.prototype = {
+    bind$1(stream) {
+      return new A._BoundSinkStream(new A.DefaultNullIfEmptyStreamTransformer_bind_closure(), type$.Stream_Uint8List._as(stream), type$._BoundSinkStream_dynamic_Uint8List);
+    }
+  };
+  A.DefaultNullIfEmptyStreamTransformer_bind_closure.prototype = {
+    call$1(sink) {
+      return new A._DefaultIfEmptyStreamSink(type$.EventSink_Uint8List._as(sink));
+    },
+    $signature: 49
+  };
+  A._DefaultIfEmptyStreamSink.prototype = {
+    add$1(_, data) {
+      var t1, t2;
+      type$.Uint8List._as(data);
+      this._hasData = this._hasData || data.length !== 0;
+      t1 = this._outputSink;
+      t2 = t1._async$_sink;
+      data = t2.$ti._rest[1]._as(t1.$ti._precomputed1._as(data));
+      if ((t2._state & 2) !== 0)
+        A.throwExpression(A.StateError$("Stream is already closed"));
+      t2.super$_BufferingStreamSubscription$_add(0, data);
+    },
+    addError$2(e, st) {
+      return this._outputSink.addError$2(e, st);
+    },
+    close$0(_) {
+      var t1, t2,
+        _s24_ = "Stream is already closed";
+      if (!this._hasData) {
+        t1 = this._outputSink;
+        t2 = t1._async$_sink;
+        t1 = t2.$ti._rest[1]._as(t1.$ti._precomputed1._as($.$get$_DefaultIfEmptyStreamSink__nullUtf8Value()));
+        if ((t2._state & 2) !== 0)
+          A.throwExpression(A.StateError$(_s24_));
+        t2.super$_BufferingStreamSubscription$_add(0, t1);
+      }
+      t1 = this._outputSink._async$_sink;
+      if ((t1._state & 2) !== 0)
+        A.throwExpression(A.StateError$(_s24_));
+      t1.super$_BufferingStreamSubscription$_close();
+    },
+    $isEventSink: 1,
+    $isSink: 1
+  };
+  A.encodeMap_maybeEncode.prototype = {
+    call$1(value) {
+      if (!this.isQuery || value == null || typeof value != "string")
+        return value;
+      return this.encodeComponent.call$1(value);
+    },
+    $signature: 50
+  };
+  A.encodeMap_urlEncode.prototype = {
+    call$2(sub, path) {
+      var t2, t3, t4, t5, t6, t7, t8, i, isCollection, t9, str, isNotEmpty, _this = this,
+        format = _this.listFormat,
+        separatorChar = A._getSeparatorChar(format, _this.isQuery),
+        t1 = type$.List_dynamic;
+      if (t1._is(sub)) {
+        t2 = format === B.ListFormat_4;
+        if (t2 || format === B.ListFormat_5)
+          for (t3 = J.getInterceptor$asx(sub), t4 = _this.rightBracket, t5 = _this.maybeEncode, t6 = _this.leftBracket, t7 = path + t6, t8 = type$.Map_dynamic_dynamic, i = 0; i < t3.get$length(sub); ++i) {
+            if (!t8._is(t3.$index(sub, i))) {
+              isCollection = t1._is(t3.$index(sub, i));
+              if (!isCollection)
+                t3.$index(sub, i);
+            } else
+              isCollection = true;
+            if (t2) {
+              t9 = t5.call$1(t3.$index(sub, i));
+              _this.call$2(t9, path + (isCollection ? t6 + i + t4 : ""));
+            } else {
+              t9 = t5.call$1(t3.$index(sub, i));
+              _this.call$2(t9, t7 + A.S(isCollection ? i : "") + t4);
+            }
+          }
+        else
+          _this.call$2(J.map$1$1$ax(sub, _this.maybeEncode, type$.nullable_Object).join$1(0, separatorChar), path);
+      } else if (type$.Map_dynamic_dynamic._is(sub))
+        J.forEach$1$x(sub, new A.encodeMap_urlEncode_closure(path, _this, _this.maybeEncode, _this.encodeComponent, _this.leftBracket, _this.rightBracket));
+      else {
+        str = _this.handler.call$2(path, sub);
+        isNotEmpty = str != null && B.JSString_methods.trim$0(str).length !== 0;
+        t1 = _this._box_0;
+        if (!t1.first && isNotEmpty)
+          _this.urlData._contents += "&";
+        t1.first = false;
+        if (isNotEmpty)
+          _this.urlData._contents += str;
+      }
+    },
+    $signature: 51
+  };
+  A.encodeMap_urlEncode_closure.prototype = {
+    call$2(k, v) {
+      var _this = this,
+        t1 = _this.path,
+        t2 = _this.urlEncode,
+        t3 = _this.maybeEncode,
+        t4 = _this.encodeComponent;
+      if (t1 === "")
+        t2.call$2(t3.call$1(v), t4.call$1(A._asString(k)));
+      else
+        t2.call$2(t3.call$1(v), t1 + _this.leftBracket + A.S(t4.call$1(A._asString(k))) + _this.rightBracket);
+    },
+    $signature: 21
+  };
+  A.caseInsensitiveKeyMap_closure.prototype = {
+    call$2(key1, key2) {
+      return A._asString(key1).toLowerCase() === A._asString(key2).toLowerCase();
+    },
+    $signature: 30
+  };
+  A.caseInsensitiveKeyMap_closure0.prototype = {
+    call$1(key) {
+      return B.JSString_methods.get$hashCode(A._asString(key).toLowerCase());
+    },
+    $signature: 26
+  };
+  A.BrowserHttpClientAdapter.prototype = {
+    fetch$3(_, options, requestStream, cancelFuture) {
+      return this.fetch$body$BrowserHttpClientAdapter(0, options, type$.nullable_Stream_Uint8List._as(requestStream), cancelFuture);
+    },
+    fetch$body$BrowserHttpClientAdapter(_, options, requestStream, cancelFuture) {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.ResponseBody),
+        $async$returnValue, $async$self = this, t2, t3, withCredentialsOption, completer, t4, t5, t6, receiveStopwatch, t7, t8, sink, t1, xhr, $async$temp1;
+      var $async$fetch$3 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = {};
+              xhr = A._asJSObject(new init.G.XMLHttpRequest());
+              $async$self.xhrs.add$1(0, xhr);
+              t2 = options.___RequestConfig_method_A;
+              t2 === $ && A.throwLateFieldNI("method");
+              xhr.open(t2, options.get$uri().toString$0(0));
+              xhr.responseType = "arraybuffer";
+              t3 = options.___RequestConfig_extra_A;
+              t3 === $ && A.throwLateFieldNI("extra");
+              withCredentialsOption = t3.$index(0, "withCredentials");
+              if (withCredentialsOption != null)
+                xhr.withCredentials = J.$eq$(withCredentialsOption, true);
+              else
+                xhr.withCredentials = false;
+              t3 = options.___RequestConfig__headers_A;
+              t3 === $ && A.throwLateFieldNI("_headers");
+              t3.remove$1(0, "content-length");
+              options.___RequestConfig__headers_A.forEach$1(0, new A.BrowserHttpClientAdapter_fetch_closure(xhr));
+              xhr.timeout = 0;
+              t3 = new A._Future($.Zone__current, type$._Future_ResponseBody);
+              completer = new A._AsyncCompleter(t3, type$._AsyncCompleter_ResponseBody);
+              t4 = type$._EventStream_JSObject;
+              t5 = type$.Null;
+              new A._EventStream(xhr, "load", false, t4).get$first(0).then$1$1(new A.BrowserHttpClientAdapter_fetch_closure0(xhr, completer, options), t5);
+              t1.connectTimeoutTimer = null;
+              t6 = requestStream != null;
+              if (t6)
+                A._asJSObject(xhr.upload);
+              receiveStopwatch = new A.Stopwatch();
+              $.$get$Stopwatch__frequency();
+              t1.receiveTimer = null;
+              t7 = new A.BrowserHttpClientAdapter_fetch_stopWatchReceiveTimeout(t1, receiveStopwatch);
+              t8 = type$.nullable_void_Function_JSObject._as(new A.BrowserHttpClientAdapter_fetch_closure1(t1, new A.BrowserHttpClientAdapter_fetch_watchReceiveTimeout(t1, B.Duration_0, receiveStopwatch, completer, xhr, options, t7), options));
+              type$.nullable_void_Function._as(new A.BrowserHttpClientAdapter_fetch_closure2(t7));
+              A._EventStreamSubscription$0(xhr, "progress", t8, false, type$.JSObject);
+              new A._EventStream(xhr, "error", false, t4).get$first(0).then$1$1(new A.BrowserHttpClientAdapter_fetch_closure3(t1, completer, options), t5);
+              new A._EventStream(xhr, "timeout", false, t4).get$first(0).then$1$1(new A.BrowserHttpClientAdapter_fetch_closure4(t1, completer, B.Duration_0, options, 0), t5);
+              $async$goto = t6 ? 3 : 5;
+              break;
+            case 3:
+              // then
+              if (t2 === "GET")
+                A.StackTrace_current();
+              t1 = new A._Future($.Zone__current, type$._Future_Uint8List);
+              completer = new A._AsyncCompleter(t1, type$._AsyncCompleter_Uint8List);
+              sink = new A._ByteCallbackSink(new A.BrowserHttpClientAdapter_fetch_closure5(completer), new Uint8Array(1024));
+              requestStream.listen$4$cancelOnError$onDone$onError(type$.void_Function_List_int._as(sink.get$add(sink)), true, sink.get$close(sink), new A.BrowserHttpClientAdapter_fetch_closure6(completer));
+              $async$temp1 = xhr;
+              $async$goto = 6;
+              return A._asyncAwait(t1, $async$fetch$3);
+            case 6:
+              // returning from await.
+              $async$temp1.send($async$result);
+              // goto join
+              $async$goto = 4;
+              break;
+            case 5:
+              // else
+              xhr.send();
+            case 4:
+              // join
+              $async$returnValue = t3.whenComplete$1(new A.BrowserHttpClientAdapter_fetch_closure7($async$self, xhr));
+              // goto return
+              $async$goto = 1;
+              break;
+            case 1:
+              // return
+              return A._asyncReturn($async$returnValue, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$fetch$3, $async$completer);
+    },
+    $isHttpClientAdapter: 1
+  };
+  A.BrowserHttpClientAdapter_fetch_closure.prototype = {
+    call$2(key, v) {
+      var t1;
+      A._asString(key);
+      t1 = this.xhr;
+      if (type$.Iterable_dynamic._is(v))
+        t1.setRequestHeader(key, J.join$1$ax(v, ", "));
+      else
+        t1.setRequestHeader(key, J.toString$0$(v));
+    },
+    $signature: 2
+  };
+  A.BrowserHttpClientAdapter_fetch_closure0.prototype = {
+    call$1(_) {
+      var t1, t2, t3, t4, t5, t6, t7, _null = null;
+      A._asJSObject(_);
+      t1 = this.xhr;
+      t2 = A.NativeUint8List_NativeUint8List$view(type$.NativeArrayBuffer._as(t1.response), 0, _null);
+      t3 = A._asInt(t1.status);
+      t4 = A._extension_0_getResponseHeaders(t1);
+      t5 = A._asString(t1.statusText);
+      t1 = A._asInt(t1.status) === 302 || A._asInt(t1.status) === 301 || this.options.get$uri().toString$0(0) !== A._asString(t1.responseURL);
+      t6 = type$._AsyncStreamController_Uint8List;
+      t7 = new A._AsyncStreamController(_null, _null, _null, _null, t6);
+      t7._add$1(0, t2);
+      t7._closeUnchecked$0();
+      this.completer.complete$1(0, new A.ResponseBody(t1, new A._ControllerStream(t7, t6._eval$1("_ControllerStream<1>")), t3, t5, t4, A.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic)));
+    },
+    $signature: 7
+  };
+  A.BrowserHttpClientAdapter_fetch_stopWatchReceiveTimeout.prototype = {
+    call$0() {
+      var t1 = this._box_0,
+        t2 = t1.receiveTimer;
+      if (t2 != null)
+        t2.cancel$0(0);
+      t1.receiveTimer = null;
+      t1 = this.receiveStopwatch;
+      if (t1._stop == null)
+        t1._stop = $.Primitives_timerTicks.call$0();
+    },
+    $signature: 0
+  };
+  A.BrowserHttpClientAdapter_fetch_watchReceiveTimeout.prototype = {
+    call$0() {
+      var t2, t3, _this = this,
+        t1 = _this.receiveTimeout;
+      if (t1._duration <= 0)
+        return;
+      t2 = _this.receiveStopwatch;
+      t2.reset$0(0);
+      if (t2._stop != null)
+        t2.start$0(0);
+      t2 = _this._box_0;
+      t3 = t2.receiveTimer;
+      if (t3 != null)
+        t3.cancel$0(0);
+      t2.receiveTimer = A.Timer_Timer(t1, new A.BrowserHttpClientAdapter_fetch_watchReceiveTimeout_closure(_this.completer, _this.xhr, t1, _this.options, _this.stopWatchReceiveTimeout));
+    },
+    $signature: 0
+  };
+  A.BrowserHttpClientAdapter_fetch_watchReceiveTimeout_closure.prototype = {
+    call$0() {
+      var _this = this,
+        t1 = _this.completer;
+      if ((t1.future._state & 30) === 0) {
+        _this.xhr.abort();
+        t1.completeError$2(A.DioException_DioException$receiveTimeout(_this.options, _this.receiveTimeout), A.StackTrace_current());
+      }
+      _this.stopWatchReceiveTimeout.call$0();
+    },
+    $signature: 0
+  };
+  A.BrowserHttpClientAdapter_fetch_closure1.prototype = {
+    call$1($event) {
+      var t1 = this._box_0,
+        t2 = t1.connectTimeoutTimer;
+      if (t2 != null) {
+        t2.cancel$0(0);
+        t1.connectTimeoutTimer = null;
+      }
+      this.watchReceiveTimeout.call$0();
+    },
+    $signature: 19
+  };
+  A.BrowserHttpClientAdapter_fetch_closure2.prototype = {
+    call$0() {
+      return this.stopWatchReceiveTimeout.call$0();
+    },
+    $signature: 0
+  };
+  A.BrowserHttpClientAdapter_fetch_closure3.prototype = {
+    call$1(_) {
+      var t1;
+      A._asJSObject(_);
+      t1 = this._box_0.connectTimeoutTimer;
+      if (t1 != null)
+        t1.cancel$0(0);
+      this.completer.completeError$2(A.DioException_DioException$connectionError("The XMLHttpRequest onError callback was called. This typically indicates an error on the network layer.", this.options), A.StackTrace_current());
+    },
+    $signature: 7
+  };
+  A.BrowserHttpClientAdapter_fetch_closure4.prototype = {
+    call$1(_) {
+      var t1, isConnectTimeout, t2, _this = this;
+      A._asJSObject(_);
+      t1 = _this._box_0.connectTimeoutTimer;
+      isConnectTimeout = t1 != null;
+      if (isConnectTimeout)
+        t1.cancel$0(0);
+      t1 = _this.completer;
+      if ((t1.future._state & 30) === 0) {
+        t2 = _this.options;
+        if (isConnectTimeout)
+          t1.completeError$1(A.DioException_DioException$connectionTimeout(t2, _this.connectTimeout));
+        else
+          t1.completeError$2(A.DioException_DioException$receiveTimeout(t2, A.Duration$(0, _this.xhrTimeout)), A.StackTrace_current());
+      }
+    },
+    $signature: 7
+  };
+  A.BrowserHttpClientAdapter_fetch_closure5.prototype = {
+    call$1(bytes) {
+      type$.List_int._as(bytes);
+      return this.completer.complete$1(0, bytes);
+    },
+    $signature: 56
+  };
+  A.BrowserHttpClientAdapter_fetch_closure6.prototype = {
+    call$2(e, s) {
+      return this.completer.completeError$2(A._asObject(e), type$.StackTrace._as(s));
+    },
+    $signature: 5
+  };
+  A.BrowserHttpClientAdapter_fetch_closure7.prototype = {
+    call$0() {
+      this.$this.xhrs.remove$1(0, this.xhr);
+    },
+    $signature: 1
+  };
+  A.DioForBrowser.prototype = {$isDio: 1};
+  A._DioForBrowser_Object_DioMixin.prototype = {};
+  A._transform_closure.prototype = {
+    call$2(data, sink) {
+      var t1, t2, t3,
+        _s24_ = "Stream is already closed";
+      this.S._as(data);
+      type$.EventSink_Uint8List._as(sink);
+      t1 = sink._async$_sink;
+      t2 = sink.$ti._precomputed1;
+      t3 = t1.$ti;
+      if (type$.Uint8List._is(data)) {
+        data = t3._rest[1]._as(t2._as(data));
+        if ((t1._state & 2) !== 0)
+          A.throwExpression(A.StateError$(_s24_));
+        t1.super$_BufferingStreamSubscription$_add(0, data);
+      } else {
+        t2 = t3._rest[1]._as(t2._as(new Uint8Array(A._ensureNativeList(data))));
+        if ((t1._state & 2) !== 0)
+          A.throwExpression(A.StateError$(_s24_));
+        t1.super$_BufferingStreamSubscription$_add(0, t2);
+      }
+    },
+    $signature() {
+      return this.S._eval$1("~(0,EventSink<Uint8List>)");
+    }
+  };
+  A.BaseRequest.prototype = {
+    toString$0(_) {
+      return this.method + " " + this.url.toString$0(0);
+    }
+  };
+  A.BaseRequest_closure.prototype = {
+    call$2(key1, key2) {
+      return A._asString(key1).toLowerCase() === A._asString(key2).toLowerCase();
+    },
+    $signature: 30
+  };
+  A.BaseRequest_closure0.prototype = {
+    call$1(key) {
+      return B.JSString_methods.get$hashCode(A._asString(key).toLowerCase());
+    },
+    $signature: 26
+  };
+  A.BaseResponse.prototype = {
+    BaseResponse$7$contentLength$headers$isRedirect$persistentConnection$reasonPhrase$request(statusCode, contentLength, headers, isRedirect, persistentConnection, reasonPhrase, request) {
+      var t1 = this.statusCode;
+      if (t1 < 100)
+        throw A.wrapException(A.ArgumentError$("Invalid status code " + t1 + ".", null));
+    }
   };
   A.Request.prototype = {
     get$encoding(_) {
@@ -16886,14 +20759,10 @@
       this.headers.$indexSet(0, "content-type", value.toString$0(0));
     },
     _checkFinalized$0() {
-      if (!this._finalized)
-        return;
-      throw A.wrapException(A.StateError$("Can't modify a finalized Request."));
+      return;
     }
   };
   A.Response.prototype = {};
-  A.StreamedResponse.prototype = {};
-  A.StreamedResponseV2.prototype = {};
   A.CaseInsensitiveMap.prototype = {};
   A.MediaType.prototype = {
     toString$0(_) {
@@ -16969,7 +20838,7 @@
       scanner.expectDone$0();
       return A.MediaType$(t4, t5, parameters);
     },
-    $signature: 37
+    $signature: 57
   };
   A.MediaType_toString_closure.prototype = {
     call$2(attribute, value) {
@@ -16988,13 +20857,13 @@
       } else
         t1._contents = t3 + value;
     },
-    $signature: 25
+    $signature: 27
   };
   A.MediaType_toString__closure.prototype = {
     call$1(match) {
       return "\\" + A.S(match.$index(0, 0));
     },
-    $signature: 24
+    $signature: 25
   };
   A.expectQuotedString_closure.prototype = {
     call$1(match) {
@@ -17002,7 +20871,7 @@
       t1.toString;
       return t1;
     },
-    $signature: 24
+    $signature: 25
   };
   A.Context.prototype = {
     absolute$1(_, part1) {
@@ -17233,20 +21102,20 @@
     call$1(part) {
       return A._asString(part) !== "";
     },
-    $signature: 7
+    $signature: 11
   };
   A.Context_split_closure.prototype = {
     call$1(part) {
       return A._asString(part).length !== 0;
     },
-    $signature: 7
+    $signature: 11
   };
   A._validateArgList_closure.prototype = {
     call$1(arg) {
       A._asStringQ(arg);
       return arg == null ? "null" : '"' + arg + '"';
     },
-    $signature: 39
+    $signature: 59
   };
   A.InternalStyle.prototype = {
     getRoot$1(path) {
@@ -18038,7 +21907,7 @@
     call$0() {
       return this.color;
     },
-    $signature: 40
+    $signature: 75
   };
   A.Highlighter$__closure.prototype = {
     call$1(line) {
@@ -18046,7 +21915,7 @@
         t2 = A._arrayInstanceType(t1);
       return new A.WhereIterable(t1, t2._eval$1("bool(1)")._as(new A.Highlighter$___closure()), t2._eval$1("WhereIterable<1>")).get$length(0);
     },
-    $signature: 41
+    $signature: 61
   };
   A.Highlighter$___closure.prototype = {
     call$1(highlight) {
@@ -18056,27 +21925,27 @@
       t1 = t1.get$end(t1);
       return t2 !== t1.get$line(t1);
     },
-    $signature: 9
+    $signature: 18
   };
   A.Highlighter$__closure0.prototype = {
     call$1(line) {
       return type$._Line._as(line).url;
     },
-    $signature: 43
+    $signature: 63
   };
   A.Highlighter__collateLines_closure.prototype = {
     call$1(highlight) {
       var t1 = type$._Highlight._as(highlight).span.get$sourceUrl();
       return t1 == null ? new A.Object() : t1;
     },
-    $signature: 44
+    $signature: 64
   };
   A.Highlighter__collateLines_closure0.prototype = {
     call$2(highlight1, highlight2) {
       var t1 = type$._Highlight;
       return t1._as(highlight1).span.compareTo$1(0, t1._as(highlight2).span);
     },
-    $signature: 45
+    $signature: 65
   };
   A.Highlighter__collateLines_closure1.prototype = {
     call$1(entry) {
@@ -18122,7 +21991,7 @@
       }
       return lines;
     },
-    $signature: 46
+    $signature: 66
   };
   A.Highlighter__collateLines__closure.prototype = {
     call$1(highlight) {
@@ -18130,14 +21999,14 @@
       t1 = t1.get$end(t1);
       return t1.get$line(t1) < this.line.number;
     },
-    $signature: 9
+    $signature: 18
   };
   A.Highlighter_highlight_closure.prototype = {
     call$1(highlight) {
       type$._Highlight._as(highlight);
       return true;
     },
-    $signature: 9
+    $signature: 18
   };
   A.Highlighter__writeFileStart_closure.prototype = {
     call$0() {
@@ -18239,7 +22108,7 @@
       t2._contents = t4;
       return t4.length - t3.length;
     },
-    $signature: 22
+    $signature: 9
   };
   A.Highlighter__writeIndicator_closure0.prototype = {
     call$0() {
@@ -18262,7 +22131,7 @@
       }
       return t2._contents.length - t3.length;
     },
-    $signature: 22
+    $signature: 9
   };
   A.Highlighter__writeSidebar_closure.prototype = {
     call$0() {
@@ -18305,7 +22174,7 @@
       }
       return A._Highlight__normalizeEndOfLine(A._Highlight__normalizeTrailingNewline(A._Highlight__normalizeNewlines(newSpan)));
     },
-    $signature: 48
+    $signature: 67
   };
   A._Line.prototype = {
     toString$0(_) {
@@ -18615,7 +22484,7 @@
     call$0() {
       return A.LinkedHashSet_LinkedHashSet$_empty(type$.Function);
     },
-    $signature: 49
+    $signature: 68
   };
   A.Hook_beforeSubscribe_closure.prototype = {
     call$1(handler) {
@@ -18660,64 +22529,52 @@
     $signature: 3
   };
   A.HookEvent.prototype = {};
-  A.HttpClient.prototype = {
+  A.TransmitHttpClient.prototype = {
     send$1(_, request) {
-      return this.send$body$HttpClient(0, request);
-    },
-    send$body$HttpClient(_, request) {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.Response),
-        $async$returnValue, $async$handler = 2, $async$errorStack = [], $async$next = [], t1, client;
+        $async$returnValue, $async$self = this, rawHeaders, bodyString, t2, t3, t4, t5, options, t1, dioResponse;
       var $async$send$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
-        if ($async$errorCode === 1) {
-          $async$errorStack.push($async$result);
-          $async$goto = $async$handler;
-        }
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
         for (;;)
           switch ($async$goto) {
             case 0:
               // Function start
-              t1 = A._setArrayType([], type$.JSArray_JSObject);
-              client = new A.BrowserClient(t1);
-              $async$handler = 3;
-              $async$goto = 6;
-              return A._asyncAwait(J.send$1$x(client, request).then$1$1(A.response_Response_fromStream$closure(), type$.Response), $async$send$1);
-            case 6:
-              // returning from await.
-              t1 = $async$result;
-              $async$returnValue = t1;
-              $async$next = [1];
-              // goto finally
-              $async$goto = 4;
-              break;
-              $async$next.push(5);
-              // goto finally
-              $async$goto = 4;
-              break;
+              options = A.Options$(request.headers, request.method, B.ResponseType_2, new A.TransmitHttpClient_send_closure());
+              t1 = request.get$encoding(0).decode$1(0, request._bodyBytes).length !== 0 ? request.get$encoding(0).decode$1(0, request._bodyBytes) : null;
+              $async$goto = 3;
+              return A._asyncAwait($async$self._dio.request$1$6$cancelToken$data$onReceiveProgress$onSendProgress$options(0, request.url.toString$0(0), null, t1, null, null, options, type$.dynamic), $async$send$1);
             case 3:
-              // uncaught
-              $async$next = [2];
-            case 4:
-              // finally
-              $async$handler = 2;
-              J.close$0$x(client);
-              // goto the next finally handler
-              $async$goto = $async$next.pop();
+              // returning from await.
+              dioResponse = $async$result;
+              t1 = type$.String;
+              rawHeaders = A.LinkedHashMap_LinkedHashMap$_empty(t1, t1);
+              dioResponse.headers.forEach$1(0, new A.TransmitHttpClient_send_closure0(rawHeaders));
+              bodyString = dioResponse.data;
+              bodyString = typeof bodyString == "string" ? bodyString : B.C_JsonCodec.encode$2$toEncodable(bodyString, null);
+              t1 = dioResponse.statusCode;
+              if (t1 == null)
+                t1 = 500;
+              t2 = dioResponse.isRedirect;
+              t3 = dioResponse.statusMessage;
+              t4 = A.encodingForContentTypeHeader(A._contentTypeForHeaders(rawHeaders)).encode$1(bodyString);
+              t5 = t4.length;
+              t4 = new A.Response(A.toUint8List(t4), t1, t5, rawHeaders);
+              t4.BaseResponse$7$contentLength$headers$isRedirect$persistentConnection$reasonPhrase$request(t1, t5, rawHeaders, t2, true, t3, request);
+              $async$returnValue = t4;
+              // goto return
+              $async$goto = 1;
               break;
-            case 5:
-              // after finally
             case 1:
               // return
               return A._asyncReturn($async$returnValue, $async$completer);
-            case 2:
-              // rethrow
-              return A._asyncRethrow($async$errorStack.at(-1), $async$completer);
           }
       });
       return A._asyncStartSync($async$send$1, $async$completer);
     },
     createRequest$2(path, body) {
-      var url, t1, t2, requestBody, request, cookies, match, t3, contentType, parameters, type, subtype, parameters0;
+      var url, t1, t2, requestBody, request, cookies, match, t3, contentType, t4, parameters, type, subtype, parameters0;
       type$.Map_String_dynamic._as(body);
       url = A.Uri_parse(this.baseUrl + path);
       t1 = type$.String;
@@ -18741,27 +22598,27 @@
       } else
         t3 = null;
       t2.$indexSet(0, "X-XSRF-TOKEN", t3 == null ? "" : t3);
-      t2 = type$.List_int._as(request.get$encoding(0).encode$1(requestBody));
+      t3 = type$.List_int._as(request.get$encoding(0).encode$1(requestBody));
       request._checkFinalized$0();
-      request._bodyBytes = A.toUint8List(t2);
+      request._bodyBytes = A.toUint8List(t3);
       contentType = request.get$_contentType();
       if (contentType == null) {
-        t2 = request.get$encoding(0);
-        request.set$_contentType(A.MediaType$("text", "plain", A.LinkedHashMap_LinkedHashMap$_literal(["charset", t2.get$name(t2)], t1, t1)));
+        t3 = request.get$encoding(0);
+        request.set$_contentType(A.MediaType$("text", "plain", A.LinkedHashMap_LinkedHashMap$_literal(["charset", t3.get$name(t3)], t1, t1)));
       } else {
-        t2 = request.get$_contentType();
-        if (t2 != null) {
-          t3 = t2.type;
-          if (t3 !== "text") {
-            t2 = t3 + "/" + t2.subtype;
-            t2 = t2 === "application/xml" || t2 === "application/xml-external-parsed-entity" || t2 === "application/xml-dtd" || B.JSString_methods.endsWith$1(t2, "+xml");
+        t3 = request.get$_contentType();
+        if (t3 != null) {
+          t4 = t3.type;
+          if (t4 !== "text") {
+            t3 = t4 + "/" + t3.subtype;
+            t3 = t3 === "application/xml" || t3 === "application/xml-external-parsed-entity" || t3 === "application/xml-dtd" || B.JSString_methods.endsWith$1(t3, "+xml");
           } else
-            t2 = true;
+            t3 = true;
         } else
-          t2 = false;
-        if (t2 && !contentType.parameters._collection$_map.containsKey$1(0, "charset")) {
-          t2 = request.get$encoding(0);
-          parameters = type$.nullable_Map_String_String._as(A.LinkedHashMap_LinkedHashMap$_literal(["charset", t2.get$name(t2)], t1, t1));
+          t3 = false;
+        if (t3 && !contentType.parameters._collection$_map.containsKey$1(0, "charset")) {
+          t3 = request.get$encoding(0);
+          parameters = type$.nullable_Map_String_String._as(A.LinkedHashMap_LinkedHashMap$_literal(["charset", t3.get$name(t3)], t1, t1));
           type = contentType.type;
           subtype = contentType.subtype;
           parameters0 = A.LinkedHashMap_LinkedHashMap$from(contentType.parameters, t1, t1);
@@ -18769,16 +22626,36 @@
           request.set$_contentType(A.MediaType$(type, subtype, parameters0));
         }
       }
+      t2.addAll$1(0, this._headers);
       return request;
     }
   };
+  A.TransmitHttpClient_closure.prototype = {
+    call$1(_) {
+      return true;
+    },
+    $signature: 17
+  };
+  A.TransmitHttpClient_send_closure.prototype = {
+    call$1(_) {
+      return true;
+    },
+    $signature: 17
+  };
+  A.TransmitHttpClient_send_closure0.prototype = {
+    call$2(key, values) {
+      this.rawHeaders.$indexSet(0, key, J.join$1$ax(type$.List_String._as(values), ","));
+    },
+    $signature: 33
+  };
   A.Subscription.prototype = {
     $$runHandler$1(message) {
-      var t1, t2, handler;
-      for (t1 = this._subscription$_handlers, t1 = A._LinkedHashSetIterator$(t1, t1._collection$_modifications, A._instanceType(t1)._precomputed1), t2 = t1.$ti._precomputed1; t1.moveNext$0();) {
-        handler = t1._collection$_current;
-        (handler == null ? t2._as(handler) : handler).call$1(message);
-      }
+      var t2, _i,
+        t1 = this._messageStreamController;
+      if ((t1._state & 4) === 0)
+        t1.add$1(0, message);
+      for (t1 = A.List_List$from(this._subscription$_handlers, true, type$.void_Function_dynamic), t2 = t1.length, _i = 0; _i < t2; ++_i)
+        t1[_i].call$1(message);
     },
     create$0(_) {
       var $async$goto = 0,
@@ -18932,6 +22809,9 @@
               }
               $async$self._subscription$_status = B.SubscriptionStatus_2_deleted;
               t4.onUnsubscription$1(t2);
+              t1 = $async$self._messageStreamController;
+              if ((t1._state & 4) === 0)
+                t1.close$0(0);
               $async$handler = 2;
               // goto after finally
               $async$goto = 6;
@@ -18960,10 +22840,9 @@
       });
       return A._asyncStartSync($async$delete$0, $async$completer);
     },
-    onMessage$1(_, handler) {
-      var t1 = type$.void_Function_dynamic;
-      t1._as(handler);
-      this._subscription$_handlers.add$1(0, t1._as(handler));
+    onMessage$1$1(_, handler, $T) {
+      $T._eval$1("~(0)")._as(handler);
+      this._subscription$_handlers.add$1(0, type$.void_Function_dynamic._as(handler));
       return new A.Subscription_onMessage_closure(this, handler);
     }
   };
@@ -18983,7 +22862,7 @@
     _connect$0(_) {
       var $async$goto = 0,
         $async$completer = A._makeAsyncAwaitCompleter(type$.void),
-        $async$handler = 1, $async$errorStack = [], $async$self = this, url, subscription, error, t1, t2, exception, $async$exception;
+        $async$handler = 1, $async$errorStack = [], $async$self = this, url, error, t1, t2, exception, $async$exception;
       var $async$_connect$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
         if ($async$errorCode === 1) {
           $async$errorStack.push($async$result);
@@ -19007,30 +22886,10 @@
               $async$self._status = B.TransmitStatus_2;
               t1.add$1(0, B.TransmitStatus_2);
               $async$self._reconnectAttempts = 0;
-              t1 = $async$self._subscriptions, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>"));
-            case 7:
-              // for condition
-              if (!t1.moveNext$0()) {
-                // goto after for
-                $async$goto = 8;
-                break;
-              }
-              subscription = t1.__js_helper$_current;
-              $async$goto = subscription._subscription$_status === B.SubscriptionStatus_1_created ? 9 : 10;
-              break;
-            case 9:
-              // then
-              $async$goto = 11;
-              return A._asyncAwait(subscription.forceCreate$0(), $async$_connect$0);
-            case 11:
-              // returning from await.
-            case 10:
-              // join
-              // goto for condition
               $async$goto = 7;
-              break;
-            case 8:
-              // after for
+              return A._asyncAwait($async$self._reRegisterSubscriptions$0(), $async$_connect$0);
+            case 7:
+              // returning from await.
               t1 = $async$self._eventSource._messageController;
               $async$self._messageSubscription = type$.nullable_StreamSubscription_MessageEvent._as(new A._BroadcastStream(t1, A._instanceType(t1)._eval$1("_BroadcastStream<1>")).listen$3$cancelOnError$onError($async$self.get$_onMessage(), false, $async$self.get$_transmit$_onError()));
               t1 = $async$self._eventSource._openController;
@@ -19105,7 +22964,48 @@
       }
       t1 = t2 + 1;
       _this._reconnectAttempts = t1;
-      A.Future_Future$delayed(new A.Duration(1000 * (100 * t1)), new A.Transmit__onError_closure(_this), type$.Null);
+      A.Future_Future$delayed(A.Duration$(0, 100 * t1), new A.Transmit__onError_closure(_this), type$.Null);
+    },
+    _reRegisterSubscriptions$0() {
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.void),
+        $async$self = this, t1, t2;
+      var $async$_reRegisterSubscriptions$0 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = $async$self._subscriptions, t1 = new A.LinkedHashMapValueIterator(t1, t1._modifications, t1._first, A._instanceType(t1)._eval$1("LinkedHashMapValueIterator<2>"));
+            case 2:
+              // for condition
+              if (!t1.moveNext$0()) {
+                // goto after for
+                $async$goto = 3;
+                break;
+              }
+              t2 = t1.__js_helper$_current;
+              $async$goto = t2._subscription$_status === B.SubscriptionStatus_1_created ? 4 : 5;
+              break;
+            case 4:
+              // then
+              $async$goto = 6;
+              return A._asyncAwait(t2.forceCreate$0(), $async$_reRegisterSubscriptions$0);
+            case 6:
+              // returning from await.
+            case 5:
+              // join
+              // goto for condition
+              $async$goto = 2;
+              break;
+            case 3:
+              // after for
+              // implicit return
+              return A._asyncReturn(null, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$_reRegisterSubscriptions$0, $async$completer);
     },
     subscription$1(channel) {
       var t2, subscription, _this = this,
@@ -19117,7 +23017,7 @@
       }
       t2 = _this.__Transmit__httpClient_F;
       t2 === $ && A.throwLateFieldNI("_httpClient");
-      subscription = new A.Subscription(t2, _this._hooks, channel, new A.Transmit_subscription_closure(_this), A.LinkedHashSet_LinkedHashSet$_empty(type$.void_Function_dynamic), B.SubscriptionStatus_0_pending);
+      subscription = new A.Subscription(t2, _this._hooks, channel, new A.Transmit_subscription_closure(_this), A.LinkedHashSet_LinkedHashSet$_empty(type$.void_Function_dynamic), A.StreamController_StreamController$broadcast(type$.dynamic), B.SubscriptionStatus_0_pending);
       t1.$indexSet(0, channel, subscription);
       return subscription;
     },
@@ -19142,18 +23042,37 @@
   };
   A.Transmit__connect_closure.prototype = {
     call$1(_) {
-      var t1 = this.$this;
-      t1._status = B.TransmitStatus_2;
-      t1._statusController.add$1(0, B.TransmitStatus_2);
-      t1._reconnectAttempts = 0;
+      var $async$goto = 0,
+        $async$completer = A._makeAsyncAwaitCompleter(type$.Null),
+        $async$self = this, t1;
+      var $async$call$1 = A._wrapJsFunctionForAsync(function($async$errorCode, $async$result) {
+        if ($async$errorCode === 1)
+          return A._asyncRethrow($async$result, $async$completer);
+        for (;;)
+          switch ($async$goto) {
+            case 0:
+              // Function start
+              t1 = $async$self.$this;
+              t1._status = B.TransmitStatus_2;
+              t1._statusController.add$1(0, B.TransmitStatus_2);
+              t1._reconnectAttempts = 0;
+              $async$goto = 2;
+              return A._asyncAwait(t1._reRegisterSubscriptions$0(), $async$call$1);
+            case 2:
+              // returning from await.
+              // implicit return
+              return A._asyncReturn(null, $async$completer);
+          }
+      });
+      return A._asyncStartSync($async$call$1, $async$completer);
     },
-    $signature: 2
+    $signature: 72
   };
   A.Transmit__connect_closure0.prototype = {
     call$1(_) {
       this.$this._transmit$_onError$1(null);
     },
-    $signature: 2
+    $signature: 4
   };
   A.Transmit__onError_closure.prototype = {
     call$0() {
@@ -19167,46 +23086,46 @@
     call$0() {
       return this.$this._status;
     },
-    $signature: 52
+    $signature: 73
   };
   A.Transmit_on_closure.prototype = {
     call$1($status) {
       return type$.TransmitStatus._as($status) === B.TransmitStatus_2;
     },
-    $signature: 12
+    $signature: 16
   };
   A.Transmit_on_closure0.prototype = {
     call$1(_) {
       type$.TransmitStatus._as(_);
       return this.callback.call$0();
     },
-    $signature: 8
+    $signature: 12
   };
   A.Transmit_on_closure1.prototype = {
     call$1($status) {
       return type$.TransmitStatus._as($status) === B.TransmitStatus_3;
     },
-    $signature: 12
+    $signature: 16
   };
   A.Transmit_on_closure2.prototype = {
     call$1(_) {
       type$.TransmitStatus._as(_);
       return this.callback.call$0();
     },
-    $signature: 8
+    $signature: 12
   };
   A.Transmit_on_closure3.prototype = {
     call$1($status) {
       return type$.TransmitStatus._as($status) === B.TransmitStatus_4;
     },
-    $signature: 12
+    $signature: 16
   };
   A.Transmit_on_closure4.prototype = {
     call$1(_) {
       type$.TransmitStatus._as(_);
       return this.callback.call$0();
     },
-    $signature: 8
+    $signature: 12
   };
   A.TransmitStatus.prototype = {
     _enumToString$0() {
@@ -19240,7 +23159,7 @@
       A._asString($event.type);
       this.$this._messageController.add$1(0, new A.MessageEvent(t1));
     },
-    $signature: 11
+    $signature: 7
   };
   A.EventSourceWeb_closure0.prototype = {
     call$1($event) {
@@ -19252,14 +23171,14 @@
         t2.complete$0(0);
       t1._openController.add$1(0, null);
     },
-    $signature: 11
+    $signature: 7
   };
   A.EventSourceWeb_closure1.prototype = {
     call$1($event) {
       A._asJSObject($event);
       this.$this._errorController.add$1(0, null);
     },
-    $signature: 11
+    $signature: 7
   };
   A.MessageEvent.prototype = {};
   A.RNG.prototype = {
@@ -19300,26 +23219,105 @@
     }
   };
   A.Uuid.prototype = {};
+  A.EventStreamProvider0.prototype = {};
+  A._EventStream.prototype = {
+    listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, onError) {
+      var t1 = this.$ti;
+      t1._eval$1("~(1)?")._as(onData);
+      type$.nullable_void_Function._as(onDone);
+      return A._EventStreamSubscription$0(this._streams$_target, this._streams$_eventType, onData, false, t1._precomputed1);
+    },
+    listen$3$onDone$onError(onData, onDone, onError) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, null, onDone, onError);
+    },
+    listen$3$cancelOnError$onDone(onData, cancelOnError, onDone) {
+      return this.listen$4$cancelOnError$onDone$onError(onData, cancelOnError, onDone, null);
+    }
+  };
+  A._EventStreamSubscription.prototype = {
+    cancel$0(_) {
+      var _this = this,
+        emptyFuture = A.Future_Future$value(null, type$.void);
+      if (_this._streams$_target == null)
+        return emptyFuture;
+      _this._streams$_unlisten$0();
+      _this._streams$_onData = _this._streams$_target = null;
+      return emptyFuture;
+    },
+    onData$1(handleData) {
+      var t1, _this = this;
+      _this.$ti._eval$1("~(1)?")._as(handleData);
+      if (_this._streams$_target == null)
+        throw A.wrapException(A.StateError$("Subscription has been canceled."));
+      _this._streams$_unlisten$0();
+      t1 = A._wrapZone0(new A._EventStreamSubscription_onData_closure0(handleData), type$.JSObject);
+      t1 = t1 == null ? null : A._functionToJS1(t1);
+      _this._streams$_onData = t1;
+      _this._streams$_tryResume$0();
+    },
+    onError$1(_, handleError) {
+    },
+    pause$1(_, resumeSignal) {
+      if (this._streams$_target == null)
+        return;
+      ++this._streams$_pauseCount;
+      this._streams$_unlisten$0();
+    },
+    pause$0(_) {
+      return this.pause$1(0, null);
+    },
+    resume$0(_) {
+      var _this = this;
+      if (_this._streams$_target == null || _this._streams$_pauseCount <= 0)
+        return;
+      --_this._streams$_pauseCount;
+      _this._streams$_tryResume$0();
+    },
+    _streams$_tryResume$0() {
+      var _this = this,
+        t1 = _this._streams$_onData;
+      if (t1 != null && _this._streams$_pauseCount <= 0)
+        _this._streams$_target.addEventListener(_this._streams$_eventType, t1, false);
+    },
+    _streams$_unlisten$0() {
+      var t1 = this._streams$_onData;
+      if (t1 != null)
+        this._streams$_target.removeEventListener(this._streams$_eventType, t1, false);
+    },
+    $isStreamSubscription: 1
+  };
+  A._EventStreamSubscription_closure.prototype = {
+    call$1(e) {
+      return this.onData.call$1(A._asJSObject(e));
+    },
+    $signature: 19
+  };
+  A._EventStreamSubscription_onData_closure0.prototype = {
+    call$1(e) {
+      return this.handleData.call$1(A._asJSObject(e));
+    },
+    $signature: 19
+  };
   A.main_closure.prototype = {
     call$1(e) {
       type$.MouseEvent._as(e);
       return A.connect();
     },
-    $signature: 5
+    $signature: 8
   };
   A.main_closure0.prototype = {
     call$1(e) {
       type$.MouseEvent._as(e);
       return A.disconnect();
     },
-    $signature: 5
+    $signature: 8
   };
   A.main_closure1.prototype = {
     call$1(e) {
       type$.MouseEvent._as(e);
       return A.triggerEvent();
     },
-    $signature: 5
+    $signature: 8
   };
   A.main_closure2.prototype = {
     call$1(e) {
@@ -19330,13 +23328,13 @@
         J.set$innerHtml$x(messagesDiv, "");
       return null;
     },
-    $signature: 5
+    $signature: 8
   };
   A.connect_closure.prototype = {
     call$1(attempt) {
       A.addMessage("Reconnect attempt " + A._asInt(attempt), "warning");
     },
-    $signature: 57
+    $signature: 77
   };
   A.connect_closure0.prototype = {
     call$0() {
@@ -19387,21 +23385,54 @@
   };
   A.connect_closure4.prototype = {
     call$1(message) {
-      A.addMessage("Message received: " + J.toString$0$(message), "message");
+      A.addMessage("\ud83d\udce8 Stream: " + J.toString$0$(message), "message");
     },
-    $signature: 2
-  };
-  A.connect_closure5.prototype = {
-    call$1(_) {
-      A.addMessage("Subscription created for channel: test", "success");
-    },
-    $signature: 2
+    $signature: 10
   };
   A.connect_closure6.prototype = {
     call$1(error) {
+      A.addMessage("\u274c Stream error: " + A.S(error), "error");
+    },
+    $signature: 4
+  };
+  A.connect_closure5.prototype = {
+    call$0() {
+      A.addMessage("\u2705 Stream closed", "info");
+    },
+    $signature: 0
+  };
+  A.connect_closure7.prototype = {
+    call$1(msg) {
+      return J.containsKey$1$x(type$.Map_String_dynamic._as(msg), "type");
+    },
+    $signature: 78
+  };
+  A.connect_closure8.prototype = {
+    call$1(msg) {
+      var t1;
+      type$.Map_String_dynamic._as(msg);
+      t1 = J.getInterceptor$asx(msg);
+      A.addMessage("\ud83d\udcdd Typed: " + A.S(t1.$index(msg, "type")) + " - " + A.S(t1.$index(msg, "data")), "message");
+    },
+    $signature: 79
+  };
+  A.connect_closure9.prototype = {
+    call$1(message) {
+      A.addMessage("\ud83d\udcde Callback: " + J.toString$0$(message), "message");
+    },
+    $signature: 6
+  };
+  A.connect_closure10.prototype = {
+    call$1(_) {
+      A.addMessage("Subscription created for channel: test", "success");
+    },
+    $signature: 80
+  };
+  A.connect_closure11.prototype = {
+    call$1(error) {
       A.addMessage("Failed to create subscription: " + A.S(error), "error");
     },
-    $signature: 2
+    $signature: 4
   };
   A.triggerEvent_closure.prototype = {
     call$1(request) {
@@ -19411,13 +23442,13 @@
       else
         A.addMessage("Failed to trigger event: " + A.S(t1), "error");
     },
-    $signature: 58
+    $signature: 81
   };
   A.triggerEvent_closure0.prototype = {
     call$1(error) {
       A.addMessage("Error triggering event: " + A.S(error), "error");
     },
-    $signature: 2
+    $signature: 4
   };
   (function aliases() {
     var _ = J.Interceptor.prototype;
@@ -19428,11 +23459,19 @@
     _.super$JsLinkedHashMap$internalContainsKey = _.internalContainsKey$1;
     _.super$JsLinkedHashMap$internalGet = _.internalGet$1;
     _.super$JsLinkedHashMap$internalSet = _.internalSet$2;
+    _.super$JsLinkedHashMap$internalRemove = _.internalRemove$1;
     _ = A._BufferingStreamSubscription.prototype;
     _.super$_BufferingStreamSubscription$_add = _._add$1;
     _.super$_BufferingStreamSubscription$_addError = _._addError$2;
+    _.super$_BufferingStreamSubscription$_close = _._close$0;
+    _ = A._StreamSinkTransformer.prototype;
+    _.super$_StreamSinkTransformer$bind = _.bind$1;
     _ = A.ListBase.prototype;
     _.super$ListBase$setRange = _.setRange$4;
+    _ = A.Converter.prototype;
+    _.super$Converter$fuse = _.fuse$1$1;
+    _ = A._StringSinkConversionSink.prototype;
+    _.super$_StringSinkConversionSink$close = _.close$0;
     _ = A.Iterable.prototype;
     _.super$Iterable$where = _.where$1;
     _ = A.Element.prototype;
@@ -19441,93 +23480,121 @@
     _.super$EventTarget$addEventListener = _.addEventListener$3;
     _ = A._SimpleNodeValidator.prototype;
     _.super$_SimpleNodeValidator$allowsAttribute = _.allowsAttribute$3;
-    _ = A.BaseRequest.prototype;
-    _.super$BaseRequest$finalize = _.finalize$0;
     _ = A.SourceSpanMixin.prototype;
     _.super$SourceSpanMixin$compareTo = _.compareTo$1;
     _.super$SourceSpanMixin$$eq = _.$eq;
   })();
   (function installTearOffs() {
-    var _static_1 = hunkHelpers._static_1,
+    var _instance_1_u = hunkHelpers._instance_1u,
       _static_0 = hunkHelpers._static_0,
+      _static_1 = hunkHelpers._static_1,
       _static_2 = hunkHelpers._static_2,
       _instance_0_u = hunkHelpers._instance_0u,
       _instance = hunkHelpers.installInstanceTearOff,
       _instance_2_u = hunkHelpers._instance_2u,
-      _instance_1_u = hunkHelpers._instance_1u,
-      _instance_1_i = hunkHelpers._instance_1i,
+      _static = hunkHelpers.installStaticTearOff,
       _instance_0_i = hunkHelpers._instance_0i,
-      _static = hunkHelpers.installStaticTearOff;
-    _static_1(A, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 10);
-    _static_1(A, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 10);
-    _static_1(A, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 10);
+      _instance_1_i = hunkHelpers._instance_1i,
+      _instance_2_i = hunkHelpers._instance_2i;
+    _instance_1_u(A.CastStreamSubscription.prototype, "get$__internal$_onData", "__internal$_onData$1", 6);
+    _static_0(A, "_js_helper_Primitives_dateNow$closure", "Primitives_dateNow", 9);
+    _static_1(A, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 15);
+    _static_1(A, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 15);
+    _static_1(A, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 15);
     _static_0(A, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 0);
-    _static_2(A, "async___nullErrorHandler$closure", "_nullErrorHandler", 16);
+    _static_1(A, "async___nullDataHandler$closure", "_nullDataHandler", 10);
+    _static_2(A, "async___nullErrorHandler$closure", "_nullErrorHandler", 5);
     _static_0(A, "async___nullDoneHandler$closure", "_nullDoneHandler", 0);
     var _;
     _instance_0_u(_ = A._BroadcastSubscription.prototype, "get$_onPause", "_onPause$0", 0);
     _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
-    _instance(A._Completer.prototype, "get$completeError", 0, 1, function() {
-      return [null];
-    }, ["call$2", "call$1"], ["completeError$2", "completeError$1"], 61, 0, 0);
-    _instance_2_u(A._Future.prototype, "get$_completeError", "_completeError$2", 16);
+    _instance(A._Completer.prototype, "get$completeError", 0, 1, null, ["call$2", "call$1"], ["completeError$2", "completeError$1"], 84, 0, 0);
+    _instance_2_u(A._Future.prototype, "get$_completeError", "_completeError$2", 5);
     _instance_0_u(_ = A._ControllerSubscription.prototype, "get$_onPause", "_onPause$0", 0);
     _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
     _instance_0_u(_ = A._BufferingStreamSubscription.prototype, "get$_onPause", "_onPause$0", 0);
     _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
     _instance_0_u(A._DoneStreamSubscription.prototype, "get$_onMicrotask", "_onMicrotask$0", 0);
+    _instance_1_u(_ = A._StreamIterator.prototype, "get$_async$_onData", "_async$_onData$1", 6);
+    _instance_2_u(_, "get$_onError", "_onError$2", 5);
+    _instance_0_u(_, "get$_onDone", "_onDone$0", 0);
     _instance_0_u(_ = A._ForwardingStreamSubscription.prototype, "get$_onPause", "_onPause$0", 0);
     _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
-    _instance_1_u(_, "get$_handleData", "_handleData$1", 18);
-    _instance_2_u(_, "get$_handleError", "_handleError$2", 59);
+    _instance_1_u(_, "get$_handleData", "_handleData$1", 6);
+    _instance_2_u(_, "get$_handleError", "_handleError$2", 82);
     _instance_0_u(_, "get$_handleDone", "_handleDone$0", 0);
-    _static_2(A, "collection___defaultEquals$closure", "_defaultEquals", 17);
-    _static_1(A, "collection___defaultHashCode$closure", "_defaultHashCode", 15);
-    _static_1(A, "convert___defaultToEncodable$closure", "_defaultToEncodable", 19);
-    _instance_1_i(_ = A._ByteCallbackSink.prototype, "get$add", "add$1", 18);
+    _instance_0_u(_ = A._SinkTransformerStreamSubscription.prototype, "get$_onPause", "_onPause$0", 0);
+    _instance_0_u(_, "get$_onResume", "_onResume$0", 0);
+    _instance_1_u(_, "get$_handleData", "_handleData$1", 6);
+    _instance_2_u(_, "get$_handleError", "_handleError$2", 5);
+    _instance_0_u(_, "get$_handleDone", "_handleDone$0", 0);
+    _static_2(A, "collection___defaultEquals$closure", "_defaultEquals", 20);
+    _static_1(A, "collection___defaultHashCode$closure", "_defaultHashCode", 35);
+    _static(A, "convert__jsonEncode$closure", 1, function() {
+      return {toEncodable: null};
+    }, ["call$2$toEncodable", "call$1"], ["jsonEncode", function(object) {
+      return A.jsonEncode(object, null);
+    }], 85, 0);
+    _static_1(A, "convert___defaultToEncodable$closure", "_defaultToEncodable", 24);
+    _instance_0_i(A._JsonDecoderSink.prototype, "get$close", "close$0", 0);
+    _instance_1_i(_ = A._ByteCallbackSink.prototype, "get$add", "add$1", 6);
     _instance_0_i(_, "get$close", "close$0", 0);
-    _static_1(A, "core__identityHashCode$closure", "identityHashCode", 15);
-    _static_2(A, "core__identical$closure", "identical", 17);
+    _static_1(A, "core__identityHashCode$closure", "identityHashCode", 35);
+    _static_2(A, "core__identical$closure", "identical", 20);
+    _static(A, "core_Uri_encodeQueryComponent$closure", 1, null, ["call$2$encoding", "call$1"], ["Uri_encodeQueryComponent", function(component) {
+      return A.Uri_encodeQueryComponent(component, B.C_Utf8Codec);
+    }], 86, 0);
     _static_1(A, "core_Uri_decodeComponent$closure", "Uri_decodeComponent", 13);
-    _static(A, "html__Html5NodeValidator__standardAttributeValidator$closure", 4, null, ["call$4"], ["_Html5NodeValidator__standardAttributeValidator"], 14, 0);
-    _static(A, "html__Html5NodeValidator__uriAttributeValidator$closure", 4, null, ["call$4"], ["_Html5NodeValidator__uriAttributeValidator"], 14, 0);
+    _static(A, "html__Html5NodeValidator__standardAttributeValidator$closure", 4, null, ["call$4"], ["_Html5NodeValidator__standardAttributeValidator"], 31, 0);
+    _static(A, "html__Html5NodeValidator__uriAttributeValidator$closure", 4, null, ["call$4"], ["_Html5NodeValidator__uriAttributeValidator"], 31, 0);
     _static(A, "math__max$closure", 2, null, ["call$1$2", "call$2"], ["max", function(a, b) {
       return A.max(a, b, type$.num);
-    }], 63, 1);
-    _static_1(A, "response_Response_fromStream$closure", "Response_fromStream", 42);
+    }], 88, 1);
+    _instance_2_u(_ = A.Interceptor0.prototype, "get$onResponse", "onResponse$2", 41);
+    _instance_2_i(_, "get$onError", "onError$2", 42);
+    _instance_2_u(A.ImplyContentTypeInterceptor.prototype, "get$onRequest", "onRequest$2", 90);
+    _static_1(A, "options___defaultValidateStatus$closure", "_defaultValidateStatus", 17);
+    _static_1(A, "fused_transformer_FusedTransformer__decodeUtf8ToJson$closure", "FusedTransformer__decodeUtf8ToJson", 89);
     _static_1(A, "case_insensitive_map_CaseInsensitiveMap__canonicalizer$closure", "CaseInsensitiveMap__canonicalizer", 13);
-    _instance_1_u(_ = A.Transmit.prototype, "get$_onMessage", "_onMessage$1", 51);
-    _instance_1_u(_, "get$_transmit$_onError", "_transmit$_onError$1", 6);
+    _instance_1_u(_ = A.Transmit.prototype, "get$_onMessage", "_onMessage$1", 71);
+    _instance_1_u(_, "get$_transmit$_onError", "_transmit$_onError$1", 10);
+    _static(A, "compute_impl__compute$closure", 2, null, ["call$2$3$debugLabel", "call$2", "call$2$2"], ["compute", function(callback, message) {
+      var t1 = type$.dynamic;
+      return A.compute(callback, message, null, t1, t1);
+    }, function(callback, message, $Q, $R) {
+      return A.compute(callback, message, null, $Q, $R);
+    }], 60, 0);
   })();
   (function inheritance() {
     var _mixin = hunkHelpers.mixin,
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(A.Object, null);
-    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, A.SafeToStringHook, J.ArrayIterator, A.Error, A.ListBase, A.Closure, A.SentinelValue, A.Iterable, A.ListIterator, A.MappedIterator, A.WhereIterator, A.ExpandIterator, A.SkipIterator, A.EmptyIterator, A.WhereTypeIterator, A.FixedLengthListMixin, A.UnmodifiableListMixin, A.ConstantMap, A._KeysOrValuesOrElementsIterator, A.TypeErrorDecoder, A.NullThrownFromJavaScriptException, A.ExceptionAndStackTrace, A._StackTrace, A.MapBase, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.LinkedHashMapValueIterator, A.LinkedHashMapEntryIterator, A.JSSyntaxRegExp, A._MatchImplementation, A._AllMatchesIterator, A.StringMatch, A._StringAllMatchesIterator, A._UnmodifiableNativeByteBufferView, A.Rti, A._FunctionParameters, A._Type, A._TimerImpl, A._AsyncAwaitCompleter, A.AsyncError, A.Stream, A._BufferingStreamSubscription, A._BroadcastStreamController, A._Completer, A._FutureListener, A._Future, A._AsyncCallbackEntry, A._StreamController, A._AsyncStreamControllerDispatch, A._DelayedEvent, A._DelayedDone, A._PendingEvents, A._DoneStreamSubscription, A._StreamIterator, A._Zone, A._HashMapKeyIterator, A.SetBase, A._LinkedHashSetCell, A._LinkedHashSetIterator, A._UnmodifiableMapMixin, A.MapView, A.Codec, A.Converter, A.ByteConversionSink, A._JsonStringifier, A._Utf8Encoder, A._Utf8Decoder, A.DateTime, A.Duration, A._Enum, A.OutOfMemoryError, A.StackOverflowError, A._Exception, A.FormatException, A.MapEntry, A.Null, A._StringStackTrace, A.StringBuffer, A._Uri, A.UriData, A._SimpleUri, A.CssStyleDeclarationBase, A.EventStreamProvider, A._EventStreamSubscription, A._Html5NodeValidator, A.ImmutableListMixin, A.NodeValidatorBuilder, A._SimpleNodeValidator, A._SvgNodeValidator, A.FixedSizeListIterator, A._SameOriginUriPolicy, A._ValidatingTreeSanitizer, A.NullRejectionException, A._JSSecureRandom, A.CanonicalizedMap, A.ClientException, A.BaseClient, A.BaseRequest, A.BaseResponse, A.MediaType, A.Context, A.Style, A.ParsedPath, A.PathException, A.SourceFile, A.SourceLocationMixin, A.SourceSpanMixin, A.Highlighter, A._Highlight, A._Line, A.SourceLocation, A.SourceSpanException, A.StringScanner, A.Hook, A.HookEvent, A.HttpClient, A.Subscription, A.TransmitOptions, A.Transmit, A.EventSourceWeb, A.MessageEvent, A.RNG, A.Uuid]);
+    _inheritMany(A.Object, [A.JS_CONST, J.Interceptor, A.SafeToStringHook, J.ArrayIterator, A.Stream, A.CastStreamSubscription, A._BytesBuilder, A.Error, A.ListBase, A.Closure, A.SentinelValue, A.Iterable, A.ListIterator, A.WhereIterator, A.ExpandIterator, A.SkipIterator, A.EmptyIterator, A.WhereTypeIterator, A.FixedLengthListMixin, A.UnmodifiableListMixin, A.ConstantMap, A.TypeErrorDecoder, A.NullThrownFromJavaScriptException, A.ExceptionAndStackTrace, A._StackTrace, A.MapBase, A.LinkedHashMapCell, A.LinkedHashMapKeyIterator, A.LinkedHashMapValueIterator, A.LinkedHashMapEntryIterator, A.JSSyntaxRegExp, A._MatchImplementation, A._AllMatchesIterator, A.StringMatch, A._StringAllMatchesIterator, A._Cell, A._UnmodifiableNativeByteBufferView, A.Rti, A._FunctionParameters, A._Type, A._TimerImpl, A._AsyncAwaitCompleter, A.AsyncError, A._BufferingStreamSubscription, A._BroadcastStreamController, A._Completer, A._FutureListener, A._Future, A._AsyncCallbackEntry, A.StreamTransformerBase, A._StreamController, A._AsyncStreamControllerDispatch, A._DelayedEvent, A._DelayedDone, A._PendingEvents, A._DoneStreamSubscription, A._StreamIterator, A._EventSinkWrapper, A._HandlerEventSink, A._Zone, A.SetBase, A._LinkedHashSetCell, A._LinkedHashSetIterator, A._UnmodifiableMapMixin, A.MapView, A.StringConversionSink, A.Codec, A.Converter, A.ByteConversionSink, A._Base64Encoder, A.ChunkedConversionSink, A._ConverterStreamEventSink, A._JsonStringifier, A._ClosableStringSink, A._StringConversionSinkAsStringSinkAdapter, A._Utf8Encoder, A._Utf8Decoder, A._WeakReferenceWrapper, A.DateTime, A.Duration, A._Enum, A.OutOfMemoryError, A.StackOverflowError, A._Exception, A.FormatException, A.MapEntry, A.Null, A._StringStackTrace, A.Stopwatch, A.StringBuffer, A._Uri, A.UriData, A._SimpleUri, A.CssStyleDeclarationBase, A.EventStreamProvider, A._EventStreamSubscription0, A._Html5NodeValidator, A.ImmutableListMixin, A.NodeValidatorBuilder, A._SimpleNodeValidator, A._SvgNodeValidator, A.FixedSizeListIterator, A._SameOriginUriPolicy, A._ValidatingTreeSanitizer, A._JSSecureRandom, A.CancelableOperation, A.CancelableCompleter, A.CanonicalizedMap, A.ResponseBody, A.DioException, A.DioMixin, A.InterceptorState, A._BaseHandler, A.Interceptor0, A.Headers, A.OptionsMixin, A._RequestConfig, A.Options, A.Response0, A.Transformer, A._DefaultIfEmptyStreamSink, A.BrowserHttpClientAdapter, A._DioForBrowser_Object_DioMixin, A.BaseRequest, A.BaseResponse, A.MediaType, A.Context, A.Style, A.ParsedPath, A.PathException, A.SourceFile, A.SourceLocationMixin, A.SourceSpanMixin, A.Highlighter, A._Highlight, A._Line, A.SourceLocation, A.SourceSpanException, A.StringScanner, A.Hook, A.HookEvent, A.TransmitHttpClient, A.Subscription, A.TransmitOptions, A.Transmit, A.EventSourceWeb, A.MessageEvent, A.RNG, A.Uuid, A.EventStreamProvider0, A._EventStreamSubscription]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JavaScriptBigInt, J.JavaScriptSymbol, J.JSNumber, J.JSString]);
     _inheritMany(J.JavaScriptObject, [J.LegacyJavaScriptObject, J.JSArray, A.NativeByteBuffer, A.NativeTypedData, A.EventTarget, A.AccessibleNodeList, A.Blob, A.CssTransformComponent, A.CssRule, A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase, A.CssStyleValue, A.DataTransferItemList, A.DomException, A.DomImplementation, A._DomRectList_JavaScriptObject_ListMixin, A.DomRectReadOnly, A._DomStringList_JavaScriptObject_ListMixin, A.DomTokenList, A.Event, A._FileList_JavaScriptObject_ListMixin, A.Gamepad, A.History, A._HtmlCollection_JavaScriptObject_ListMixin, A.Location, A.MediaList, A._MidiInputMap_JavaScriptObject_MapMixin, A._MidiOutputMap_JavaScriptObject_MapMixin, A.MimeType, A._MimeTypeArray_JavaScriptObject_ListMixin, A._NodeList_JavaScriptObject_ListMixin, A.Plugin, A._PluginArray_JavaScriptObject_ListMixin, A._RtcStatsReport_JavaScriptObject_MapMixin, A.SpeechGrammar, A._SpeechGrammarList_JavaScriptObject_ListMixin, A.SpeechRecognitionResult, A._Storage_JavaScriptObject_MapMixin, A.StyleSheet, A._TextTrackCueList_JavaScriptObject_ListMixin, A.TimeRanges, A.Touch, A._TouchList_JavaScriptObject_ListMixin, A.TrackDefaultList, A.Url, A.__CssRuleList_JavaScriptObject_ListMixin, A.__GamepadList_JavaScriptObject_ListMixin, A.__NamedNodeMap_JavaScriptObject_ListMixin, A.__SpeechRecognitionResultList_JavaScriptObject_ListMixin, A.__StyleSheetList_JavaScriptObject_ListMixin, A.Length, A._LengthList_JavaScriptObject_ListMixin, A.Number, A._NumberList_JavaScriptObject_ListMixin, A.PointList, A._StringList_JavaScriptObject_ListMixin, A.Transform, A._TransformList_JavaScriptObject_ListMixin, A.AudioBuffer, A._AudioParamMap_JavaScriptObject_MapMixin]);
     _inheritMany(J.LegacyJavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction]);
     _inherit(J.JSArraySafeToStringHook, A.SafeToStringHook);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
+    _inheritMany(A.Stream, [A.CastStream, A._StreamImpl, A._MultiStream, A._ForwardingStream, A._BoundSinkStream, A._EventStream0, A._EventStream]);
     _inheritMany(A.Error, [A.LateError, A.TypeError, A.JsNoSuchMethodError, A.UnknownJsTypeError, A.RuntimeError, A._Error, A.JsonUnsupportedObjectError, A.AssertionError, A.ArgumentError, A.UnsupportedError, A.UnimplementedError, A.StateError, A.ConcurrentModificationError]);
-    _inheritMany(A.ListBase, [A.UnmodifiableListBase, A._ChildNodeListLazy]);
+    _inheritMany(A.ListBase, [A.UnmodifiableListBase, A._ChildNodeListLazy, A.Interceptors]);
     _inherit(A.CodeUnits, A.UnmodifiableListBase);
-    _inheritMany(A.Closure, [A.Closure0Args, A.Instantiation, A.Closure2Args, A.TearOffClosure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_length_closure, A._RootZone_bindUnaryCallbackGuarded_closure, A._LinkedCustomHashMap_closure, A.Element_Element$html_closure, A.HttpRequest_request_closure, A._EventStreamSubscription_closure, A.NodeValidatorBuilder_allowsElement_closure, A.NodeValidatorBuilder_allowsAttribute_closure, A._SimpleNodeValidator_closure, A._SimpleNodeValidator_closure0, A._TemplatingNodeValidator_closure, A.jsify__convert, A.promiseToFuture_closure, A.promiseToFuture_closure0, A.CanonicalizedMap_keys_closure, A.BaseRequest_closure0, A.BrowserClient_send_closure, A._bodyToStream_closure, A.ByteStream_toBytes_closure, A.MediaType_toString__closure, A.expectQuotedString_closure, A.Context_joinAll_closure, A.Context_split_closure, A._validateArgList_closure, A.Highlighter$__closure, A.Highlighter$___closure, A.Highlighter$__closure0, A.Highlighter__collateLines_closure, A.Highlighter__collateLines_closure1, A.Highlighter__collateLines__closure, A.Highlighter_highlight_closure, A.Hook_beforeSubscribe_closure, A.Hook_beforeUnsubscribe_closure, A.Hook_onReconnectAttempt_closure, A.Hook_onReconnectFailed_closure, A.Hook_onSubscribeFailed_closure, A.Hook_onSubscription_closure, A.Hook_onUnsubscription_closure, A.Transmit__connect_closure, A.Transmit__connect_closure0, A.Transmit_on_closure, A.Transmit_on_closure0, A.Transmit_on_closure1, A.Transmit_on_closure2, A.Transmit_on_closure3, A.Transmit_on_closure4, A.EventSourceWeb_closure, A.EventSourceWeb_closure0, A.EventSourceWeb_closure1, A.main_closure, A.main_closure0, A.main_closure1, A.main_closure2, A.connect_closure, A.connect_closure4, A.connect_closure5, A.connect_closure6, A.triggerEvent_closure, A.triggerEvent_closure0]);
-    _inheritMany(A.Closure0Args, [A.nullFuture_closure, A._AsyncRun__scheduleImmediateJsOverride_internalCallback, A._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, A._TimerImpl_internalCallback, A.Future_Future$delayed_closure, A._Future__addListener_closure, A._Future__prependListeners_closure, A._Future__chainCoreFuture_closure, A._Future__asyncCompleteWithValue_closure, A._Future__asyncCompleteErrorObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback, A._Future__propagateToListeners_handleValueCallback, A._Future__propagateToListeners_handleError, A.Stream_length_closure0, A._StreamController__subscribe_closure, A._StreamController__recordCancel_complete, A._BufferingStreamSubscription__sendError_sendError, A._BufferingStreamSubscription__sendDone_sendDone, A._PendingEvents_schedule_closure, A._MultiStream_listen_closure, A._rootHandleError_closure, A._RootZone_bindCallbackGuarded_closure, A._Utf8Decoder__decoder_closure, A._Utf8Decoder__decoderNonfatal_closure, A._readStreamBody_closure, A._readStreamBody_closure0, A.MediaType_MediaType$parse_closure, A.Highlighter_closure, A.Highlighter__writeFileStart_closure, A.Highlighter__writeMultilineHighlights_closure, A.Highlighter__writeMultilineHighlights_closure0, A.Highlighter__writeMultilineHighlights_closure1, A.Highlighter__writeMultilineHighlights_closure2, A.Highlighter__writeMultilineHighlights__closure, A.Highlighter__writeMultilineHighlights__closure0, A.Highlighter__writeHighlightedText_closure, A.Highlighter__writeIndicator_closure, A.Highlighter__writeIndicator_closure0, A.Highlighter__writeIndicator_closure1, A.Highlighter__writeSidebar_closure, A._Highlight_closure, A.Hook_register_closure, A.Subscription_onMessage_closure, A.Transmit__onError_closure, A.Transmit_subscription_closure, A.connect_closure0, A.connect_closure1, A.connect_closure2, A.connect_closure3]);
-    _inheritMany(A.Iterable, [A.EfficientLengthIterable, A.MappedIterable, A.WhereIterable, A.ExpandIterable, A.SkipIterable, A.WhereTypeIterable, A._KeysOrValues, A._AllMatchesIterable, A._StringAllMatchesIterable]);
-    _inheritMany(A.EfficientLengthIterable, [A.ListIterable, A.EmptyIterable, A.LinkedHashMapKeysIterable, A.LinkedHashMapValuesIterable, A.LinkedHashMapEntriesIterable, A._HashMapKeyIterable]);
+    _inheritMany(A.Closure, [A.Closure0Args, A.Instantiation, A.Closure2Args, A.TearOffClosure, A.initHooks_closure, A.initHooks_closure1, A._AsyncRun__initializeScheduleImmediate_internalCallback, A._AsyncRun__initializeScheduleImmediate_closure, A._awaitOnObject_closure, A.Future_wait_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure, A.Stream_Stream$fromIterable_closure, A.Stream_length_closure, A.Stream_toList_closure, A.Stream_first_closure0, A._StreamHandlerTransformer_closure, A._RootZone_bindUnaryCallbackGuarded_closure, A._LinkedCustomHashMap_closure, A.Converter_bind_closure, A.Element_Element$html_closure, A.HttpRequest_request_closure, A._EventStreamSubscription_closure0, A._EventStreamSubscription_onData_closure, A.NodeValidatorBuilder_allowsElement_closure, A.NodeValidatorBuilder_allowsAttribute_closure, A._SimpleNodeValidator_closure, A._SimpleNodeValidator_closure0, A._TemplatingNodeValidator_closure, A.CancelableCompleter_complete_closure, A.DioMixin_fetch_requestInterceptorWrapper, A.DioMixin_fetch_requestInterceptorWrapper_closure, A.DioMixin_fetch_responseInterceptorWrapper, A.DioMixin_fetch_responseInterceptorWrapper_closure, A.DioMixin_fetch_errorInterceptorWrapper, A.DioMixin_fetch_errorInterceptorWrapper_closure, A.handleResponseStream_closure, A.DefaultNullIfEmptyStreamTransformer_bind_closure, A.encodeMap_maybeEncode, A.caseInsensitiveKeyMap_closure0, A.BrowserHttpClientAdapter_fetch_closure0, A.BrowserHttpClientAdapter_fetch_closure1, A.BrowserHttpClientAdapter_fetch_closure3, A.BrowserHttpClientAdapter_fetch_closure4, A.BrowserHttpClientAdapter_fetch_closure5, A.BaseRequest_closure0, A.MediaType_toString__closure, A.expectQuotedString_closure, A.Context_joinAll_closure, A.Context_split_closure, A._validateArgList_closure, A.Highlighter$__closure, A.Highlighter$___closure, A.Highlighter$__closure0, A.Highlighter__collateLines_closure, A.Highlighter__collateLines_closure1, A.Highlighter__collateLines__closure, A.Highlighter_highlight_closure, A.Hook_beforeSubscribe_closure, A.Hook_beforeUnsubscribe_closure, A.Hook_onReconnectAttempt_closure, A.Hook_onReconnectFailed_closure, A.Hook_onSubscribeFailed_closure, A.Hook_onSubscription_closure, A.Hook_onUnsubscription_closure, A.TransmitHttpClient_closure, A.TransmitHttpClient_send_closure, A.Transmit__connect_closure, A.Transmit__connect_closure0, A.Transmit_on_closure, A.Transmit_on_closure0, A.Transmit_on_closure1, A.Transmit_on_closure2, A.Transmit_on_closure3, A.Transmit_on_closure4, A.EventSourceWeb_closure, A.EventSourceWeb_closure0, A.EventSourceWeb_closure1, A._EventStreamSubscription_closure, A._EventStreamSubscription_onData_closure0, A.main_closure, A.main_closure0, A.main_closure1, A.main_closure2, A.connect_closure, A.connect_closure4, A.connect_closure6, A.connect_closure7, A.connect_closure8, A.connect_closure9, A.connect_closure10, A.connect_closure11, A.triggerEvent_closure, A.triggerEvent_closure0]);
+    _inheritMany(A.Closure0Args, [A.nullFuture_closure, A.Primitives_initTicker_closure, A._AsyncRun__scheduleImmediateJsOverride_internalCallback, A._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, A._TimerImpl_internalCallback, A.Future_Future_closure, A.Future_Future$delayed_closure, A._Future__addListener_closure, A._Future__prependListeners_closure, A._Future__chainCoreFuture_closure, A._Future__asyncCompleteWithValue_closure, A._Future__asyncCompleteErrorObject_closure, A._Future__propagateToListeners_handleWhenCompleteCallback, A._Future__propagateToListeners_handleValueCallback, A._Future__propagateToListeners_handleError, A.Stream_Stream$fromIterable_closure_next, A.Stream_Stream$fromIterable__closure, A.Stream_length_closure0, A.Stream_toList_closure0, A.Stream_first_closure, A._StreamController__subscribe_closure, A._StreamController__recordCancel_complete, A._BufferingStreamSubscription__sendError_sendError, A._BufferingStreamSubscription__sendDone_sendDone, A._PendingEvents_schedule_closure, A._MultiStream_listen_closure, A._cancelAndValue_closure, A._rootHandleError_closure, A._RootZone_bindCallbackGuarded_closure, A._Utf8Decoder__decoder_closure, A._Utf8Decoder__decoderNonfatal_closure, A.DioMixin_fetch_requestInterceptorWrapper__closure, A.DioMixin_fetch_responseInterceptorWrapper__closure, A.DioMixin_fetch_errorInterceptorWrapper_closure_handleError, A.DioMixin_fetch_closure, A.DioMixin__dispatchRequest_closure, A.handleResponseStream_stopWatchReceiveTimeout, A.handleResponseStream_watchReceiveTimeout, A.handleResponseStream_watchReceiveTimeout_closure, A.handleResponseStream_closure0, A.BrowserHttpClientAdapter_fetch_stopWatchReceiveTimeout, A.BrowserHttpClientAdapter_fetch_watchReceiveTimeout, A.BrowserHttpClientAdapter_fetch_watchReceiveTimeout_closure, A.BrowserHttpClientAdapter_fetch_closure2, A.BrowserHttpClientAdapter_fetch_closure7, A.MediaType_MediaType$parse_closure, A.Highlighter_closure, A.Highlighter__writeFileStart_closure, A.Highlighter__writeMultilineHighlights_closure, A.Highlighter__writeMultilineHighlights_closure0, A.Highlighter__writeMultilineHighlights_closure1, A.Highlighter__writeMultilineHighlights_closure2, A.Highlighter__writeMultilineHighlights__closure, A.Highlighter__writeMultilineHighlights__closure0, A.Highlighter__writeHighlightedText_closure, A.Highlighter__writeIndicator_closure, A.Highlighter__writeIndicator_closure0, A.Highlighter__writeIndicator_closure1, A.Highlighter__writeSidebar_closure, A._Highlight_closure, A.Hook_register_closure, A.Subscription_onMessage_closure, A.Transmit__onError_closure, A.Transmit_subscription_closure, A.connect_closure0, A.connect_closure1, A.connect_closure2, A.connect_closure3, A.connect_closure5]);
+    _inheritMany(A.Iterable, [A.EfficientLengthIterable, A.WhereIterable, A.ExpandIterable, A.SkipIterable, A.WhereTypeIterable, A._AllMatchesIterable, A._StringAllMatchesIterable]);
+    _inheritMany(A.EfficientLengthIterable, [A.ListIterable, A.EmptyIterable, A.LinkedHashMapKeysIterable, A.LinkedHashMapValuesIterable, A.LinkedHashMapEntriesIterable]);
     _inheritMany(A.ListIterable, [A.SubListIterable, A.MappedListIterable, A.ReversedListIterable, A._JsonMapKeyIterable]);
-    _inherit(A.EfficientLengthMappedIterable, A.MappedIterable);
     _inherit(A.EfficientLengthSkipIterable, A.SkipIterable);
     _inherit(A.ConstantStringMap, A.ConstantMap);
     _inherit(A.Instantiation1, A.Instantiation);
     _inherit(A.NullError, A.TypeError);
     _inheritMany(A.TearOffClosure, [A.StaticClosure, A.BoundClosure]);
-    _inheritMany(A.MapBase, [A.JsLinkedHashMap, A._HashMap, A._JsonMap, A._AttributeMap]);
-    _inheritMany(A.Closure2Args, [A.JsLinkedHashMap_addAll_closure, A.initHooks_closure0, A._awaitOnObject_closure0, A._wrapJsFunctionForAsync_closure, A._Future__propagateToListeners_handleWhenCompleteCallback_closure0, A.LinkedHashMap_LinkedHashMap$from_closure, A.MapBase_mapToString_closure, A._JsonStringifier_writeMap_closure, A._Uri__makeQueryFromParameters_closure, A.Uri_parseIPv6Address_error, A._Uri__makeQueryFromParametersDefault_writeParameter, A._Uri__makeQueryFromParametersDefault_closure, A.MidiInputMap_keys_closure, A.MidiOutputMap_keys_closure, A.RtcStatsReport_keys_closure, A.Storage_keys_closure, A._ValidatingTreeSanitizer_sanitizeTree_walk, A.AudioParamMap_keys_closure, A.CanonicalizedMap_addAll_closure, A.CanonicalizedMap_forEach_closure, A.BaseRequest_closure, A.MediaType_toString_closure, A.Highlighter__collateLines_closure0]);
+    _inheritMany(A.MapBase, [A.JsLinkedHashMap, A._JsonMap, A._AttributeMap]);
+    _inheritMany(A.Closure2Args, [A.JsLinkedHashMap_addAll_closure, A.initHooks_closure0, A._awaitOnObject_closure0, A._wrapJsFunctionForAsync_closure, A.Future_wait_handleError, A._Future__propagateToListeners_handleWhenCompleteCallback_closure0, A.LinkedHashMap_LinkedHashMap$from_closure, A.MapBase_mapToString_closure, A._JsonStringifier_writeMap_closure, A._Uri__makeQueryFromParameters_closure, A.Uri_parseIPv6Address_error, A._Uri__makeQueryFromParametersDefault_writeParameter, A._Uri__makeQueryFromParametersDefault_closure, A.MidiInputMap_keys_closure, A.MidiOutputMap_keys_closure, A.RtcStatsReport_keys_closure, A.Storage_keys_closure, A._ValidatingTreeSanitizer_sanitizeTree_walk, A.AudioParamMap_keys_closure, A.CancelableCompleter_complete_closure0, A.CanonicalizedMap_addAll_closure, A.CanonicalizedMap_forEach_closure, A.DioMixin_fetch_closure0, A.Headers$fromMap_closure, A.Headers_toString_closure, A.handleResponseStream_closure1, A.Transformer_urlEncodeQueryMap_closure, A.encodeMap_urlEncode, A.encodeMap_urlEncode_closure, A.caseInsensitiveKeyMap_closure, A.BrowserHttpClientAdapter_fetch_closure, A.BrowserHttpClientAdapter_fetch_closure6, A._transform_closure, A.BaseRequest_closure, A.MediaType_toString_closure, A.Highlighter__collateLines_closure0, A.TransmitHttpClient_send_closure0]);
     _inheritMany(A.JsLinkedHashMap, [A.JsIdentityLinkedHashMap, A._LinkedCustomHashMap]);
+    _inherit(A.NativeArrayBuffer, A.NativeByteBuffer);
     _inheritMany(A.NativeTypedData, [A.NativeByteData, A.NativeTypedArray]);
     _inheritMany(A.NativeTypedArray, [A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin]);
     _inherit(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin);
@@ -19537,10 +23604,9 @@
     _inheritMany(A.NativeTypedArrayOfDouble, [A.NativeFloat32List, A.NativeFloat64List]);
     _inheritMany(A.NativeTypedArrayOfInt, [A.NativeInt16List, A.NativeInt32List, A.NativeInt8List, A.NativeUint16List, A.NativeUint32List, A.NativeUint8ClampedList, A.NativeUint8List]);
     _inherit(A._TypeError, A._Error);
-    _inheritMany(A.Stream, [A._StreamImpl, A.StreamView, A._EmptyStream, A._MultiStream, A._ForwardingStream, A._EventStream]);
     _inherit(A._ControllerStream, A._StreamImpl);
     _inherit(A._BroadcastStream, A._ControllerStream);
-    _inheritMany(A._BufferingStreamSubscription, [A._ControllerSubscription, A._ForwardingStreamSubscription]);
+    _inheritMany(A._BufferingStreamSubscription, [A._ControllerSubscription, A._ForwardingStreamSubscription, A._SinkTransformerStreamSubscription]);
     _inherit(A._BroadcastSubscription, A._ControllerSubscription);
     _inherit(A._AsyncBroadcastStreamController, A._BroadcastStreamController);
     _inherit(A._AsyncCompleter, A._Completer);
@@ -19548,20 +23614,29 @@
     _inheritMany(A._DelayedEvent, [A._DelayedData, A._DelayedError]);
     _inherit(A._MultiStreamController, A._AsyncStreamController);
     _inherit(A._WhereStream, A._ForwardingStream);
+    _inheritMany(A.StreamTransformerBase, [A._StreamSinkTransformer, A.DefaultNullIfEmptyStreamTransformer]);
+    _inherit(A._StreamHandlerTransformer, A._StreamSinkTransformer);
     _inherit(A._RootZone, A._Zone);
-    _inherit(A._IdentityHashMap, A._HashMap);
     _inherit(A._SetBase, A.SetBase);
     _inherit(A._LinkedHashSet, A._SetBase);
     _inherit(A._UnmodifiableMapView_MapView__UnmodifiableMapMixin, A.MapView);
     _inherit(A.UnmodifiableMapView, A._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
+    _inheritMany(A.StringConversionSink, [A._StringSinkConversionSink, A._UnicodeSubsetEncoderSink, A._StringAdapterSink]);
+    _inherit(A._JsonDecoderSink, A._StringSinkConversionSink);
     _inheritMany(A.Codec, [A.Encoding, A.Base64Codec, A.JsonCodec]);
     _inheritMany(A.Encoding, [A.AsciiCodec, A.Latin1Codec, A.Utf8Codec]);
-    _inheritMany(A.Converter, [A._UnicodeSubsetEncoder, A._UnicodeSubsetDecoder, A.Base64Encoder, A.JsonEncoder, A.JsonDecoder, A.Utf8Encoder, A.Utf8Decoder]);
+    _inheritMany(A.Converter, [A._UnicodeSubsetEncoder, A._UnicodeSubsetDecoder, A.Base64Encoder, A._FusedConverter, A.JsonEncoder, A.JsonDecoder, A.Utf8Encoder, A.Utf8Decoder]);
     _inheritMany(A._UnicodeSubsetEncoder, [A.AsciiEncoder, A.Latin1Encoder]);
     _inheritMany(A._UnicodeSubsetDecoder, [A.AsciiDecoder, A.Latin1Decoder]);
-    _inherit(A._ByteCallbackSink, A.ByteConversionSink);
+    _inheritMany(A.ByteConversionSink, [A._ErrorHandlingAsciiDecoderSink, A._SimpleAsciiDecoderSink, A._Base64EncoderSink, A._ByteAdapterSink, A._ByteCallbackSink, A._Latin1DecoderSink, A._Utf8StringSinkAdapter, A._Utf8ConversionSink]);
+    _inherit(A._BufferCachingBase64Encoder, A._Base64Encoder);
+    _inheritMany(A._Base64EncoderSink, [A._AsciiBase64EncoderSink, A._Utf8Base64EncoderSink]);
     _inherit(A.JsonCyclicError, A.JsonUnsupportedObjectError);
+    _inherit(A._JsonEncoderSink, A.ChunkedConversionSink);
     _inherit(A._JsonStringStringifier, A._JsonStringifier);
+    _inherit(A._Latin1AllowInvalidDecoderSink, A._Latin1DecoderSink);
+    _inherit(A.__Utf8EncoderSink__Utf8Encoder_StringConversionSink, A._Utf8Encoder);
+    _inherit(A._Utf8EncoderSink, A.__Utf8EncoderSink__Utf8Encoder_StringConversionSink);
     _inheritMany(A.ArgumentError, [A.RangeError, A.IndexError]);
     _inherit(A._DataUri, A._Uri);
     _inheritMany(A.EventTarget, [A.Node, A.FileWriter, A.HttpRequestEventTarget, A.MessagePort, A.SourceBuffer, A._SourceBufferList_EventTarget_ListMixin, A.TextTrack, A.TextTrackCue, A._TextTrackList_EventTarget_ListMixin, A.VideoTrackList, A.AudioTrackList, A.BaseAudioContext]);
@@ -19616,7 +23691,7 @@
     _inherit(A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin, A.__StyleSheetList_JavaScriptObject_ListMixin);
     _inherit(A._StyleSheetList, A.__StyleSheetList_JavaScriptObject_ListMixin_ImmutableListMixin);
     _inherit(A._ElementAttributeMap, A._AttributeMap);
-    _inherit(A._ElementEventStreamImpl, A._EventStream);
+    _inherit(A._ElementEventStreamImpl, A._EventStream0);
     _inherit(A._TemplatingNodeValidator, A._SimpleNodeValidator);
     _inherit(A._LengthList_JavaScriptObject_ListMixin_ImmutableListMixin, A._LengthList_JavaScriptObject_ListMixin);
     _inherit(A.LengthList, A._LengthList_JavaScriptObject_ListMixin_ImmutableListMixin);
@@ -19629,12 +23704,16 @@
     _inherit(A.TransformList, A._TransformList_JavaScriptObject_ListMixin_ImmutableListMixin);
     _inherit(A.AudioParamMap, A._AudioParamMap_JavaScriptObject_MapMixin);
     _inherit(A.OfflineAudioContext, A.BaseAudioContext);
-    _inherit(A.RequestAbortedException, A.ClientException);
-    _inherit(A.BrowserClient, A.BaseClient);
-    _inherit(A.ByteStream, A.StreamView);
+    _inheritMany(A._Enum, [A.DioExceptionType, A.InterceptorResultType, A.ResponseType, A.ListFormat, A.SubscriptionStatus, A.TransmitStatus]);
+    _inheritMany(A._BaseHandler, [A.RequestInterceptorHandler, A.ResponseInterceptorHandler, A.ErrorInterceptorHandler]);
+    _inherit(A.ImplyContentTypeInterceptor, A.Interceptor0);
+    _inheritMany(A._RequestConfig, [A._BaseOptions__RequestConfig_OptionsMixin, A._RequestOptions__RequestConfig_OptionsMixin]);
+    _inherit(A.BaseOptions, A._BaseOptions__RequestConfig_OptionsMixin);
+    _inherit(A.RequestOptions, A._RequestOptions__RequestConfig_OptionsMixin);
+    _inherit(A.FusedTransformer, A.Transformer);
+    _inherit(A.DioForBrowser, A._DioForBrowser_Object_DioMixin);
     _inherit(A.Request, A.BaseRequest);
-    _inheritMany(A.BaseResponse, [A.Response, A.StreamedResponse]);
-    _inherit(A.StreamedResponseV2, A.StreamedResponse);
+    _inherit(A.Response, A.BaseResponse);
     _inherit(A.CaseInsensitiveMap, A.CanonicalizedMap);
     _inherit(A.InternalStyle, A.Style);
     _inheritMany(A.InternalStyle, [A.PosixStyle, A.UrlStyle, A.WindowsStyle]);
@@ -19643,7 +23722,6 @@
     _inherit(A.SourceSpanFormatException, A.SourceSpanException);
     _inherit(A.SourceSpanWithContext, A.SourceSpanBase);
     _inherit(A.StringScannerException, A.SourceSpanFormatException);
-    _inheritMany(A._Enum, [A.SubscriptionStatus, A.TransmitStatus]);
     _inherit(A.CryptoRNG, A.RNG);
     _mixin(A.UnmodifiableListBase, A.UnmodifiableListMixin);
     _mixin(A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, A.ListBase);
@@ -19652,6 +23730,7 @@
     _mixin(A._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin, A.FixedLengthListMixin);
     _mixin(A._AsyncStreamController, A._AsyncStreamControllerDispatch);
     _mixin(A._UnmodifiableMapView_MapView__UnmodifiableMapMixin, A._UnmodifiableMapMixin);
+    _mixin(A.__Utf8EncoderSink__Utf8Encoder_StringConversionSink, A.StringConversionSink);
     _mixin(A._CssStyleDeclaration_JavaScriptObject_CssStyleDeclarationBase, A.CssStyleDeclarationBase);
     _mixin(A._DomRectList_JavaScriptObject_ListMixin, A.ListBase);
     _mixin(A._DomRectList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
@@ -19700,66 +23779,81 @@
     _mixin(A._TransformList_JavaScriptObject_ListMixin, A.ListBase);
     _mixin(A._TransformList_JavaScriptObject_ListMixin_ImmutableListMixin, A.ImmutableListMixin);
     _mixin(A._AudioParamMap_JavaScriptObject_MapMixin, A.MapBase);
+    _mixin(A._BaseOptions__RequestConfig_OptionsMixin, A.OptionsMixin);
+    _mixin(A._RequestOptions__RequestConfig_OptionsMixin, A.OptionsMixin);
+    _mixin(A._DioForBrowser_Object_DioMixin, A.DioMixin);
   })();
   var init = {
     G: typeof self != "undefined" ? self : globalThis,
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List", Object: "Object", Map: "Map", JSObject: "JSObject"},
     mangledNames: {},
-    types: ["~()", "Null()", "Null(@)", "~(Function)", "~(String,@)", "~(MouseEvent)", "~(@)", "bool(String)", "~(TransmitStatus)", "bool(_Highlight)", "~(~())", "Null(JSObject)", "bool(TransmitStatus)", "String(String)", "bool(Element,String,String,_Html5NodeValidator)", "int(Object?)", "~(Object,StackTrace)", "bool(Object?,Object?)", "~(Object?)", "@(@)", "~(Object?,Object?)", "@()", "int()", "Future<~>()", "String(Match)", "~(String,String)", "bool(NodeValidator)", "~(Event)", "@(@,String)", "~(ProgressEvent)", "~(Node,Node?)", "Object?(Object?)", "bool(String,String)", "int(String)", "Null(String,String[Object?])", "~(MultiStreamController<List<int>>)", "~(List<int>)", "MediaType()", "bool(Node)", "String(String?)", "String?()", "int(_Line)", "Future<Response>(StreamedResponse)", "Object(_Line)", "Object(_Highlight)", "int(_Highlight,_Highlight)", "List<_Line>(MapEntry<Object,List<_Highlight>>)", "0&(String,int?)", "SourceSpanWithContext()", "Set<Function>()", "@(String)", "~(MessageEvent)", "TransmitStatus()", "Null(~())", "~(String,String?)", "~(@,@)", "bool(Object?)", "~(int)", "Null(HttpRequest)", "~(@,StackTrace)", "Null(Object,StackTrace)", "~(Object[StackTrace?])", "Null(@,StackTrace)", "0^(0^,0^)<num>", "~(int,@)"],
+    types: ["~()", "Null()", "~(String,@)", "~(Function)", "Null(@)", "~(Object,StackTrace)", "~(Object?)", "Null(JSObject)", "~(MouseEvent)", "int()", "~(@)", "bool(String)", "~(TransmitStatus)", "String(String)", "Future<InterceptorState<@>>()", "~(~())", "bool(TransmitStatus)", "bool(int?)", "bool(_Highlight)", "~(JSObject)", "bool(Object?,Object?)", "~(@,@)", "~(Object?,Object?)", "@()", "@(@)", "String(Match)", "int(String)", "~(String,String)", "~(Event)", "bool(NodeValidator)", "bool(String,String)", "bool(Element,String,String,_Html5NodeValidator)", "Null(Object,StackTrace)", "~(String,List<String>)", "Object(@)", "int(Object?)", "@(@)(~(Response0<@>,ResponseInterceptorHandler))", "@(Object)(~(DioException,ErrorInterceptorHandler))", "Future<@>(@)", "InterceptorState<RequestOptions>()", "Future<~>(RequestOptions,RequestInterceptorHandler)", "~(Response0<@>,ResponseInterceptorHandler)", "~(DioException,ErrorInterceptorHandler)", "MapEntry<String,List<String>>(String,List<String>)", "@(@)(~(RequestOptions,RequestInterceptorHandler))", "~(Node,Node?)", "~(Uint8List)", "Null(@,@)", "String(String,Object?)", "_DefaultIfEmptyStreamSink(EventSink<Uint8List>)", "Object?(Object?)", "~(Object?,String)", "@(@,String)", "~(ProgressEvent)", "@(String)", "bool(Node)", "~(List<int>)", "MediaType()", "~(String,String?)", "String(String?)", "Future<1^>(1^/(0^),0^{debugLabel:String?})<Object?,Object?>", "int(_Line)", "0&(String,int?)", "Object(_Line)", "Object(_Highlight)", "int(_Highlight,_Highlight)", "List<_Line>(MapEntry<Object,List<_Highlight>>)", "SourceSpanWithContext()", "Set<Function>()", "Null(@,StackTrace)", "_ConverterStreamEventSink<@,@>(EventSink<@>)", "~(MessageEvent)", "Future<Null>(@)", "TransmitStatus()", "bool(Object?)", "String?()", "~(int,@)", "~(int)", "bool(Map<String,@>)", "~(Map<String,@>)", "Null(~)", "Null(HttpRequest)", "~(@,StackTrace)", "Null(~())", "~(Object[StackTrace?])", "String(Object?{toEncodable:Object?(Object?)?})", "String(String{encoding:Encoding})", "Future<~>()", "0^(0^,0^)<num>", "Future<Object?>(Uint8List)", "~(RequestOptions,RequestInterceptorHandler)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")
   };
-  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","KeyframeEffect":"JavaScriptObject","KeyframeEffectReadOnly":"JavaScriptObject","AnimationEffectReadOnly":"JavaScriptObject","AbortPaymentEvent":"Event","ExtendableEvent":"Event","AudioContext":"BaseAudioContext","AbsoluteOrientationSensor":"EventTarget","OrientationSensor":"EventTarget","Sensor":"EventTarget","AElement":"SvgElement","GraphicsElement":"SvgElement","_ResourceProgressEvent":"ProgressEvent","AudioElement":"HtmlElement","MediaElement":"HtmlElement","ShadowRoot":"Node","DocumentFragment":"Node","XmlDocument":"Document","PointerEvent":"MouseEvent","VttCue":"TextTrackCue","CompositionEvent":"UIEvent","CDataSection":"CharacterData","Text":"CharacterData","MathMLElement":"Element","HttpRequestUpload":"HttpRequestEventTarget","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssMatrixComponent":"CssTransformComponent","CssStyleSheet":"StyleSheet","CssurlImageValue":"CssStyleValue","CssImageValue":"CssStyleValue","CssResourceValue":"CssStyleValue","NativeArrayBuffer":"NativeByteBuffer","JSBool":{"bool":[],"TrustedGetRuntimeType":[]},"JSNull":{"Null":[],"TrustedGetRuntimeType":[]},"JavaScriptObject":{"JSObject":[]},"LegacyJavaScriptObject":{"JSObject":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"JSArraySafeToStringHook":{"SafeToStringHook":[]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[],"TrustedGetRuntimeType":[]},"JSNumNotInt":{"double":[],"num":[],"TrustedGetRuntimeType":[]},"JSString":{"String":[],"Pattern":[],"TrustedGetRuntimeType":[]},"LateError":{"Error":[]},"CodeUnits":{"ListBase":["int"],"UnmodifiableListMixin":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"],"ListBase.E":"int","UnmodifiableListMixin.E":"int"},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"SubListIterable":{"ListIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"ListIterable.E":"1","Iterable.E":"1"},"ListIterator":{"Iterator":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"MappedIterator":{"Iterator":["2"]},"MappedListIterable":{"ListIterable":["2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"ListIterable.E":"2","Iterable.E":"2"},"WhereIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereIterator":{"Iterator":["1"]},"ExpandIterable":{"Iterable":["2"],"Iterable.E":"2"},"ExpandIterator":{"Iterator":["2"]},"SkipIterable":{"Iterable":["1"],"Iterable.E":"1"},"EfficientLengthSkipIterable":{"SkipIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"SkipIterator":{"Iterator":["1"]},"EmptyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"EmptyIterator":{"Iterator":["1"]},"WhereTypeIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereTypeIterator":{"Iterator":["1"]},"UnmodifiableListBase":{"ListBase":["1"],"UnmodifiableListMixin":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"ReversedListIterable":{"ListIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"ListIterable.E":"1","Iterable.E":"1"},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"ConstantMap":["1","2"],"Map":["1","2"]},"_KeysOrValues":{"Iterable":["1"],"Iterable.E":"1"},"_KeysOrValuesOrElementsIterator":{"Iterator":["1"]},"Instantiation":{"Closure":[],"Function":[]},"Instantiation1":{"Closure":[],"Function":[]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"NullThrownFromJavaScriptException":{"Exception":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Closure":[],"Function":[]},"Closure2Args":{"Closure":[],"Function":[]},"TearOffClosure":{"Closure":[],"Function":[]},"StaticClosure":{"Closure":[],"Function":[]},"BoundClosure":{"Closure":[],"Function":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"LinkedHashMapKeysIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"LinkedHashMapValuesIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapValueIterator":{"Iterator":["1"]},"LinkedHashMapEntriesIterable":{"EfficientLengthIterable":["MapEntry<1,2>"],"Iterable":["MapEntry<1,2>"],"Iterable.E":"MapEntry<1,2>"},"LinkedHashMapEntryIterator":{"Iterator":["MapEntry<1,2>"]},"JsIdentityLinkedHashMap":{"JsLinkedHashMap":["1","2"],"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"JSSyntaxRegExp":{"RegExp":[],"Pattern":[]},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"_AllMatchesIterable":{"Iterable":["RegExpMatch"],"Iterable.E":"RegExpMatch"},"_AllMatchesIterator":{"Iterator":["RegExpMatch"]},"StringMatch":{"Match":[]},"_StringAllMatchesIterable":{"Iterable":["Match"],"Iterable.E":"Match"},"_StringAllMatchesIterator":{"Iterator":["Match"]},"NativeByteBuffer":{"JSObject":[],"ByteBuffer":[],"TrustedGetRuntimeType":[]},"NativeTypedData":{"JSObject":[]},"_UnmodifiableNativeByteBufferView":{"ByteBuffer":[]},"NativeByteData":{"ByteData":[],"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JSObject":[]},"NativeTypedArrayOfDouble":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"]},"NativeTypedArrayOfInt":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeFloat32List":{"Float32List":[],"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double","FixedLengthListMixin.E":"double"},"NativeFloat64List":{"Float64List":[],"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double","FixedLengthListMixin.E":"double"},"NativeInt16List":{"NativeTypedArrayOfInt":[],"Int16List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeInt32List":{"NativeTypedArrayOfInt":[],"Int32List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeInt8List":{"NativeTypedArrayOfInt":[],"Int8List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint16List":{"NativeTypedArrayOfInt":[],"Uint16List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint32List":{"NativeTypedArrayOfInt":[],"Uint32List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint8ClampedList":{"NativeTypedArrayOfInt":[],"Uint8ClampedList":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint8List":{"NativeTypedArrayOfInt":[],"Uint8List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"MultiStreamController":{"StreamController":["1"]},"_AsyncAwaitCompleter":{"Completer":["1"]},"AsyncError":{"Error":[]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"],"Stream.T":"1"},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"],"StreamSubscription":["1"],"_EventSink":["1"],"_EventDispatch":["1"],"_BufferingStreamSubscription.T":"1"},"_BroadcastStreamController":{"StreamController":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_AsyncBroadcastStreamController":{"_BroadcastStreamController":["1"],"StreamController":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_Completer":{"Completer":["1"]},"_AsyncCompleter":{"_Completer":["1"],"Completer":["1"]},"_Future":{"Future":["1"]},"StreamView":{"Stream":["1"]},"_StreamController":{"StreamController":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_AsyncStreamController":{"_AsyncStreamControllerDispatch":["1"],"_StreamController":["1"],"StreamController":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"],"Stream.T":"1"},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"],"StreamSubscription":["1"],"_EventSink":["1"],"_EventDispatch":["1"],"_BufferingStreamSubscription.T":"1"},"_BufferingStreamSubscription":{"StreamSubscription":["1"],"_EventSink":["1"],"_EventDispatch":["1"],"_BufferingStreamSubscription.T":"1"},"_StreamImpl":{"Stream":["1"]},"_DelayedData":{"_DelayedEvent":["1"]},"_DelayedError":{"_DelayedEvent":["@"]},"_DelayedDone":{"_DelayedEvent":["@"]},"_DoneStreamSubscription":{"StreamSubscription":["1"]},"_EmptyStream":{"Stream":["1"],"Stream.T":"1"},"_MultiStream":{"Stream":["1"],"Stream.T":"1"},"_MultiStreamController":{"_AsyncStreamController":["1"],"_AsyncStreamControllerDispatch":["1"],"_StreamController":["1"],"MultiStreamController":["1"],"StreamController":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_ForwardingStream":{"Stream":["2"]},"_ForwardingStreamSubscription":{"_BufferingStreamSubscription":["2"],"StreamSubscription":["2"],"_EventSink":["2"],"_EventDispatch":["2"],"_BufferingStreamSubscription.T":"2"},"_WhereStream":{"_ForwardingStream":["1","1"],"Stream":["1"],"Stream.T":"1","_ForwardingStream.T":"1","_ForwardingStream.S":"1"},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"_HashMap":{"MapBase":["1","2"],"Map":["1","2"]},"_IdentityHashMap":{"_HashMap":["1","2"],"MapBase":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_HashMapKeyIterator":{"Iterator":["1"]},"_LinkedCustomHashMap":{"JsLinkedHashMap":["1","2"],"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"_LinkedHashSet":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_LinkedHashSetIterator":{"Iterator":["1"]},"ListBase":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"MapBase":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":["1","2"],"MapView":["1","2"],"_UnmodifiableMapMixin":["1","2"],"Map":["1","2"]},"SetBase":{"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_SetBase":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"Encoding":{"Codec":["String","List<int>"]},"_JsonMap":{"MapBase":["String","@"],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"],"ListIterable.E":"String","Iterable.E":"String"},"AsciiCodec":{"Encoding":[],"Codec":["String","List<int>"]},"Base64Codec":{"Codec":["List<int>","String"]},"JsonUnsupportedObjectError":{"Error":[]},"JsonCyclicError":{"Error":[]},"JsonCodec":{"Codec":["Object?","String"]},"Latin1Codec":{"Encoding":[],"Codec":["String","List<int>"]},"Utf8Codec":{"Encoding":[],"Codec":["String","List<int>"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"Set":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"String":{"Pattern":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"OutOfMemoryError":{"Error":[]},"StackOverflowError":{"Error":[]},"_Exception":{"Exception":[]},"FormatException":{"Exception":[]},"_StringStackTrace":{"StackTrace":[]},"StringBuffer":{"StringSink":[]},"_Uri":{"Uri":[]},"_SimpleUri":{"Uri":[]},"_DataUri":{"Uri":[]},"CssRule":{"JSObject":[]},"Element":{"Node":[],"EventTarget":[],"JSObject":[]},"Event":{"JSObject":[]},"File":{"JSObject":[]},"Gamepad":{"JSObject":[]},"HttpRequest":{"EventTarget":[],"JSObject":[]},"MimeType":{"JSObject":[]},"MouseEvent":{"Event":[],"JSObject":[]},"Node":{"EventTarget":[],"JSObject":[]},"Plugin":{"JSObject":[]},"ProgressEvent":{"Event":[],"JSObject":[]},"SourceBuffer":{"EventTarget":[],"JSObject":[]},"SpeechGrammar":{"JSObject":[]},"SpeechRecognitionResult":{"JSObject":[]},"StyleSheet":{"JSObject":[]},"TextTrack":{"EventTarget":[],"JSObject":[]},"TextTrackCue":{"EventTarget":[],"JSObject":[]},"Touch":{"JSObject":[]},"_Html5NodeValidator":{"NodeValidator":[]},"HtmlElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"AccessibleNodeList":{"JSObject":[]},"AnchorElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"AreaElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"BaseElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"Blob":{"JSObject":[]},"BodyElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"ButtonElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"CharacterData":{"Node":[],"EventTarget":[],"JSObject":[]},"CssPerspective":{"JSObject":[]},"CssStyleDeclaration":{"JSObject":[]},"CssStyleValue":{"JSObject":[]},"CssTransformComponent":{"JSObject":[]},"CssTransformValue":{"JSObject":[]},"CssUnparsedValue":{"JSObject":[]},"DataTransferItemList":{"JSObject":[]},"DivElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"Document":{"Node":[],"EventTarget":[],"JSObject":[]},"DomException":{"JSObject":[]},"DomImplementation":{"JSObject":[]},"DomRectList":{"ListBase":["Rectangle<num>"],"ImmutableListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"],"JSObject":[],"Iterable":["Rectangle<num>"],"ListBase.E":"Rectangle<num>","ImmutableListMixin.E":"Rectangle<num>"},"DomRectReadOnly":{"Rectangle":["num"],"JSObject":[]},"DomStringList":{"ListBase":["String"],"ImmutableListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"],"JSObject":[],"Iterable":["String"],"ListBase.E":"String","ImmutableListMixin.E":"String"},"DomTokenList":{"JSObject":[]},"EventTarget":{"JSObject":[]},"FileList":{"ListBase":["File"],"ImmutableListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"],"JSObject":[],"Iterable":["File"],"ListBase.E":"File","ImmutableListMixin.E":"File"},"FileWriter":{"EventTarget":[],"JSObject":[]},"FormElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"History":{"JSObject":[]},"HtmlCollection":{"ListBase":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"JSObject":[],"Iterable":["Node"],"ListBase.E":"Node","ImmutableListMixin.E":"Node"},"HtmlDocument":{"Node":[],"EventTarget":[],"JSObject":[]},"HttpRequestEventTarget":{"EventTarget":[],"JSObject":[]},"Location":{"JSObject":[]},"MediaList":{"JSObject":[]},"MessagePort":{"EventTarget":[],"JSObject":[]},"MidiInputMap":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"MidiOutputMap":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"MimeTypeArray":{"ListBase":["MimeType"],"ImmutableListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"],"JSObject":[],"Iterable":["MimeType"],"ListBase.E":"MimeType","ImmutableListMixin.E":"MimeType"},"_ChildNodeListLazy":{"ListBase":["Node"],"List":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"],"ListBase.E":"Node"},"NodeList":{"ListBase":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"JSObject":[],"Iterable":["Node"],"ListBase.E":"Node","ImmutableListMixin.E":"Node"},"PluginArray":{"ListBase":["Plugin"],"ImmutableListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"],"JSObject":[],"Iterable":["Plugin"],"ListBase.E":"Plugin","ImmutableListMixin.E":"Plugin"},"RtcStatsReport":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"SelectElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"SourceBufferList":{"ListBase":["SourceBuffer"],"ImmutableListMixin":["SourceBuffer"],"List":["SourceBuffer"],"EventTarget":[],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"],"JSObject":[],"Iterable":["SourceBuffer"],"ListBase.E":"SourceBuffer","ImmutableListMixin.E":"SourceBuffer"},"SpeechGrammarList":{"ListBase":["SpeechGrammar"],"ImmutableListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"],"JSObject":[],"Iterable":["SpeechGrammar"],"ListBase.E":"SpeechGrammar","ImmutableListMixin.E":"SpeechGrammar"},"Storage":{"MapBase":["String","String"],"JSObject":[],"Map":["String","String"],"MapBase.K":"String","MapBase.V":"String"},"TableElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TableRowElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TableSectionElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TemplateElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TextTrackCueList":{"ListBase":["TextTrackCue"],"ImmutableListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"],"JSObject":[],"Iterable":["TextTrackCue"],"ListBase.E":"TextTrackCue","ImmutableListMixin.E":"TextTrackCue"},"TextTrackList":{"ListBase":["TextTrack"],"ImmutableListMixin":["TextTrack"],"List":["TextTrack"],"EventTarget":[],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"],"JSObject":[],"Iterable":["TextTrack"],"ListBase.E":"TextTrack","ImmutableListMixin.E":"TextTrack"},"TimeRanges":{"JSObject":[]},"TouchList":{"ListBase":["Touch"],"ImmutableListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"],"JSObject":[],"Iterable":["Touch"],"ListBase.E":"Touch","ImmutableListMixin.E":"Touch"},"TrackDefaultList":{"JSObject":[]},"UIEvent":{"Event":[],"JSObject":[]},"Url":{"JSObject":[]},"VideoTrackList":{"EventTarget":[],"JSObject":[]},"_Attr":{"Node":[],"EventTarget":[],"JSObject":[]},"_CssRuleList":{"ListBase":["CssRule"],"ImmutableListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"],"JSObject":[],"Iterable":["CssRule"],"ListBase.E":"CssRule","ImmutableListMixin.E":"CssRule"},"_DomRect":{"Rectangle":["num"],"JSObject":[]},"_GamepadList":{"ListBase":["Gamepad?"],"ImmutableListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"],"JSObject":[],"Iterable":["Gamepad?"],"ListBase.E":"Gamepad?","ImmutableListMixin.E":"Gamepad?"},"_NamedNodeMap":{"ListBase":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"JSObject":[],"Iterable":["Node"],"ListBase.E":"Node","ImmutableListMixin.E":"Node"},"_SpeechRecognitionResultList":{"ListBase":["SpeechRecognitionResult"],"ImmutableListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"],"JSObject":[],"Iterable":["SpeechRecognitionResult"],"ListBase.E":"SpeechRecognitionResult","ImmutableListMixin.E":"SpeechRecognitionResult"},"_StyleSheetList":{"ListBase":["StyleSheet"],"ImmutableListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"],"JSObject":[],"Iterable":["StyleSheet"],"ListBase.E":"StyleSheet","ImmutableListMixin.E":"StyleSheet"},"_AttributeMap":{"MapBase":["String","String"],"Map":["String","String"]},"_ElementAttributeMap":{"MapBase":["String","String"],"Map":["String","String"],"MapBase.K":"String","MapBase.V":"String"},"_EventStream":{"Stream":["1"],"Stream.T":"1"},"_ElementEventStreamImpl":{"_EventStream":["1"],"Stream":["1"],"Stream.T":"1"},"_EventStreamSubscription":{"StreamSubscription":["1"]},"NodeValidatorBuilder":{"NodeValidator":[]},"_SimpleNodeValidator":{"NodeValidator":[]},"_TemplatingNodeValidator":{"NodeValidator":[]},"_SvgNodeValidator":{"NodeValidator":[]},"FixedSizeListIterator":{"Iterator":["1"]},"_SameOriginUriPolicy":{"UriPolicy":[]},"_ValidatingTreeSanitizer":{"NodeTreeSanitizer":[]},"NullRejectionException":{"Exception":[]},"Length":{"JSObject":[]},"Number":{"JSObject":[]},"Transform":{"JSObject":[]},"LengthList":{"ListBase":["Length"],"ImmutableListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"],"JSObject":[],"Iterable":["Length"],"ListBase.E":"Length","ImmutableListMixin.E":"Length"},"NumberList":{"ListBase":["Number"],"ImmutableListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"],"JSObject":[],"Iterable":["Number"],"ListBase.E":"Number","ImmutableListMixin.E":"Number"},"PointList":{"JSObject":[]},"ScriptElement0":{"SvgElement":[],"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"StringList":{"ListBase":["String"],"ImmutableListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"],"JSObject":[],"Iterable":["String"],"ListBase.E":"String","ImmutableListMixin.E":"String"},"SvgElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TransformList":{"ListBase":["Transform"],"ImmutableListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"],"JSObject":[],"Iterable":["Transform"],"ListBase.E":"Transform","ImmutableListMixin.E":"Transform"},"AudioBuffer":{"JSObject":[]},"AudioParamMap":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"AudioTrackList":{"EventTarget":[],"JSObject":[]},"BaseAudioContext":{"EventTarget":[],"JSObject":[]},"OfflineAudioContext":{"EventTarget":[],"JSObject":[]},"CanonicalizedMap":{"Map":["2","3"]},"RequestAbortedException":{"Exception":[]},"ByteStream":{"StreamView":["List<int>"],"Stream":["List<int>"],"Stream.T":"List<int>","StreamView.T":"List<int>"},"ClientException":{"Exception":[]},"Request":{"BaseRequest":[]},"StreamedResponseV2":{"StreamedResponse":[]},"CaseInsensitiveMap":{"CanonicalizedMap":["String","String","1"],"Map":["String","1"],"CanonicalizedMap.K":"String","CanonicalizedMap.V":"1","CanonicalizedMap.C":"String"},"PathException":{"Exception":[]},"PosixStyle":{"InternalStyle":[]},"UrlStyle":{"InternalStyle":[]},"WindowsStyle":{"InternalStyle":[]},"FileLocation":{"SourceLocation":[]},"_FileSpan":{"SourceSpanWithContext":[],"SourceSpan":[]},"SourceLocationMixin":{"SourceLocation":[]},"SourceSpanBase":{"SourceSpan":[]},"SourceSpanException":{"Exception":[]},"SourceSpanFormatException":{"FormatException":[],"Exception":[]},"SourceSpanMixin":{"SourceSpan":[]},"SourceSpanWithContext":{"SourceSpan":[]},"StringScannerException":{"FormatException":[],"Exception":[]},"Int8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8ClampedList":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Float32List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"Float64List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]}}'));
-  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"UnmodifiableListBase":1,"NativeTypedArray":1,"_DelayedEvent":1,"_SetBase":1,"Converter":2}'));
+  A._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"LegacyJavaScriptObject","UnknownJavaScriptObject":"LegacyJavaScriptObject","JavaScriptFunction":"LegacyJavaScriptObject","KeyframeEffect":"JavaScriptObject","KeyframeEffectReadOnly":"JavaScriptObject","AnimationEffectReadOnly":"JavaScriptObject","AbortPaymentEvent":"Event","ExtendableEvent":"Event","AudioContext":"BaseAudioContext","AbsoluteOrientationSensor":"EventTarget","OrientationSensor":"EventTarget","Sensor":"EventTarget","AElement":"SvgElement","GraphicsElement":"SvgElement","_ResourceProgressEvent":"ProgressEvent","AudioElement":"HtmlElement","MediaElement":"HtmlElement","ShadowRoot":"Node","DocumentFragment":"Node","XmlDocument":"Document","PointerEvent":"MouseEvent","VttCue":"TextTrackCue","CompositionEvent":"UIEvent","CDataSection":"CharacterData","Text":"CharacterData","MathMLElement":"Element","HttpRequestUpload":"HttpRequestEventTarget","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssMatrixComponent":"CssTransformComponent","CssStyleSheet":"StyleSheet","CssurlImageValue":"CssStyleValue","CssImageValue":"CssStyleValue","CssResourceValue":"CssStyleValue","NativeSharedArrayBuffer":"NativeByteBuffer","JSBool":{"bool":[],"TrustedGetRuntimeType":[]},"JSNull":{"Null":[],"TrustedGetRuntimeType":[]},"JavaScriptObject":{"JSObject":[]},"LegacyJavaScriptObject":{"JSObject":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"],"JSIndexable":["1"]},"JSArraySafeToStringHook":{"SafeToStringHook":[]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"JSObject":[],"Iterable":["1"],"JSIndexable":["1"]},"ArrayIterator":{"Iterator":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[],"TrustedGetRuntimeType":[]},"JSNumNotInt":{"double":[],"num":[],"TrustedGetRuntimeType":[]},"JSString":{"String":[],"Pattern":[],"JSIndexable":["@"],"TrustedGetRuntimeType":[]},"CastStream":{"Stream":["2"],"Stream.T":"2"},"CastStreamSubscription":{"StreamSubscription":["2"]},"LateError":{"Error":[]},"CodeUnits":{"ListBase":["int"],"UnmodifiableListMixin":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"],"ListBase.E":"int","UnmodifiableListMixin.E":"int"},"EfficientLengthIterable":{"Iterable":["1"]},"ListIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"SubListIterable":{"ListIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"ListIterable.E":"1","Iterable.E":"1"},"ListIterator":{"Iterator":["1"]},"MappedListIterable":{"ListIterable":["2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"ListIterable.E":"2","Iterable.E":"2"},"WhereIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereIterator":{"Iterator":["1"]},"ExpandIterable":{"Iterable":["2"],"Iterable.E":"2"},"ExpandIterator":{"Iterator":["2"]},"SkipIterable":{"Iterable":["1"],"Iterable.E":"1"},"EfficientLengthSkipIterable":{"SkipIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"SkipIterator":{"Iterator":["1"]},"EmptyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"EmptyIterator":{"Iterator":["1"]},"WhereTypeIterable":{"Iterable":["1"],"Iterable.E":"1"},"WhereTypeIterator":{"Iterator":["1"]},"UnmodifiableListBase":{"ListBase":["1"],"UnmodifiableListMixin":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"ReversedListIterable":{"ListIterable":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"],"ListIterable.E":"1","Iterable.E":"1"},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"ConstantMap":["1","2"],"Map":["1","2"]},"Instantiation":{"Closure":[],"Function":[]},"Instantiation1":{"Closure":[],"Function":[]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"NullThrownFromJavaScriptException":{"Exception":[]},"_StackTrace":{"StackTrace":[]},"Closure":{"Function":[]},"Closure0Args":{"Closure":[],"Function":[]},"Closure2Args":{"Closure":[],"Function":[]},"TearOffClosure":{"Closure":[],"Function":[]},"StaticClosure":{"Closure":[],"Function":[]},"BoundClosure":{"Closure":[],"Function":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"LinkedHashMapKeysIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapKeyIterator":{"Iterator":["1"]},"LinkedHashMapValuesIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"LinkedHashMapValueIterator":{"Iterator":["1"]},"LinkedHashMapEntriesIterable":{"EfficientLengthIterable":["MapEntry<1,2>"],"Iterable":["MapEntry<1,2>"],"Iterable.E":"MapEntry<1,2>"},"LinkedHashMapEntryIterator":{"Iterator":["MapEntry<1,2>"]},"JsIdentityLinkedHashMap":{"JsLinkedHashMap":["1","2"],"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"JSSyntaxRegExp":{"RegExp":[],"Pattern":[]},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"_AllMatchesIterable":{"Iterable":["RegExpMatch"],"Iterable.E":"RegExpMatch"},"_AllMatchesIterator":{"Iterator":["RegExpMatch"]},"StringMatch":{"Match":[]},"_StringAllMatchesIterable":{"Iterable":["Match"],"Iterable.E":"Match"},"_StringAllMatchesIterator":{"Iterator":["Match"]},"NativeByteBuffer":{"JSObject":[],"TrustedGetRuntimeType":[]},"NativeArrayBuffer":{"NativeByteBuffer":[],"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedData":{"JSObject":[]},"NativeByteData":{"ByteData":[],"JSObject":[],"TrustedGetRuntimeType":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"],"JSObject":[],"JSIndexable":["1"]},"NativeTypedArrayOfDouble":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"JSIndexable":["double"],"Iterable":["double"],"FixedLengthListMixin":["double"]},"NativeTypedArrayOfInt":{"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"]},"NativeFloat32List":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"JSIndexable":["double"],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double","FixedLengthListMixin.E":"double"},"NativeFloat64List":{"ListBase":["double"],"NativeTypedArray":["double"],"List":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"JSObject":[],"JSIndexable":["double"],"Iterable":["double"],"FixedLengthListMixin":["double"],"TrustedGetRuntimeType":[],"ListBase.E":"double","FixedLengthListMixin.E":"double"},"NativeInt16List":{"NativeTypedArrayOfInt":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeInt32List":{"NativeTypedArrayOfInt":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeInt8List":{"NativeTypedArrayOfInt":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint16List":{"NativeTypedArrayOfInt":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint32List":{"NativeTypedArrayOfInt":[],"Uint32List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint8ClampedList":{"NativeTypedArrayOfInt":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"NativeUint8List":{"NativeTypedArrayOfInt":[],"Uint8List":[],"ListBase":["int"],"NativeTypedArray":["int"],"List":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"JSObject":[],"JSIndexable":["int"],"Iterable":["int"],"FixedLengthListMixin":["int"],"TrustedGetRuntimeType":[],"ListBase.E":"int","FixedLengthListMixin.E":"int"},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"EventSink":{"Sink":["1"]},"MultiStreamController":{"StreamController":["1"],"EventSink":["1"],"Sink":["1"]},"_HandlerEventSink":{"EventSink":["1"],"Sink":["1"]},"_AsyncAwaitCompleter":{"Completer":["1"]},"AsyncError":{"Error":[]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"],"Stream.T":"1"},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"],"StreamSubscription":["1"],"_EventSink":["1"],"_EventDispatch":["1"],"_BufferingStreamSubscription.T":"1"},"_BroadcastStreamController":{"StreamController":["1"],"EventSink":["1"],"Sink":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_AsyncBroadcastStreamController":{"_BroadcastStreamController":["1"],"StreamController":["1"],"EventSink":["1"],"Sink":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_Completer":{"Completer":["1"]},"_AsyncCompleter":{"_Completer":["1"],"Completer":["1"]},"_Future":{"Future":["1"]},"StreamTransformerBase":{"StreamTransformer":["1","2"]},"_StreamController":{"StreamController":["1"],"EventSink":["1"],"Sink":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_AsyncStreamController":{"_AsyncStreamControllerDispatch":["1"],"_StreamController":["1"],"StreamController":["1"],"EventSink":["1"],"Sink":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"],"Stream.T":"1"},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"],"StreamSubscription":["1"],"_EventSink":["1"],"_EventDispatch":["1"],"_BufferingStreamSubscription.T":"1"},"_BufferingStreamSubscription":{"StreamSubscription":["1"],"_EventSink":["1"],"_EventDispatch":["1"],"_BufferingStreamSubscription.T":"1"},"_StreamImpl":{"Stream":["1"]},"_DelayedData":{"_DelayedEvent":["1"]},"_DelayedError":{"_DelayedEvent":["@"]},"_DelayedDone":{"_DelayedEvent":["@"]},"_DoneStreamSubscription":{"StreamSubscription":["1"]},"_MultiStream":{"Stream":["1"],"Stream.T":"1"},"_MultiStreamController":{"_AsyncStreamController":["1"],"_AsyncStreamControllerDispatch":["1"],"_StreamController":["1"],"MultiStreamController":["1"],"StreamController":["1"],"EventSink":["1"],"Sink":["1"],"_StreamControllerLifecycle":["1"],"_EventSink":["1"],"_EventDispatch":["1"]},"_ForwardingStream":{"Stream":["2"]},"_ForwardingStreamSubscription":{"_BufferingStreamSubscription":["2"],"StreamSubscription":["2"],"_EventSink":["2"],"_EventDispatch":["2"],"_BufferingStreamSubscription.T":"2"},"_WhereStream":{"_ForwardingStream":["1","1"],"Stream":["1"],"Stream.T":"1","_ForwardingStream.T":"1","_ForwardingStream.S":"1"},"_EventSinkWrapper":{"EventSink":["1"],"Sink":["1"]},"_SinkTransformerStreamSubscription":{"_BufferingStreamSubscription":["2"],"StreamSubscription":["2"],"_EventSink":["2"],"_EventDispatch":["2"],"_BufferingStreamSubscription.T":"2"},"_StreamSinkTransformer":{"StreamTransformer":["1","2"]},"_BoundSinkStream":{"Stream":["2"],"Stream.T":"2"},"_StreamHandlerTransformer":{"_StreamSinkTransformer":["1","2"],"StreamTransformer":["1","2"]},"_Zone":{"Zone":[]},"_RootZone":{"_Zone":[],"Zone":[]},"_LinkedCustomHashMap":{"JsLinkedHashMap":["1","2"],"MapBase":["1","2"],"LinkedHashMap":["1","2"],"Map":["1","2"],"MapBase.K":"1","MapBase.V":"2"},"_LinkedHashSet":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_LinkedHashSetIterator":{"Iterator":["1"]},"ListBase":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"MapBase":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":["1","2"],"MapView":["1","2"],"_UnmodifiableMapMixin":["1","2"],"Map":["1","2"]},"SetBase":{"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_SetBase":{"SetBase":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_ConverterStreamEventSink":{"EventSink":["1"],"Sink":["1"]},"Encoding":{"Codec":["String","List<int>"]},"_JsonMap":{"MapBase":["String","@"],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"_JsonMapKeyIterable":{"ListIterable":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"],"ListIterable.E":"String","Iterable.E":"String"},"_JsonDecoderSink":{"_StringSinkConversionSink":["StringBuffer"],"StringConversionSink":[],"Sink":["String"],"_StringSinkConversionSink.0":"StringBuffer"},"AsciiCodec":{"Encoding":[],"Codec":["String","List<int>"]},"_UnicodeSubsetEncoder":{"Converter":["String","List<int>"],"StreamTransformer":["String","List<int>"]},"AsciiEncoder":{"Converter":["String","List<int>"],"StreamTransformer":["String","List<int>"],"Converter.S":"String","Converter.T":"List<int>"},"_UnicodeSubsetEncoderSink":{"StringConversionSink":[],"Sink":["String"]},"_UnicodeSubsetDecoder":{"Converter":["List<int>","String"],"StreamTransformer":["List<int>","String"]},"AsciiDecoder":{"Converter":["List<int>","String"],"StreamTransformer":["List<int>","String"],"Converter.S":"List<int>","Converter.T":"String"},"_ErrorHandlingAsciiDecoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"_SimpleAsciiDecoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"Base64Codec":{"Codec":["List<int>","String"]},"Base64Encoder":{"Converter":["List<int>","String"],"StreamTransformer":["List<int>","String"],"Converter.S":"List<int>","Converter.T":"String"},"_BufferCachingBase64Encoder":{"_Base64Encoder":[]},"_Base64EncoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"_AsciiBase64EncoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"_Utf8Base64EncoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"ByteConversionSink":{"Sink":["List<int>"]},"_ByteAdapterSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"_ByteCallbackSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"ChunkedConversionSink":{"Sink":["1"]},"Converter":{"StreamTransformer":["1","2"]},"_FusedConverter":{"Converter":["1","3"],"StreamTransformer":["1","3"],"Converter.S":"1","Converter.T":"3"},"JsonUnsupportedObjectError":{"Error":[]},"JsonCyclicError":{"Error":[]},"JsonCodec":{"Codec":["Object?","String"]},"JsonEncoder":{"Converter":["Object?","String"],"StreamTransformer":["Object?","String"],"Converter.S":"Object?","Converter.T":"String"},"_JsonEncoderSink":{"Sink":["Object?"]},"JsonDecoder":{"Converter":["String","Object?"],"StreamTransformer":["String","Object?"],"Converter.S":"String","Converter.T":"Object?"},"Latin1Codec":{"Encoding":[],"Codec":["String","List<int>"]},"Latin1Encoder":{"Converter":["String","List<int>"],"StreamTransformer":["String","List<int>"],"Converter.S":"String","Converter.T":"List<int>"},"Latin1Decoder":{"Converter":["List<int>","String"],"StreamTransformer":["List<int>","String"],"Converter.S":"List<int>","Converter.T":"String"},"_Latin1DecoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"_Latin1AllowInvalidDecoderSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"StringConversionSink":{"Sink":["String"]},"_ClosableStringSink":{"StringSink":[]},"_StringConversionSinkAsStringSinkAdapter":{"StringSink":[]},"_StringSinkConversionSink":{"StringConversionSink":[],"Sink":["String"]},"_StringAdapterSink":{"StringConversionSink":[],"Sink":["String"]},"_Utf8StringSinkAdapter":{"ByteConversionSink":[],"Sink":["List<int>"]},"_Utf8ConversionSink":{"ByteConversionSink":[],"Sink":["List<int>"]},"Utf8Codec":{"Encoding":[],"Codec":["String","List<int>"]},"Utf8Encoder":{"Converter":["String","List<int>"],"StreamTransformer":["String","List<int>"],"Converter.S":"String","Converter.T":"List<int>"},"_Utf8EncoderSink":{"StringConversionSink":[],"Sink":["String"]},"Utf8Decoder":{"Converter":["List<int>","String"],"StreamTransformer":["List<int>","String"],"Converter.S":"List<int>","Converter.T":"String"},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"Set":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"String":{"Pattern":[]},"StringBuffer":{"StringSink":[]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"OutOfMemoryError":{"Error":[]},"StackOverflowError":{"Error":[]},"_Exception":{"Exception":[]},"FormatException":{"Exception":[]},"_StringStackTrace":{"StackTrace":[]},"_Uri":{"Uri":[]},"_SimpleUri":{"Uri":[]},"_DataUri":{"Uri":[]},"CssRule":{"JSObject":[]},"Element":{"Node":[],"EventTarget":[],"JSObject":[]},"Event":{"JSObject":[]},"File":{"JSObject":[]},"Gamepad":{"JSObject":[]},"HttpRequest":{"EventTarget":[],"JSObject":[]},"MimeType":{"JSObject":[]},"MouseEvent":{"Event":[],"JSObject":[]},"Node":{"EventTarget":[],"JSObject":[]},"Plugin":{"JSObject":[]},"ProgressEvent":{"Event":[],"JSObject":[]},"SourceBuffer":{"EventTarget":[],"JSObject":[]},"SpeechGrammar":{"JSObject":[]},"SpeechRecognitionResult":{"JSObject":[]},"StyleSheet":{"JSObject":[]},"TextTrack":{"EventTarget":[],"JSObject":[]},"TextTrackCue":{"EventTarget":[],"JSObject":[]},"Touch":{"JSObject":[]},"_Html5NodeValidator":{"NodeValidator":[]},"HtmlElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"AccessibleNodeList":{"JSObject":[]},"AnchorElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"AreaElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"BaseElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"Blob":{"JSObject":[]},"BodyElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"ButtonElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"CharacterData":{"Node":[],"EventTarget":[],"JSObject":[]},"CssPerspective":{"JSObject":[]},"CssStyleDeclaration":{"JSObject":[]},"CssStyleValue":{"JSObject":[]},"CssTransformComponent":{"JSObject":[]},"CssTransformValue":{"JSObject":[]},"CssUnparsedValue":{"JSObject":[]},"DataTransferItemList":{"JSObject":[]},"DivElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"Document":{"Node":[],"EventTarget":[],"JSObject":[]},"DomException":{"JSObject":[]},"DomImplementation":{"JSObject":[]},"DomRectList":{"ListBase":["Rectangle<num>"],"ImmutableListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"],"JSObject":[],"Iterable":["Rectangle<num>"],"JSIndexable":["Rectangle<num>"],"ListBase.E":"Rectangle<num>","ImmutableListMixin.E":"Rectangle<num>"},"DomRectReadOnly":{"Rectangle":["num"],"JSObject":[]},"DomStringList":{"ListBase":["String"],"ImmutableListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"],"JSObject":[],"Iterable":["String"],"JSIndexable":["String"],"ListBase.E":"String","ImmutableListMixin.E":"String"},"DomTokenList":{"JSObject":[]},"EventTarget":{"JSObject":[]},"FileList":{"ListBase":["File"],"ImmutableListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"],"JSObject":[],"Iterable":["File"],"JSIndexable":["File"],"ListBase.E":"File","ImmutableListMixin.E":"File"},"FileWriter":{"EventTarget":[],"JSObject":[]},"FormElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"History":{"JSObject":[]},"HtmlCollection":{"ListBase":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"JSObject":[],"Iterable":["Node"],"JSIndexable":["Node"],"ListBase.E":"Node","ImmutableListMixin.E":"Node"},"HtmlDocument":{"Node":[],"EventTarget":[],"JSObject":[]},"HttpRequestEventTarget":{"EventTarget":[],"JSObject":[]},"Location":{"JSObject":[]},"MediaList":{"JSObject":[]},"MessagePort":{"EventTarget":[],"JSObject":[]},"MidiInputMap":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"MidiOutputMap":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"MimeTypeArray":{"ListBase":["MimeType"],"ImmutableListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"],"JSObject":[],"Iterable":["MimeType"],"JSIndexable":["MimeType"],"ListBase.E":"MimeType","ImmutableListMixin.E":"MimeType"},"_ChildNodeListLazy":{"ListBase":["Node"],"List":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"],"ListBase.E":"Node"},"NodeList":{"ListBase":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"JSObject":[],"Iterable":["Node"],"JSIndexable":["Node"],"ListBase.E":"Node","ImmutableListMixin.E":"Node"},"PluginArray":{"ListBase":["Plugin"],"ImmutableListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"],"JSObject":[],"Iterable":["Plugin"],"JSIndexable":["Plugin"],"ListBase.E":"Plugin","ImmutableListMixin.E":"Plugin"},"RtcStatsReport":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"SelectElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"SourceBufferList":{"ListBase":["SourceBuffer"],"ImmutableListMixin":["SourceBuffer"],"List":["SourceBuffer"],"EventTarget":[],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"],"JSObject":[],"Iterable":["SourceBuffer"],"JSIndexable":["SourceBuffer"],"ListBase.E":"SourceBuffer","ImmutableListMixin.E":"SourceBuffer"},"SpeechGrammarList":{"ListBase":["SpeechGrammar"],"ImmutableListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"],"JSObject":[],"Iterable":["SpeechGrammar"],"JSIndexable":["SpeechGrammar"],"ListBase.E":"SpeechGrammar","ImmutableListMixin.E":"SpeechGrammar"},"Storage":{"MapBase":["String","String"],"JSObject":[],"Map":["String","String"],"MapBase.K":"String","MapBase.V":"String"},"TableElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TableRowElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TableSectionElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TemplateElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TextTrackCueList":{"ListBase":["TextTrackCue"],"ImmutableListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"],"JSObject":[],"Iterable":["TextTrackCue"],"JSIndexable":["TextTrackCue"],"ListBase.E":"TextTrackCue","ImmutableListMixin.E":"TextTrackCue"},"TextTrackList":{"ListBase":["TextTrack"],"ImmutableListMixin":["TextTrack"],"List":["TextTrack"],"EventTarget":[],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"],"JSObject":[],"Iterable":["TextTrack"],"JSIndexable":["TextTrack"],"ListBase.E":"TextTrack","ImmutableListMixin.E":"TextTrack"},"TimeRanges":{"JSObject":[]},"TouchList":{"ListBase":["Touch"],"ImmutableListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"],"JSObject":[],"Iterable":["Touch"],"JSIndexable":["Touch"],"ListBase.E":"Touch","ImmutableListMixin.E":"Touch"},"TrackDefaultList":{"JSObject":[]},"UIEvent":{"Event":[],"JSObject":[]},"Url":{"JSObject":[]},"VideoTrackList":{"EventTarget":[],"JSObject":[]},"_Attr":{"Node":[],"EventTarget":[],"JSObject":[]},"_CssRuleList":{"ListBase":["CssRule"],"ImmutableListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"],"JSObject":[],"Iterable":["CssRule"],"JSIndexable":["CssRule"],"ListBase.E":"CssRule","ImmutableListMixin.E":"CssRule"},"_DomRect":{"Rectangle":["num"],"JSObject":[]},"_GamepadList":{"ListBase":["Gamepad?"],"ImmutableListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"],"JSObject":[],"Iterable":["Gamepad?"],"JSIndexable":["Gamepad?"],"ListBase.E":"Gamepad?","ImmutableListMixin.E":"Gamepad?"},"_NamedNodeMap":{"ListBase":["Node"],"ImmutableListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"JSObject":[],"Iterable":["Node"],"JSIndexable":["Node"],"ListBase.E":"Node","ImmutableListMixin.E":"Node"},"_SpeechRecognitionResultList":{"ListBase":["SpeechRecognitionResult"],"ImmutableListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"],"JSObject":[],"Iterable":["SpeechRecognitionResult"],"JSIndexable":["SpeechRecognitionResult"],"ListBase.E":"SpeechRecognitionResult","ImmutableListMixin.E":"SpeechRecognitionResult"},"_StyleSheetList":{"ListBase":["StyleSheet"],"ImmutableListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"],"JSObject":[],"Iterable":["StyleSheet"],"JSIndexable":["StyleSheet"],"ListBase.E":"StyleSheet","ImmutableListMixin.E":"StyleSheet"},"_AttributeMap":{"MapBase":["String","String"],"Map":["String","String"]},"_ElementAttributeMap":{"MapBase":["String","String"],"Map":["String","String"],"MapBase.K":"String","MapBase.V":"String"},"_EventStream0":{"Stream":["1"],"Stream.T":"1"},"_ElementEventStreamImpl":{"_EventStream0":["1"],"Stream":["1"],"Stream.T":"1"},"_EventStreamSubscription0":{"StreamSubscription":["1"]},"NodeValidatorBuilder":{"NodeValidator":[]},"_SimpleNodeValidator":{"NodeValidator":[]},"_TemplatingNodeValidator":{"NodeValidator":[]},"_SvgNodeValidator":{"NodeValidator":[]},"FixedSizeListIterator":{"Iterator":["1"]},"_SameOriginUriPolicy":{"UriPolicy":[]},"_ValidatingTreeSanitizer":{"NodeTreeSanitizer":[]},"Length":{"JSObject":[]},"Number":{"JSObject":[]},"Transform":{"JSObject":[]},"LengthList":{"ListBase":["Length"],"ImmutableListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"],"JSObject":[],"Iterable":["Length"],"ListBase.E":"Length","ImmutableListMixin.E":"Length"},"NumberList":{"ListBase":["Number"],"ImmutableListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"],"JSObject":[],"Iterable":["Number"],"ListBase.E":"Number","ImmutableListMixin.E":"Number"},"PointList":{"JSObject":[]},"ScriptElement0":{"SvgElement":[],"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"StringList":{"ListBase":["String"],"ImmutableListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"],"JSObject":[],"Iterable":["String"],"ListBase.E":"String","ImmutableListMixin.E":"String"},"SvgElement":{"Element":[],"Node":[],"EventTarget":[],"JSObject":[]},"TransformList":{"ListBase":["Transform"],"ImmutableListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"],"JSObject":[],"Iterable":["Transform"],"ListBase.E":"Transform","ImmutableListMixin.E":"Transform"},"AudioBuffer":{"JSObject":[]},"AudioParamMap":{"MapBase":["String","@"],"JSObject":[],"Map":["String","@"],"MapBase.K":"String","MapBase.V":"@"},"AudioTrackList":{"EventTarget":[],"JSObject":[]},"BaseAudioContext":{"EventTarget":[],"JSObject":[]},"OfflineAudioContext":{"EventTarget":[],"JSObject":[]},"CanonicalizedMap":{"Map":["2","3"]},"DioException":{"Exception":[]},"Interceptors":{"ListBase":["Interceptor0"],"List":["Interceptor0"],"EfficientLengthIterable":["Interceptor0"],"Iterable":["Interceptor0"],"ListBase.E":"Interceptor0"},"ImplyContentTypeInterceptor":{"Interceptor0":[]},"FusedTransformer":{"Transformer":[]},"_DefaultIfEmptyStreamSink":{"EventSink":["Uint8List"],"Sink":["Uint8List"]},"DefaultNullIfEmptyStreamTransformer":{"StreamTransformer":["Uint8List","Uint8List"]},"BrowserHttpClientAdapter":{"HttpClientAdapter":[]},"DioForBrowser":{"Dio":[]},"Request":{"BaseRequest":[]},"CaseInsensitiveMap":{"CanonicalizedMap":["String","String","1"],"Map":["String","1"],"CanonicalizedMap.K":"String","CanonicalizedMap.V":"1","CanonicalizedMap.C":"String"},"PathException":{"Exception":[]},"PosixStyle":{"InternalStyle":[]},"UrlStyle":{"InternalStyle":[]},"WindowsStyle":{"InternalStyle":[]},"FileLocation":{"SourceLocation":[]},"_FileSpan":{"SourceSpanWithContext":[],"SourceSpan":[]},"SourceLocationMixin":{"SourceLocation":[]},"SourceSpanBase":{"SourceSpan":[]},"SourceSpanException":{"Exception":[]},"SourceSpanFormatException":{"FormatException":[],"Exception":[]},"SourceSpanMixin":{"SourceSpan":[]},"SourceSpanWithContext":{"SourceSpan":[]},"StringScannerException":{"FormatException":[],"Exception":[]},"_EventStream":{"Stream":["1"],"Stream.T":"1"},"_EventStreamSubscription":{"StreamSubscription":["1"]},"Int8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint8ClampedList":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint16List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Int32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Uint32List":{"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"Float32List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"Float64List":{"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]}}'));
+  A._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"UnmodifiableListBase":1,"NativeTypedArray":1,"StreamTransformerBase":2,"_DelayedEvent":1,"_SetBase":1,"ChunkedConversionSink":1}'));
   var string$ = {
     x00_____: "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\u03f6\x00\u0404\u03f4 \u03f4\u03f6\u01f6\u01f6\u03f6\u03fc\u01f4\u03ff\u03ff\u0584\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u05d4\u01f4\x00\u01f4\x00\u0504\u05c4\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u0400\x00\u0400\u0200\u03f7\u0200\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u03ff\u0200\u0200\u0200\u03f7\x00",
     x20must_: " must not be greater than the number of characters in the file, ",
+    x20or_im: " or improve the response time of the server.",
+    ABCDEF: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
     Cannotff: "Cannot extract a file path from a URI with a fragment component",
     Cannotfq: "Cannot extract a file path from a URI with a query component",
     Cannotn: "Cannot extract a non-Windows file path from a file URI with an authority",
-    Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type"
+    Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type",
+    The__h: "The `handler` has already been called, make sure each handler gets called only once.",
+    handle: "handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace."
   };
   var type$ = (function rtii() {
     var findType = A.findType;
     return {
+      $env_1_1_dynamic: findType("@<@>"),
       $env_1_1_void: findType("@<~>"),
       AsyncError: findType("AsyncError"),
       BaseElement: findType("BaseElement"),
       BodyElement: findType("BodyElement"),
-      ByteBuffer: findType("ByteBuffer"),
-      ByteData: findType("ByteData"),
+      CancelableCompleter_ResponseBody: findType("CancelableCompleter<ResponseBody>"),
+      CancelableOperation_ResponseBody: findType("CancelableOperation<ResponseBody>"),
       CaseInsensitiveMap_String: findType("CaseInsensitiveMap<String>"),
       CodeUnits: findType("CodeUnits"),
       CssRule: findType("CssRule"),
+      DioException: findType("DioException"),
       EfficientLengthIterable_dynamic: findType("EfficientLengthIterable<@>"),
       Element: findType("Element"),
       Error: findType("Error"),
       Event: findType("Event"),
+      EventSink_Uint8List: findType("EventSink<Uint8List>"),
       Exception: findType("Exception"),
       File: findType("File"),
-      Float32List: findType("Float32List"),
-      Float64List: findType("Float64List"),
       FormatException: findType("FormatException"),
       Function: findType("Function"),
       HookEvent: findType("HookEvent"),
       HttpRequest: findType("HttpRequest"),
-      Int16List: findType("Int16List"),
-      Int32List: findType("Int32List"),
-      Int8List: findType("Int8List"),
+      Interceptor: findType("Interceptor0"),
+      InterceptorState_DioException: findType("InterceptorState<DioException>"),
+      InterceptorState_RequestOptions: findType("InterceptorState<RequestOptions>"),
+      InterceptorState_Response_dynamic: findType("InterceptorState<Response0<@>>"),
+      InterceptorState_dynamic: findType("InterceptorState<@>"),
       Iterable_Node: findType("Iterable<Node>"),
       Iterable_String: findType("Iterable<String>"),
       Iterable_dynamic: findType("Iterable<@>"),
       Iterable_int: findType("Iterable<int>"),
-      JSArray_JSObject: findType("JSArray<JSObject>"),
+      JSArray_Future_nullable_Object: findType("JSArray<Future<Object?>>"),
+      JSArray_List_int: findType("JSArray<List<int>>"),
       JSArray_NodeValidator: findType("JSArray<NodeValidator>"),
+      JSArray_RedirectRecord: findType("JSArray<RedirectRecord>"),
       JSArray_String: findType("JSArray<String>"),
+      JSArray_Uint8List: findType("JSArray<Uint8List>"),
       JSArray__Highlight: findType("JSArray<_Highlight>"),
       JSArray__Line: findType("JSArray<_Line>"),
       JSArray_dynamic: findType("JSArray<@>"),
       JSArray_int: findType("JSArray<int>"),
+      JSArray_nullable_Interceptor: findType("JSArray<Interceptor0?>"),
       JSArray_nullable_String: findType("JSArray<String?>"),
+      JSIndexable_dynamic: findType("JSIndexable<@>"),
       JSNull: findType("JSNull"),
       JSObject: findType("JSObject"),
       JavaScriptFunction: findType("JavaScriptFunction"),
@@ -19772,15 +23866,17 @@
       Location: findType("Location"),
       MapEntry_String_String: findType("MapEntry<String,String>"),
       MapEntry_of_Object_and_List__Highlight: findType("MapEntry<Object,List<_Highlight>>"),
+      MapEntry_of_String_and_List_String: findType("MapEntry<String,List<String>>"),
       Map_String_dynamic: findType("Map<String,@>"),
       Map_dynamic_dynamic: findType("Map<@,@>"),
+      Map_of_String_and_List_String: findType("Map<String,List<String>>"),
       MappedListIterable_String_String: findType("MappedListIterable<String,String>"),
       MappedListIterable_String_dynamic: findType("MappedListIterable<String,@>"),
       MediaType: findType("MediaType"),
       MessageEvent: findType("MessageEvent"),
       MimeType: findType("MimeType"),
       MouseEvent: findType("MouseEvent"),
-      MultiStreamController_List_int: findType("MultiStreamController<List<int>>"),
+      NativeArrayBuffer: findType("NativeArrayBuffer"),
       NativeTypedArrayOfInt: findType("NativeTypedArrayOfInt"),
       NativeUint8List: findType("NativeUint8List"),
       Node: findType("Node"),
@@ -19794,9 +23890,14 @@
       Rectangle_dynamic: findType("Rectangle<@>"),
       Rectangle_num: findType("Rectangle<num>"),
       RegExpMatch: findType("RegExpMatch"),
+      RequestOptions: findType("RequestOptions"),
       Response: findType("Response"),
+      ResponseBody: findType("ResponseBody"),
+      Response_dynamic: findType("Response0<@>"),
       ScriptElement: findType("ScriptElement0"),
       Set_Function: findType("Set<Function>"),
+      Sink_List_int: findType("Sink<List<int>>"),
+      Sink_String: findType("Sink<String>"),
       SourceBuffer: findType("SourceBuffer"),
       SourceLocation: findType("SourceLocation"),
       SourceSpan: findType("SourceSpan"),
@@ -19804,8 +23905,9 @@
       SpeechGrammar: findType("SpeechGrammar"),
       SpeechRecognitionResult: findType("SpeechRecognitionResult"),
       StackTrace: findType("StackTrace"),
-      StreamedResponse: findType("StreamedResponse"),
+      Stream_Uint8List: findType("Stream<Uint8List>"),
       String: findType("String"),
+      StringConversionSink: findType("StringConversionSink"),
       String_Function_Match: findType("String(Match)"),
       String_Function_String: findType("String(String)"),
       StyleSheet: findType("StyleSheet"),
@@ -19819,32 +23921,39 @@
       TransmitStatus: findType("TransmitStatus"),
       TrustedGetRuntimeType: findType("TrustedGetRuntimeType"),
       TypeError: findType("TypeError"),
-      Uint16List: findType("Uint16List"),
-      Uint32List: findType("Uint32List"),
-      Uint8ClampedList: findType("Uint8ClampedList"),
       Uint8List: findType("Uint8List"),
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
       UnmodifiableMapView_String_String: findType("UnmodifiableMapView<String,String>"),
       Uri: findType("Uri"),
       WhereTypeIterable_String: findType("WhereTypeIterable<String>"),
       _AsyncCompleter_HttpRequest: findType("_AsyncCompleter<HttpRequest>"),
+      _AsyncCompleter_InterceptorState_dynamic: findType("_AsyncCompleter<InterceptorState<@>>"),
+      _AsyncCompleter_ResponseBody: findType("_AsyncCompleter<ResponseBody>"),
       _AsyncCompleter_Uint8List: findType("_AsyncCompleter<Uint8List>"),
+      _AsyncCompleter_nullable_Object: findType("_AsyncCompleter<Object?>"),
       _AsyncCompleter_void: findType("_AsyncCompleter<~>"),
-      _AsyncStreamController_List_int: findType("_AsyncStreamController<List<int>>"),
+      _AsyncStreamController_Uint8List: findType("_AsyncStreamController<Uint8List>"),
       _Attr: findType("_Attr"),
+      _BoundSinkStream_dynamic_Uint8List: findType("_BoundSinkStream<@,Uint8List>"),
       _ChildNodeListLazy: findType("_ChildNodeListLazy"),
+      _ConverterStreamEventSink_dynamic_dynamic: findType("_ConverterStreamEventSink<@,@>"),
       _ElementEventStreamImpl_MouseEvent: findType("_ElementEventStreamImpl<MouseEvent>"),
+      _EventStream_JSObject: findType("_EventStream<JSObject>"),
       _Future_HttpRequest: findType("_Future<HttpRequest>"),
+      _Future_InterceptorState_dynamic: findType("_Future<InterceptorState<@>>"),
+      _Future_ResponseBody: findType("_Future<ResponseBody>"),
       _Future_Uint8List: findType("_Future<Uint8List>"),
+      _Future_bool: findType("_Future<bool>"),
       _Future_dynamic: findType("_Future<@>"),
       _Future_int: findType("_Future<int>"),
+      _Future_nullable_Object: findType("_Future<Object?>"),
       _Future_void: findType("_Future<~>"),
       _Highlight: findType("_Highlight"),
       _Html5NodeValidator: findType("_Html5NodeValidator"),
-      _IdentityHashMap_of_nullable_Object_and_nullable_Object: findType("_IdentityHashMap<Object?,Object?>"),
       _Line: findType("_Line"),
-      _MultiStream_List_int: findType("_MultiStream<List<int>>"),
       _StreamControllerAddStreamState_nullable_Object: findType("_StreamControllerAddStreamState<Object?>"),
+      _StreamIterator_Uint8List: findType("_StreamIterator<Uint8List>"),
+      _WeakReferenceWrapper_CancelableOperation_ResponseBody: findType("_WeakReferenceWrapper<CancelableOperation<ResponseBody>>"),
       bool: findType("bool"),
       bool_Function_Object: findType("bool(Object)"),
       bool_Function__Highlight: findType("bool(_Highlight)"),
@@ -19865,6 +23974,7 @@
       nullable_Object: findType("Object?"),
       nullable_StackTrace: findType("StackTrace?"),
       nullable_StreamSubscription_MessageEvent: findType("StreamSubscription<MessageEvent>?"),
+      nullable_Stream_Uint8List: findType("Stream<Uint8List>?"),
       nullable_String: findType("String?"),
       nullable_String_Function_Match: findType("String(Match)?"),
       nullable__DelayedEvent_dynamic: findType("_DelayedEvent<@>?"),
@@ -19876,15 +23986,22 @@
       nullable_dynamic_Function_Event: findType("@(Event)?"),
       nullable_int: findType("int?"),
       nullable_int_Function_Node_Node: findType("int(Node,Node)?"),
+      nullable_nullable_Object_Function_dynamic: findType("Object?(@)?"),
+      nullable_nullable_Object_Function_nullable_Object: findType("Object?(Object?)?"),
       nullable_num: findType("num?"),
       nullable_void_Function: findType("~()?"),
+      nullable_void_Function_JSObject: findType("~(JSObject)?"),
       nullable_void_Function_ProgressEvent: findType("~(ProgressEvent)?"),
       num: findType("num"),
       void: findType("~"),
       void_Function: findType("~()"),
+      void_Function_2_Response_dynamic_and_ResponseInterceptorHandler: findType("~(Response0<@>,ResponseInterceptorHandler)"),
+      void_Function_2_String_and_List_String: findType("~(String,List<String>)"),
+      void_Function_DioException_ErrorInterceptorHandler: findType("~(DioException,ErrorInterceptorHandler)"),
       void_Function_List_int: findType("~(List<int>)"),
       void_Function_Object: findType("~(Object)"),
       void_Function_Object_StackTrace: findType("~(Object,StackTrace)"),
+      void_Function_RequestOptions_RequestInterceptorHandler: findType("~(RequestOptions,RequestInterceptorHandler)"),
       void_Function_String_String: findType("~(String,String)"),
       void_Function_String_dynamic: findType("~(String,@)"),
       void_Function_dynamic: findType("~(@)")
@@ -19913,12 +24030,11 @@
     B.UnknownJavaScriptObject_methods = J.UnknownJavaScriptObject.prototype;
     B.AsciiDecoder_false_127 = new A.AsciiDecoder(false, 127);
     B.AsciiEncoder_127 = new A.AsciiEncoder(127);
-    B.C__EmptyStream = new A._EmptyStream(A.findType("_EmptyStream<List<int>>"));
-    B.ByteStream__EmptyStream = new A.ByteStream(B.C__EmptyStream);
     B.CONSTANT = new A.Instantiation1(A.math__max$closure(), A.findType("Instantiation1<int>"));
     B.C_AsciiCodec = new A.AsciiCodec();
     B.C_Base64Encoder = new A.Base64Encoder();
     B.C_Base64Codec = new A.Base64Codec();
+    B.C_DefaultNullIfEmptyStreamTransformer = new A.DefaultNullIfEmptyStreamTransformer();
     B.C_EmptyIterator = new A.EmptyIterator(A.findType("EmptyIterator<0&>"));
     B.C_HookEvent3 = new A.HookEvent();
     B.C_HookEvent5 = new A.HookEvent();
@@ -19927,6 +24043,7 @@
     B.C_HookEvent2 = new A.HookEvent();
     B.C_HookEvent1 = new A.HookEvent();
     B.C_HookEvent4 = new A.HookEvent();
+    B.C_ImplyContentTypeInterceptor = new A.ImplyContentTypeInterceptor();
     B.C_JS_CONST = function getTagFallback(o) {
   var s = Object.prototype.toString.call(o);
   return s.substring(8, s.length - 1);
@@ -20061,19 +24178,41 @@
     B.C__DelayedDone = new A._DelayedDone();
     B.C__RootZone = new A._RootZone();
     B.C__StringStackTrace = new A._StringStackTrace();
+    B.DioExceptionType_0 = new A.DioExceptionType(0, "connectionTimeout");
+    B.DioExceptionType_2 = new A.DioExceptionType(2, "receiveTimeout");
+    B.DioExceptionType_4 = new A.DioExceptionType(4, "badResponse");
+    B.DioExceptionType_5 = new A.DioExceptionType(5, "cancel");
+    B.DioExceptionType_6 = new A.DioExceptionType(6, "connectionError");
+    B.DioExceptionType_7 = new A.DioExceptionType(7, "unknown");
     B.Duration_0 = new A.Duration(0);
     B.Duration_100000 = new A.Duration(100000);
+    B.InterceptorResultType_0 = new A.InterceptorResultType(0, "next");
+    B.InterceptorResultType_1 = new A.InterceptorResultType(1, "resolve");
+    B.InterceptorResultType_2 = new A.InterceptorResultType(2, "resolveCallFollowing");
+    B.InterceptorResultType_4 = new A.InterceptorResultType(4, "rejectCallFollowing");
     B.JsonDecoder_null = new A.JsonDecoder(null);
     B.JsonEncoder_null = new A.JsonEncoder(null);
     B.Latin1Decoder_false_255 = new A.Latin1Decoder(false, 255);
     B.Latin1Encoder_255 = new A.Latin1Encoder(255);
+    B.ListFormat_4 = new A.ListFormat(4, "multi");
+    B.ListFormat_5 = new A.ListFormat(5, "multiCompatible");
+    B.List_110_117_108_108 = makeConstList([110, 117, 108, 108], type$.JSArray_int);
+    B.List_239_191_189 = makeConstList([239, 191, 189], type$.JSArray_int);
+    B.List_65533 = makeConstList([65533], type$.JSArray_int);
+    B.List_empty2 = makeConstList([], A.findType("JSArray<Interceptor0>"));
+    B.List_empty0 = makeConstList([], type$.JSArray_RedirectRecord);
     B.List_empty = makeConstList([], type$.JSArray_String);
+    B.List_empty1 = makeConstList([], type$.JSArray_int);
     B.List_pgZ = makeConstList(["bind", "if", "ref", "repeat", "syntax"], type$.JSArray_String);
     B.List_ql7 = makeConstList(["A::href", "AREA::href", "BLOCKQUOTE::cite", "BODY::background", "COMMAND::icon", "DEL::cite", "FORM::action", "IMG::src", "INPUT::src", "INS::cite", "Q::cite", "VIDEO::poster"], type$.JSArray_String);
     B.List_tEi = makeConstList(["HEAD", "AREA", "BASE", "BASEFONT", "BR", "COL", "COLGROUP", "EMBED", "FRAME", "FRAMESET", "HR", "IMAGE", "IMG", "INPUT", "ISINDEX", "LINK", "META", "PARAM", "SOURCE", "STYLE", "TITLE", "WBR"], type$.JSArray_String);
     B.List_xWm = makeConstList(["*::class", "*::dir", "*::draggable", "*::hidden", "*::id", "*::inert", "*::itemprop", "*::itemref", "*::itemscope", "*::lang", "*::spellcheck", "*::title", "*::translate", "A::accesskey", "A::coords", "A::hreflang", "A::name", "A::shape", "A::tabindex", "A::target", "A::type", "AREA::accesskey", "AREA::alt", "AREA::coords", "AREA::nohref", "AREA::shape", "AREA::tabindex", "AREA::target", "AUDIO::controls", "AUDIO::loop", "AUDIO::mediagroup", "AUDIO::muted", "AUDIO::preload", "BDO::dir", "BODY::alink", "BODY::bgcolor", "BODY::link", "BODY::text", "BODY::vlink", "BR::clear", "BUTTON::accesskey", "BUTTON::disabled", "BUTTON::name", "BUTTON::tabindex", "BUTTON::type", "BUTTON::value", "CANVAS::height", "CANVAS::width", "CAPTION::align", "COL::align", "COL::char", "COL::charoff", "COL::span", "COL::valign", "COL::width", "COLGROUP::align", "COLGROUP::char", "COLGROUP::charoff", "COLGROUP::span", "COLGROUP::valign", "COLGROUP::width", "COMMAND::checked", "COMMAND::command", "COMMAND::disabled", "COMMAND::label", "COMMAND::radiogroup", "COMMAND::type", "DATA::value", "DEL::datetime", "DETAILS::open", "DIR::compact", "DIV::align", "DL::compact", "FIELDSET::disabled", "FONT::color", "FONT::face", "FONT::size", "FORM::accept", "FORM::autocomplete", "FORM::enctype", "FORM::method", "FORM::name", "FORM::novalidate", "FORM::target", "FRAME::name", "H1::align", "H2::align", "H3::align", "H4::align", "H5::align", "H6::align", "HR::align", "HR::noshade", "HR::size", "HR::width", "HTML::version", "IFRAME::align", "IFRAME::frameborder", "IFRAME::height", "IFRAME::marginheight", "IFRAME::marginwidth", "IFRAME::width", "IMG::align", "IMG::alt", "IMG::border", "IMG::height", "IMG::hspace", "IMG::ismap", "IMG::name", "IMG::usemap", "IMG::vspace", "IMG::width", "INPUT::accept", "INPUT::accesskey", "INPUT::align", "INPUT::alt", "INPUT::autocomplete", "INPUT::autofocus", "INPUT::checked", "INPUT::disabled", "INPUT::inputmode", "INPUT::ismap", "INPUT::list", "INPUT::max", "INPUT::maxlength", "INPUT::min", "INPUT::multiple", "INPUT::name", "INPUT::placeholder", "INPUT::readonly", "INPUT::required", "INPUT::size", "INPUT::step", "INPUT::tabindex", "INPUT::type", "INPUT::usemap", "INPUT::value", "INS::datetime", "KEYGEN::disabled", "KEYGEN::keytype", "KEYGEN::name", "LABEL::accesskey", "LABEL::for", "LEGEND::accesskey", "LEGEND::align", "LI::type", "LI::value", "LINK::sizes", "MAP::name", "MENU::compact", "MENU::label", "MENU::type", "METER::high", "METER::low", "METER::max", "METER::min", "METER::value", "OBJECT::typemustmatch", "OL::compact", "OL::reversed", "OL::start", "OL::type", "OPTGROUP::disabled", "OPTGROUP::label", "OPTION::disabled", "OPTION::label", "OPTION::selected", "OPTION::value", "OUTPUT::for", "OUTPUT::name", "P::align", "PRE::width", "PROGRESS::max", "PROGRESS::min", "PROGRESS::value", "SELECT::autocomplete", "SELECT::disabled", "SELECT::multiple", "SELECT::name", "SELECT::required", "SELECT::size", "SELECT::tabindex", "SOURCE::type", "TABLE::align", "TABLE::bgcolor", "TABLE::border", "TABLE::cellpadding", "TABLE::cellspacing", "TABLE::frame", "TABLE::rules", "TABLE::summary", "TABLE::width", "TBODY::align", "TBODY::char", "TBODY::charoff", "TBODY::valign", "TD::abbr", "TD::align", "TD::axis", "TD::bgcolor", "TD::char", "TD::charoff", "TD::colspan", "TD::headers", "TD::height", "TD::nowrap", "TD::rowspan", "TD::scope", "TD::valign", "TD::width", "TEXTAREA::accesskey", "TEXTAREA::autocomplete", "TEXTAREA::cols", "TEXTAREA::disabled", "TEXTAREA::inputmode", "TEXTAREA::name", "TEXTAREA::placeholder", "TEXTAREA::readonly", "TEXTAREA::required", "TEXTAREA::rows", "TEXTAREA::tabindex", "TEXTAREA::wrap", "TFOOT::align", "TFOOT::char", "TFOOT::charoff", "TFOOT::valign", "TH::abbr", "TH::align", "TH::axis", "TH::bgcolor", "TH::char", "TH::charoff", "TH::colspan", "TH::headers", "TH::height", "TH::nowrap", "TH::rowspan", "TH::scope", "TH::valign", "TH::width", "THEAD::align", "THEAD::char", "THEAD::charoff", "THEAD::valign", "TR::align", "TR::bgcolor", "TR::char", "TR::charoff", "TR::valign", "TRACK::default", "TRACK::kind", "TRACK::label", "TRACK::srclang", "UL::compact", "UL::type", "VIDEO::controls", "VIDEO::height", "VIDEO::loop", "VIDEO::mediagroup", "VIDEO::muted", "VIDEO::preload", "VIDEO::width"], type$.JSArray_String);
     B.Object_empty = {};
     B.Map_empty = new A.ConstantStringMap(B.Object_empty, [], A.findType("ConstantStringMap<String,String>"));
+    B.ResponseType_0 = new A.ResponseType(0, "json");
+    B.ResponseType_1 = new A.ResponseType(1, "stream");
+    B.ResponseType_2 = new A.ResponseType(2, "plain");
+    B.ResponseType_3 = new A.ResponseType(3, "bytes");
     B.SubscriptionStatus_0_pending = new A.SubscriptionStatus(0, "pending");
     B.SubscriptionStatus_1_created = new A.SubscriptionStatus(1, "created");
     B.SubscriptionStatus_2_deleted = new A.SubscriptionStatus(2, "deleted");
@@ -20090,16 +24229,21 @@
     B.Type_Int32List_O8Z = A.typeLiteral("Int32List");
     B.Type_Int8List_rFV = A.typeLiteral("Int8List");
     B.Type_Object_A4p = A.typeLiteral("Object");
+    B.Type_String_AXU = A.typeLiteral("String");
     B.Type_Uint16List_kmP = A.typeLiteral("Uint16List");
     B.Type_Uint32List_kmP = A.typeLiteral("Uint32List");
     B.Type_Uint8ClampedList_04U = A.typeLiteral("Uint8ClampedList");
     B.Type_Uint8List_8Eb = A.typeLiteral("Uint8List");
+    B.Type_dynamic_wn9 = A.typeLiteral("@");
     B.Utf8Decoder_false = new A.Utf8Decoder(false);
+    B.Utf8Decoder_true = new A.Utf8Decoder(true);
   })();
   (function staticFields() {
     $._JS_INTEROP_INTERCEPTOR_TAG = null;
     $.toStringVisiting = A._setArrayType([], A.findType("JSArray<Object>"));
     $.Primitives__identityHashCodeProperty = null;
+    $.Primitives_timerFrequency = 0;
+    $.Primitives_timerTicks = A._js_helper_Primitives_dateNow$closure();
     $.BoundClosure__receiverFieldNameCache = null;
     $.BoundClosure__interceptorFieldNameCache = null;
     $.getTagFunction = null;
@@ -20124,11 +24268,13 @@
     $._current = null;
     $.transmit = null;
     $.subscription = null;
+    $.streamSubscription = null;
   })();
   (function lazyInitializers() {
     var _lazyFinal = hunkHelpers.lazyFinal,
       _lazy = hunkHelpers.lazy;
     _lazyFinal($, "DART_CLOSURE_PROPERTY_NAME", "$get$DART_CLOSURE_PROPERTY_NAME", () => A.getIsolateAffinityTag("_$dart_dartClosure"));
+    _lazyFinal($, "_CopyingBytesBuilder__emptyList", "$get$_CopyingBytesBuilder__emptyList", () => A.NativeUint8List_NativeUint8List(0));
     _lazyFinal($, "nullFuture", "$get$nullFuture", () => B.C__RootZone.run$1$1(new A.nullFuture_closure(), A.findType("Future<~>")));
     _lazyFinal($, "_safeToStringHooks", "$get$_safeToStringHooks", () => A._setArrayType([new J.JSArraySafeToStringHook()], A.findType("JSArray<SafeToStringHook>")));
     _lazyFinal($, "TypeErrorDecoder_noSuchMethodPattern", "$get$TypeErrorDecoder_noSuchMethodPattern", () => A.TypeErrorDecoder_extractPattern(A.TypeErrorDecoder_provokeCallErrorOn({
@@ -20177,20 +24323,28 @@
     }()));
     _lazyFinal($, "_AsyncRun__scheduleImmediateClosure", "$get$_AsyncRun__scheduleImmediateClosure", () => A._AsyncRun__initializeScheduleImmediate());
     _lazyFinal($, "Future__nullFuture", "$get$Future__nullFuture", () => $.$get$nullFuture());
+    _lazyFinal($, "Future__falseFuture", "$get$Future__falseFuture", () => A._Future$zoneValue(false, B.C__RootZone, type$.bool));
     _lazyFinal($, "_Utf8Decoder__reusableBuffer", "$get$_Utf8Decoder__reusableBuffer", () => A.NativeUint8List_NativeUint8List(4096));
     _lazyFinal($, "_Utf8Decoder__decoder", "$get$_Utf8Decoder__decoder", () => new A._Utf8Decoder__decoder_closure().call$0());
     _lazyFinal($, "_Utf8Decoder__decoderNonfatal", "$get$_Utf8Decoder__decoderNonfatal", () => new A._Utf8Decoder__decoderNonfatal_closure().call$0());
     _lazyFinal($, "_Base64Decoder__inverseAlphabet", "$get$_Base64Decoder__inverseAlphabet", () => A.NativeInt8List__create1(A._ensureNativeList(A._setArrayType([-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -2, -2, -2, -2, -2, 62, -2, 62, -2, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -2, -2, -2, -1, -2, -2, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -2, -2, -2, -2, 63, -2, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -2, -2, -2, -2, -2], type$.JSArray_int))));
     _lazyFinal($, "Encoding__nameToEncoding", "$get$Encoding__nameToEncoding", () => A.LinkedHashMap_LinkedHashMap$_literal(["iso_8859-1:1987", B.C_Latin1Codec, "iso-ir-100", B.C_Latin1Codec, "iso_8859-1", B.C_Latin1Codec, "iso-8859-1", B.C_Latin1Codec, "latin1", B.C_Latin1Codec, "l1", B.C_Latin1Codec, "ibm819", B.C_Latin1Codec, "cp819", B.C_Latin1Codec, "csisolatin1", B.C_Latin1Codec, "iso-ir-6", B.C_AsciiCodec, "ansi_x3.4-1968", B.C_AsciiCodec, "ansi_x3.4-1986", B.C_AsciiCodec, "iso_646.irv:1991", B.C_AsciiCodec, "iso646-us", B.C_AsciiCodec, "us-ascii", B.C_AsciiCodec, "us", B.C_AsciiCodec, "ibm367", B.C_AsciiCodec, "cp367", B.C_AsciiCodec, "csascii", B.C_AsciiCodec, "ascii", B.C_AsciiCodec, "csutf8", B.C_Utf8Codec, "utf-8", B.C_Utf8Codec], type$.String, A.findType("Encoding")));
+    _lazyFinal($, "_WeakReferenceWrapper__weakRefConstructor", "$get$_WeakReferenceWrapper__weakRefConstructor", () => A._WeakReferenceWrapper__findWeakRefConstructor());
     _lazyFinal($, "_Uri__needsNoEncoding", "$get$_Uri__needsNoEncoding", () => A.RegExp_RegExp("^[\\-\\.0-9A-Z_a-z~]*$"));
     _lazyFinal($, "_Uri__useURLSearchParams", "$get$_Uri__useURLSearchParams", () => typeof URLSearchParams == "function");
     _lazyFinal($, "_hashSeed", "$get$_hashSeed", () => A.objectHashCode(B.Type_Object_A4p));
+    _lazyFinal($, "Stopwatch__frequency", "$get$Stopwatch__frequency", () => {
+      A.Primitives_initTicker();
+      return $.Primitives_timerFrequency;
+    });
     _lazyFinal($, "_Html5NodeValidator__allowedElements", "$get$_Html5NodeValidator__allowedElements", () => A.LinkedHashSet_LinkedHashSet$from(["A", "ABBR", "ACRONYM", "ADDRESS", "AREA", "ARTICLE", "ASIDE", "AUDIO", "B", "BDI", "BDO", "BIG", "BLOCKQUOTE", "BR", "BUTTON", "CANVAS", "CAPTION", "CENTER", "CITE", "CODE", "COL", "COLGROUP", "COMMAND", "DATA", "DATALIST", "DD", "DEL", "DETAILS", "DFN", "DIR", "DIV", "DL", "DT", "EM", "FIELDSET", "FIGCAPTION", "FIGURE", "FONT", "FOOTER", "FORM", "H1", "H2", "H3", "H4", "H5", "H6", "HEADER", "HGROUP", "HR", "I", "IFRAME", "IMG", "INPUT", "INS", "KBD", "LABEL", "LEGEND", "LI", "MAP", "MARK", "MENU", "METER", "NAV", "NOBR", "OL", "OPTGROUP", "OPTION", "OUTPUT", "P", "PRE", "PROGRESS", "Q", "S", "SAMP", "SECTION", "SELECT", "SMALL", "SOURCE", "SPAN", "STRIKE", "STRONG", "SUB", "SUMMARY", "SUP", "TABLE", "TBODY", "TD", "TEXTAREA", "TFOOT", "TH", "THEAD", "TIME", "TR", "TRACK", "TT", "U", "UL", "VAR", "VIDEO", "WBR"], type$.String));
     _lazyFinal($, "Random__secureRandom", "$get$Random__secureRandom", () => {
       var t1 = new A._JSSecureRandom(new DataView(new ArrayBuffer(A._checkLength(8))));
       t1._JSSecureRandom$0();
       return t1;
     });
+    _lazyFinal($, "FusedTransformer__utf8JsonDecoder", "$get$FusedTransformer__utf8JsonDecoder", () => B.Utf8Decoder_false.super$Converter$fuse(A.findType("Converter<String,Object?>")._as(B.JsonDecoder_null), type$.nullable_Object));
+    _lazyFinal($, "_DefaultIfEmptyStreamSink__nullUtf8Value", "$get$_DefaultIfEmptyStreamSink__nullUtf8Value", () => A.NativeUint8List_NativeUint8List$fromList(B.List_110_117_108_108));
     _lazyFinal($, "BaseRequest__tokenRE", "$get$BaseRequest__tokenRE", () => A.RegExp_RegExp("^[\\w!#%&'*+\\-.^`|~]+$"));
     _lazyFinal($, "_escapedChar", "$get$_escapedChar", () => A.RegExp_RegExp('["\\x00-\\x1F\\x7F]'));
     _lazyFinal($, "token", "$get$token", () => A.RegExp_RegExp('[^()<>@,;:"\\\\/[\\]?={} \\t\\x00-\\x1F\\x7F]+'));
@@ -20238,8 +24392,8 @@
       }
       init.dispatchPropertyName = init.getIsolateTag("dispatch_record");
     }();
-    hunkHelpers.setOrUpdateInterceptorsByTag({WebGL: J.Interceptor, AnimationEffectReadOnly: J.JavaScriptObject, AnimationEffectTiming: J.JavaScriptObject, AnimationEffectTimingReadOnly: J.JavaScriptObject, AnimationTimeline: J.JavaScriptObject, AnimationWorkletGlobalScope: J.JavaScriptObject, AuthenticatorAssertionResponse: J.JavaScriptObject, AuthenticatorAttestationResponse: J.JavaScriptObject, AuthenticatorResponse: J.JavaScriptObject, BackgroundFetchFetch: J.JavaScriptObject, BackgroundFetchManager: J.JavaScriptObject, BackgroundFetchSettledFetch: J.JavaScriptObject, BarProp: J.JavaScriptObject, BarcodeDetector: J.JavaScriptObject, BluetoothRemoteGATTDescriptor: J.JavaScriptObject, Body: J.JavaScriptObject, BudgetState: J.JavaScriptObject, CacheStorage: J.JavaScriptObject, CanvasGradient: J.JavaScriptObject, CanvasPattern: J.JavaScriptObject, CanvasRenderingContext2D: J.JavaScriptObject, Client: J.JavaScriptObject, Clients: J.JavaScriptObject, CookieStore: J.JavaScriptObject, Coordinates: J.JavaScriptObject, Credential: J.JavaScriptObject, CredentialUserData: J.JavaScriptObject, CredentialsContainer: J.JavaScriptObject, Crypto: J.JavaScriptObject, CryptoKey: J.JavaScriptObject, CSS: J.JavaScriptObject, CSSVariableReferenceValue: J.JavaScriptObject, CustomElementRegistry: J.JavaScriptObject, DataTransfer: J.JavaScriptObject, DataTransferItem: J.JavaScriptObject, DeprecatedStorageInfo: J.JavaScriptObject, DeprecatedStorageQuota: J.JavaScriptObject, DeprecationReport: J.JavaScriptObject, DetectedBarcode: J.JavaScriptObject, DetectedFace: J.JavaScriptObject, DetectedText: J.JavaScriptObject, DeviceAcceleration: J.JavaScriptObject, DeviceRotationRate: J.JavaScriptObject, DirectoryEntry: J.JavaScriptObject, webkitFileSystemDirectoryEntry: J.JavaScriptObject, FileSystemDirectoryEntry: J.JavaScriptObject, DirectoryReader: J.JavaScriptObject, WebKitDirectoryReader: J.JavaScriptObject, webkitFileSystemDirectoryReader: J.JavaScriptObject, FileSystemDirectoryReader: J.JavaScriptObject, DocumentOrShadowRoot: J.JavaScriptObject, DocumentTimeline: J.JavaScriptObject, DOMError: J.JavaScriptObject, Iterator: J.JavaScriptObject, DOMMatrix: J.JavaScriptObject, DOMMatrixReadOnly: J.JavaScriptObject, DOMParser: J.JavaScriptObject, DOMPoint: J.JavaScriptObject, DOMPointReadOnly: J.JavaScriptObject, DOMQuad: J.JavaScriptObject, DOMStringMap: J.JavaScriptObject, Entry: J.JavaScriptObject, webkitFileSystemEntry: J.JavaScriptObject, FileSystemEntry: J.JavaScriptObject, External: J.JavaScriptObject, FaceDetector: J.JavaScriptObject, FederatedCredential: J.JavaScriptObject, FileEntry: J.JavaScriptObject, webkitFileSystemFileEntry: J.JavaScriptObject, FileSystemFileEntry: J.JavaScriptObject, DOMFileSystem: J.JavaScriptObject, WebKitFileSystem: J.JavaScriptObject, webkitFileSystem: J.JavaScriptObject, FileSystem: J.JavaScriptObject, FontFace: J.JavaScriptObject, FontFaceSource: J.JavaScriptObject, FormData: J.JavaScriptObject, GamepadButton: J.JavaScriptObject, GamepadPose: J.JavaScriptObject, Geolocation: J.JavaScriptObject, Position: J.JavaScriptObject, GeolocationPosition: J.JavaScriptObject, Headers: J.JavaScriptObject, HTMLHyperlinkElementUtils: J.JavaScriptObject, IdleDeadline: J.JavaScriptObject, ImageBitmap: J.JavaScriptObject, ImageBitmapRenderingContext: J.JavaScriptObject, ImageCapture: J.JavaScriptObject, ImageData: J.JavaScriptObject, InputDeviceCapabilities: J.JavaScriptObject, IntersectionObserver: J.JavaScriptObject, IntersectionObserverEntry: J.JavaScriptObject, InterventionReport: J.JavaScriptObject, KeyframeEffect: J.JavaScriptObject, KeyframeEffectReadOnly: J.JavaScriptObject, MediaCapabilities: J.JavaScriptObject, MediaCapabilitiesInfo: J.JavaScriptObject, MediaDeviceInfo: J.JavaScriptObject, MediaError: J.JavaScriptObject, MediaKeyStatusMap: J.JavaScriptObject, MediaKeySystemAccess: J.JavaScriptObject, MediaKeys: J.JavaScriptObject, MediaKeysPolicy: J.JavaScriptObject, MediaMetadata: J.JavaScriptObject, MediaSession: J.JavaScriptObject, MediaSettingsRange: J.JavaScriptObject, MemoryInfo: J.JavaScriptObject, MessageChannel: J.JavaScriptObject, Metadata: J.JavaScriptObject, MutationObserver: J.JavaScriptObject, WebKitMutationObserver: J.JavaScriptObject, MutationRecord: J.JavaScriptObject, NavigationPreloadManager: J.JavaScriptObject, Navigator: J.JavaScriptObject, NavigatorAutomationInformation: J.JavaScriptObject, NavigatorConcurrentHardware: J.JavaScriptObject, NavigatorCookies: J.JavaScriptObject, NavigatorUserMediaError: J.JavaScriptObject, NodeFilter: J.JavaScriptObject, NodeIterator: J.JavaScriptObject, NonDocumentTypeChildNode: J.JavaScriptObject, NonElementParentNode: J.JavaScriptObject, NoncedElement: J.JavaScriptObject, OffscreenCanvasRenderingContext2D: J.JavaScriptObject, OverconstrainedError: J.JavaScriptObject, PaintRenderingContext2D: J.JavaScriptObject, PaintSize: J.JavaScriptObject, PaintWorkletGlobalScope: J.JavaScriptObject, PasswordCredential: J.JavaScriptObject, Path2D: J.JavaScriptObject, PaymentAddress: J.JavaScriptObject, PaymentInstruments: J.JavaScriptObject, PaymentManager: J.JavaScriptObject, PaymentResponse: J.JavaScriptObject, PerformanceEntry: J.JavaScriptObject, PerformanceLongTaskTiming: J.JavaScriptObject, PerformanceMark: J.JavaScriptObject, PerformanceMeasure: J.JavaScriptObject, PerformanceNavigation: J.JavaScriptObject, PerformanceNavigationTiming: J.JavaScriptObject, PerformanceObserver: J.JavaScriptObject, PerformanceObserverEntryList: J.JavaScriptObject, PerformancePaintTiming: J.JavaScriptObject, PerformanceResourceTiming: J.JavaScriptObject, PerformanceServerTiming: J.JavaScriptObject, PerformanceTiming: J.JavaScriptObject, Permissions: J.JavaScriptObject, PhotoCapabilities: J.JavaScriptObject, PositionError: J.JavaScriptObject, GeolocationPositionError: J.JavaScriptObject, Presentation: J.JavaScriptObject, PresentationReceiver: J.JavaScriptObject, PublicKeyCredential: J.JavaScriptObject, PushManager: J.JavaScriptObject, PushMessageData: J.JavaScriptObject, PushSubscription: J.JavaScriptObject, PushSubscriptionOptions: J.JavaScriptObject, Range: J.JavaScriptObject, RelatedApplication: J.JavaScriptObject, ReportBody: J.JavaScriptObject, ReportingObserver: J.JavaScriptObject, ResizeObserver: J.JavaScriptObject, ResizeObserverEntry: J.JavaScriptObject, RTCCertificate: J.JavaScriptObject, RTCIceCandidate: J.JavaScriptObject, mozRTCIceCandidate: J.JavaScriptObject, RTCLegacyStatsReport: J.JavaScriptObject, RTCRtpContributingSource: J.JavaScriptObject, RTCRtpReceiver: J.JavaScriptObject, RTCRtpSender: J.JavaScriptObject, RTCSessionDescription: J.JavaScriptObject, mozRTCSessionDescription: J.JavaScriptObject, RTCStatsResponse: J.JavaScriptObject, Screen: J.JavaScriptObject, ScrollState: J.JavaScriptObject, ScrollTimeline: J.JavaScriptObject, Selection: J.JavaScriptObject, SpeechRecognitionAlternative: J.JavaScriptObject, SpeechSynthesisVoice: J.JavaScriptObject, StaticRange: J.JavaScriptObject, StorageManager: J.JavaScriptObject, StyleMedia: J.JavaScriptObject, StylePropertyMap: J.JavaScriptObject, StylePropertyMapReadonly: J.JavaScriptObject, SyncManager: J.JavaScriptObject, TaskAttributionTiming: J.JavaScriptObject, TextDetector: J.JavaScriptObject, TextMetrics: J.JavaScriptObject, TrackDefault: J.JavaScriptObject, TreeWalker: J.JavaScriptObject, TrustedHTML: J.JavaScriptObject, TrustedScriptURL: J.JavaScriptObject, TrustedURL: J.JavaScriptObject, UnderlyingSourceBase: J.JavaScriptObject, URLSearchParams: J.JavaScriptObject, VRCoordinateSystem: J.JavaScriptObject, VRDisplayCapabilities: J.JavaScriptObject, VREyeParameters: J.JavaScriptObject, VRFrameData: J.JavaScriptObject, VRFrameOfReference: J.JavaScriptObject, VRPose: J.JavaScriptObject, VRStageBounds: J.JavaScriptObject, VRStageBoundsPoint: J.JavaScriptObject, VRStageParameters: J.JavaScriptObject, ValidityState: J.JavaScriptObject, VideoPlaybackQuality: J.JavaScriptObject, VideoTrack: J.JavaScriptObject, VTTRegion: J.JavaScriptObject, WindowClient: J.JavaScriptObject, WorkletAnimation: J.JavaScriptObject, WorkletGlobalScope: J.JavaScriptObject, XPathEvaluator: J.JavaScriptObject, XPathExpression: J.JavaScriptObject, XPathNSResolver: J.JavaScriptObject, XPathResult: J.JavaScriptObject, XMLSerializer: J.JavaScriptObject, XSLTProcessor: J.JavaScriptObject, Bluetooth: J.JavaScriptObject, BluetoothCharacteristicProperties: J.JavaScriptObject, BluetoothRemoteGATTServer: J.JavaScriptObject, BluetoothRemoteGATTService: J.JavaScriptObject, BluetoothUUID: J.JavaScriptObject, BudgetService: J.JavaScriptObject, Cache: J.JavaScriptObject, DOMFileSystemSync: J.JavaScriptObject, DirectoryEntrySync: J.JavaScriptObject, DirectoryReaderSync: J.JavaScriptObject, EntrySync: J.JavaScriptObject, FileEntrySync: J.JavaScriptObject, FileReaderSync: J.JavaScriptObject, FileWriterSync: J.JavaScriptObject, HTMLAllCollection: J.JavaScriptObject, Mojo: J.JavaScriptObject, MojoHandle: J.JavaScriptObject, MojoWatcher: J.JavaScriptObject, NFC: J.JavaScriptObject, PagePopupController: J.JavaScriptObject, Report: J.JavaScriptObject, Request: J.JavaScriptObject, Response: J.JavaScriptObject, SubtleCrypto: J.JavaScriptObject, USBAlternateInterface: J.JavaScriptObject, USBConfiguration: J.JavaScriptObject, USBDevice: J.JavaScriptObject, USBEndpoint: J.JavaScriptObject, USBInTransferResult: J.JavaScriptObject, USBInterface: J.JavaScriptObject, USBIsochronousInTransferPacket: J.JavaScriptObject, USBIsochronousInTransferResult: J.JavaScriptObject, USBIsochronousOutTransferPacket: J.JavaScriptObject, USBIsochronousOutTransferResult: J.JavaScriptObject, USBOutTransferResult: J.JavaScriptObject, WorkerLocation: J.JavaScriptObject, WorkerNavigator: J.JavaScriptObject, Worklet: J.JavaScriptObject, IDBCursor: J.JavaScriptObject, IDBCursorWithValue: J.JavaScriptObject, IDBFactory: J.JavaScriptObject, IDBIndex: J.JavaScriptObject, IDBKeyRange: J.JavaScriptObject, IDBObjectStore: J.JavaScriptObject, IDBObservation: J.JavaScriptObject, IDBObserver: J.JavaScriptObject, IDBObserverChanges: J.JavaScriptObject, SVGAngle: J.JavaScriptObject, SVGAnimatedAngle: J.JavaScriptObject, SVGAnimatedBoolean: J.JavaScriptObject, SVGAnimatedEnumeration: J.JavaScriptObject, SVGAnimatedInteger: J.JavaScriptObject, SVGAnimatedLength: J.JavaScriptObject, SVGAnimatedLengthList: J.JavaScriptObject, SVGAnimatedNumber: J.JavaScriptObject, SVGAnimatedNumberList: J.JavaScriptObject, SVGAnimatedPreserveAspectRatio: J.JavaScriptObject, SVGAnimatedRect: J.JavaScriptObject, SVGAnimatedString: J.JavaScriptObject, SVGAnimatedTransformList: J.JavaScriptObject, SVGMatrix: J.JavaScriptObject, SVGPoint: J.JavaScriptObject, SVGPreserveAspectRatio: J.JavaScriptObject, SVGRect: J.JavaScriptObject, SVGUnitTypes: J.JavaScriptObject, AudioListener: J.JavaScriptObject, AudioParam: J.JavaScriptObject, AudioTrack: J.JavaScriptObject, AudioWorkletGlobalScope: J.JavaScriptObject, AudioWorkletProcessor: J.JavaScriptObject, PeriodicWave: J.JavaScriptObject, WebGLActiveInfo: J.JavaScriptObject, ANGLEInstancedArrays: J.JavaScriptObject, ANGLE_instanced_arrays: J.JavaScriptObject, WebGLBuffer: J.JavaScriptObject, WebGLCanvas: J.JavaScriptObject, WebGLColorBufferFloat: J.JavaScriptObject, WebGLCompressedTextureASTC: J.JavaScriptObject, WebGLCompressedTextureATC: J.JavaScriptObject, WEBGL_compressed_texture_atc: J.JavaScriptObject, WebGLCompressedTextureETC1: J.JavaScriptObject, WEBGL_compressed_texture_etc1: J.JavaScriptObject, WebGLCompressedTextureETC: J.JavaScriptObject, WebGLCompressedTexturePVRTC: J.JavaScriptObject, WEBGL_compressed_texture_pvrtc: J.JavaScriptObject, WebGLCompressedTextureS3TC: J.JavaScriptObject, WEBGL_compressed_texture_s3tc: J.JavaScriptObject, WebGLCompressedTextureS3TCsRGB: J.JavaScriptObject, WebGLDebugRendererInfo: J.JavaScriptObject, WEBGL_debug_renderer_info: J.JavaScriptObject, WebGLDebugShaders: J.JavaScriptObject, WEBGL_debug_shaders: J.JavaScriptObject, WebGLDepthTexture: J.JavaScriptObject, WEBGL_depth_texture: J.JavaScriptObject, WebGLDrawBuffers: J.JavaScriptObject, WEBGL_draw_buffers: J.JavaScriptObject, EXTsRGB: J.JavaScriptObject, EXT_sRGB: J.JavaScriptObject, EXTBlendMinMax: J.JavaScriptObject, EXT_blend_minmax: J.JavaScriptObject, EXTColorBufferFloat: J.JavaScriptObject, EXTColorBufferHalfFloat: J.JavaScriptObject, EXTDisjointTimerQuery: J.JavaScriptObject, EXTDisjointTimerQueryWebGL2: J.JavaScriptObject, EXTFragDepth: J.JavaScriptObject, EXT_frag_depth: J.JavaScriptObject, EXTShaderTextureLOD: J.JavaScriptObject, EXT_shader_texture_lod: J.JavaScriptObject, EXTTextureFilterAnisotropic: J.JavaScriptObject, EXT_texture_filter_anisotropic: J.JavaScriptObject, WebGLFramebuffer: J.JavaScriptObject, WebGLGetBufferSubDataAsync: J.JavaScriptObject, WebGLLoseContext: J.JavaScriptObject, WebGLExtensionLoseContext: J.JavaScriptObject, WEBGL_lose_context: J.JavaScriptObject, OESElementIndexUint: J.JavaScriptObject, OES_element_index_uint: J.JavaScriptObject, OESStandardDerivatives: J.JavaScriptObject, OES_standard_derivatives: J.JavaScriptObject, OESTextureFloat: J.JavaScriptObject, OES_texture_float: J.JavaScriptObject, OESTextureFloatLinear: J.JavaScriptObject, OES_texture_float_linear: J.JavaScriptObject, OESTextureHalfFloat: J.JavaScriptObject, OES_texture_half_float: J.JavaScriptObject, OESTextureHalfFloatLinear: J.JavaScriptObject, OES_texture_half_float_linear: J.JavaScriptObject, OESVertexArrayObject: J.JavaScriptObject, OES_vertex_array_object: J.JavaScriptObject, WebGLProgram: J.JavaScriptObject, WebGLQuery: J.JavaScriptObject, WebGLRenderbuffer: J.JavaScriptObject, WebGLRenderingContext: J.JavaScriptObject, WebGL2RenderingContext: J.JavaScriptObject, WebGLSampler: J.JavaScriptObject, WebGLShader: J.JavaScriptObject, WebGLShaderPrecisionFormat: J.JavaScriptObject, WebGLSync: J.JavaScriptObject, WebGLTexture: J.JavaScriptObject, WebGLTimerQueryEXT: J.JavaScriptObject, WebGLTransformFeedback: J.JavaScriptObject, WebGLUniformLocation: J.JavaScriptObject, WebGLVertexArrayObject: J.JavaScriptObject, WebGLVertexArrayObjectOES: J.JavaScriptObject, WebGL2RenderingContextBase: J.JavaScriptObject, ArrayBuffer: A.NativeByteBuffer, SharedArrayBuffer: A.NativeByteBuffer, ArrayBufferView: A.NativeTypedData, DataView: A.NativeByteData, Float32Array: A.NativeFloat32List, Float64Array: A.NativeFloat64List, Int16Array: A.NativeInt16List, Int32Array: A.NativeInt32List, Int8Array: A.NativeInt8List, Uint16Array: A.NativeUint16List, Uint32Array: A.NativeUint32List, Uint8ClampedArray: A.NativeUint8ClampedList, CanvasPixelArray: A.NativeUint8ClampedList, Uint8Array: A.NativeUint8List, HTMLAudioElement: A.HtmlElement, HTMLBRElement: A.HtmlElement, HTMLCanvasElement: A.HtmlElement, HTMLContentElement: A.HtmlElement, HTMLDListElement: A.HtmlElement, HTMLDataElement: A.HtmlElement, HTMLDataListElement: A.HtmlElement, HTMLDetailsElement: A.HtmlElement, HTMLDialogElement: A.HtmlElement, HTMLEmbedElement: A.HtmlElement, HTMLFieldSetElement: A.HtmlElement, HTMLHRElement: A.HtmlElement, HTMLHeadElement: A.HtmlElement, HTMLHeadingElement: A.HtmlElement, HTMLHtmlElement: A.HtmlElement, HTMLIFrameElement: A.HtmlElement, HTMLImageElement: A.HtmlElement, HTMLInputElement: A.HtmlElement, HTMLLIElement: A.HtmlElement, HTMLLabelElement: A.HtmlElement, HTMLLegendElement: A.HtmlElement, HTMLLinkElement: A.HtmlElement, HTMLMapElement: A.HtmlElement, HTMLMediaElement: A.HtmlElement, HTMLMenuElement: A.HtmlElement, HTMLMetaElement: A.HtmlElement, HTMLMeterElement: A.HtmlElement, HTMLModElement: A.HtmlElement, HTMLOListElement: A.HtmlElement, HTMLObjectElement: A.HtmlElement, HTMLOptGroupElement: A.HtmlElement, HTMLOptionElement: A.HtmlElement, HTMLOutputElement: A.HtmlElement, HTMLParagraphElement: A.HtmlElement, HTMLParamElement: A.HtmlElement, HTMLPictureElement: A.HtmlElement, HTMLPreElement: A.HtmlElement, HTMLProgressElement: A.HtmlElement, HTMLQuoteElement: A.HtmlElement, HTMLScriptElement: A.HtmlElement, HTMLShadowElement: A.HtmlElement, HTMLSlotElement: A.HtmlElement, HTMLSourceElement: A.HtmlElement, HTMLSpanElement: A.HtmlElement, HTMLStyleElement: A.HtmlElement, HTMLTableCaptionElement: A.HtmlElement, HTMLTableCellElement: A.HtmlElement, HTMLTableDataCellElement: A.HtmlElement, HTMLTableHeaderCellElement: A.HtmlElement, HTMLTableColElement: A.HtmlElement, HTMLTextAreaElement: A.HtmlElement, HTMLTimeElement: A.HtmlElement, HTMLTitleElement: A.HtmlElement, HTMLTrackElement: A.HtmlElement, HTMLUListElement: A.HtmlElement, HTMLUnknownElement: A.HtmlElement, HTMLVideoElement: A.HtmlElement, HTMLDirectoryElement: A.HtmlElement, HTMLFontElement: A.HtmlElement, HTMLFrameElement: A.HtmlElement, HTMLFrameSetElement: A.HtmlElement, HTMLMarqueeElement: A.HtmlElement, HTMLElement: A.HtmlElement, AccessibleNodeList: A.AccessibleNodeList, HTMLAnchorElement: A.AnchorElement, HTMLAreaElement: A.AreaElement, HTMLBaseElement: A.BaseElement, Blob: A.Blob, HTMLBodyElement: A.BodyElement, HTMLButtonElement: A.ButtonElement, CDATASection: A.CharacterData, CharacterData: A.CharacterData, Comment: A.CharacterData, ProcessingInstruction: A.CharacterData, Text: A.CharacterData, CSSPerspective: A.CssPerspective, CSSCharsetRule: A.CssRule, CSSConditionRule: A.CssRule, CSSFontFaceRule: A.CssRule, CSSGroupingRule: A.CssRule, CSSImportRule: A.CssRule, CSSKeyframeRule: A.CssRule, MozCSSKeyframeRule: A.CssRule, WebKitCSSKeyframeRule: A.CssRule, CSSKeyframesRule: A.CssRule, MozCSSKeyframesRule: A.CssRule, WebKitCSSKeyframesRule: A.CssRule, CSSMediaRule: A.CssRule, CSSNamespaceRule: A.CssRule, CSSPageRule: A.CssRule, CSSRule: A.CssRule, CSSStyleRule: A.CssRule, CSSSupportsRule: A.CssRule, CSSViewportRule: A.CssRule, CSSStyleDeclaration: A.CssStyleDeclaration, MSStyleCSSProperties: A.CssStyleDeclaration, CSS2Properties: A.CssStyleDeclaration, CSSImageValue: A.CssStyleValue, CSSKeywordValue: A.CssStyleValue, CSSNumericValue: A.CssStyleValue, CSSPositionValue: A.CssStyleValue, CSSResourceValue: A.CssStyleValue, CSSUnitValue: A.CssStyleValue, CSSURLImageValue: A.CssStyleValue, CSSStyleValue: A.CssStyleValue, CSSMatrixComponent: A.CssTransformComponent, CSSRotation: A.CssTransformComponent, CSSScale: A.CssTransformComponent, CSSSkew: A.CssTransformComponent, CSSTranslation: A.CssTransformComponent, CSSTransformComponent: A.CssTransformComponent, CSSTransformValue: A.CssTransformValue, CSSUnparsedValue: A.CssUnparsedValue, DataTransferItemList: A.DataTransferItemList, HTMLDivElement: A.DivElement, XMLDocument: A.Document, Document: A.Document, DOMException: A.DomException, DOMImplementation: A.DomImplementation, ClientRectList: A.DomRectList, DOMRectList: A.DomRectList, DOMRectReadOnly: A.DomRectReadOnly, DOMStringList: A.DomStringList, DOMTokenList: A.DomTokenList, MathMLElement: A.Element, Element: A.Element, AbortPaymentEvent: A.Event, AnimationEvent: A.Event, AnimationPlaybackEvent: A.Event, ApplicationCacheErrorEvent: A.Event, BackgroundFetchClickEvent: A.Event, BackgroundFetchEvent: A.Event, BackgroundFetchFailEvent: A.Event, BackgroundFetchedEvent: A.Event, BeforeInstallPromptEvent: A.Event, BeforeUnloadEvent: A.Event, BlobEvent: A.Event, CanMakePaymentEvent: A.Event, ClipboardEvent: A.Event, CloseEvent: A.Event, CustomEvent: A.Event, DeviceMotionEvent: A.Event, DeviceOrientationEvent: A.Event, ErrorEvent: A.Event, ExtendableEvent: A.Event, ExtendableMessageEvent: A.Event, FetchEvent: A.Event, FontFaceSetLoadEvent: A.Event, ForeignFetchEvent: A.Event, GamepadEvent: A.Event, HashChangeEvent: A.Event, InstallEvent: A.Event, MediaEncryptedEvent: A.Event, MediaKeyMessageEvent: A.Event, MediaQueryListEvent: A.Event, MediaStreamEvent: A.Event, MediaStreamTrackEvent: A.Event, MessageEvent: A.Event, MIDIConnectionEvent: A.Event, MIDIMessageEvent: A.Event, MutationEvent: A.Event, NotificationEvent: A.Event, PageTransitionEvent: A.Event, PaymentRequestEvent: A.Event, PaymentRequestUpdateEvent: A.Event, PopStateEvent: A.Event, PresentationConnectionAvailableEvent: A.Event, PresentationConnectionCloseEvent: A.Event, PromiseRejectionEvent: A.Event, PushEvent: A.Event, RTCDataChannelEvent: A.Event, RTCDTMFToneChangeEvent: A.Event, RTCPeerConnectionIceEvent: A.Event, RTCTrackEvent: A.Event, SecurityPolicyViolationEvent: A.Event, SensorErrorEvent: A.Event, SpeechRecognitionError: A.Event, SpeechRecognitionEvent: A.Event, SpeechSynthesisEvent: A.Event, StorageEvent: A.Event, SyncEvent: A.Event, TrackEvent: A.Event, TransitionEvent: A.Event, WebKitTransitionEvent: A.Event, VRDeviceEvent: A.Event, VRDisplayEvent: A.Event, VRSessionEvent: A.Event, MojoInterfaceRequestEvent: A.Event, USBConnectionEvent: A.Event, IDBVersionChangeEvent: A.Event, AudioProcessingEvent: A.Event, OfflineAudioCompletionEvent: A.Event, WebGLContextEvent: A.Event, Event: A.Event, InputEvent: A.Event, SubmitEvent: A.Event, AbsoluteOrientationSensor: A.EventTarget, Accelerometer: A.EventTarget, AccessibleNode: A.EventTarget, AmbientLightSensor: A.EventTarget, Animation: A.EventTarget, ApplicationCache: A.EventTarget, DOMApplicationCache: A.EventTarget, OfflineResourceList: A.EventTarget, BackgroundFetchRegistration: A.EventTarget, BatteryManager: A.EventTarget, BroadcastChannel: A.EventTarget, CanvasCaptureMediaStreamTrack: A.EventTarget, DedicatedWorkerGlobalScope: A.EventTarget, EventSource: A.EventTarget, FileReader: A.EventTarget, FontFaceSet: A.EventTarget, Gyroscope: A.EventTarget, LinearAccelerationSensor: A.EventTarget, Magnetometer: A.EventTarget, MediaDevices: A.EventTarget, MediaKeySession: A.EventTarget, MediaQueryList: A.EventTarget, MediaRecorder: A.EventTarget, MediaSource: A.EventTarget, MediaStream: A.EventTarget, MediaStreamTrack: A.EventTarget, MIDIAccess: A.EventTarget, MIDIInput: A.EventTarget, MIDIOutput: A.EventTarget, MIDIPort: A.EventTarget, NetworkInformation: A.EventTarget, Notification: A.EventTarget, OffscreenCanvas: A.EventTarget, OrientationSensor: A.EventTarget, PaymentRequest: A.EventTarget, Performance: A.EventTarget, PermissionStatus: A.EventTarget, PresentationAvailability: A.EventTarget, PresentationConnection: A.EventTarget, PresentationConnectionList: A.EventTarget, PresentationRequest: A.EventTarget, RelativeOrientationSensor: A.EventTarget, RemotePlayback: A.EventTarget, RTCDataChannel: A.EventTarget, DataChannel: A.EventTarget, RTCDTMFSender: A.EventTarget, RTCPeerConnection: A.EventTarget, webkitRTCPeerConnection: A.EventTarget, mozRTCPeerConnection: A.EventTarget, ScreenOrientation: A.EventTarget, Sensor: A.EventTarget, ServiceWorker: A.EventTarget, ServiceWorkerContainer: A.EventTarget, ServiceWorkerGlobalScope: A.EventTarget, ServiceWorkerRegistration: A.EventTarget, SharedWorker: A.EventTarget, SharedWorkerGlobalScope: A.EventTarget, SpeechRecognition: A.EventTarget, webkitSpeechRecognition: A.EventTarget, SpeechSynthesis: A.EventTarget, SpeechSynthesisUtterance: A.EventTarget, VR: A.EventTarget, VRDevice: A.EventTarget, VRDisplay: A.EventTarget, VRSession: A.EventTarget, VisualViewport: A.EventTarget, WebSocket: A.EventTarget, Window: A.EventTarget, DOMWindow: A.EventTarget, Worker: A.EventTarget, WorkerGlobalScope: A.EventTarget, WorkerPerformance: A.EventTarget, BluetoothDevice: A.EventTarget, BluetoothRemoteGATTCharacteristic: A.EventTarget, Clipboard: A.EventTarget, MojoInterfaceInterceptor: A.EventTarget, USB: A.EventTarget, IDBDatabase: A.EventTarget, IDBOpenDBRequest: A.EventTarget, IDBVersionChangeRequest: A.EventTarget, IDBRequest: A.EventTarget, IDBTransaction: A.EventTarget, AnalyserNode: A.EventTarget, RealtimeAnalyserNode: A.EventTarget, AudioBufferSourceNode: A.EventTarget, AudioDestinationNode: A.EventTarget, AudioNode: A.EventTarget, AudioScheduledSourceNode: A.EventTarget, AudioWorkletNode: A.EventTarget, BiquadFilterNode: A.EventTarget, ChannelMergerNode: A.EventTarget, AudioChannelMerger: A.EventTarget, ChannelSplitterNode: A.EventTarget, AudioChannelSplitter: A.EventTarget, ConstantSourceNode: A.EventTarget, ConvolverNode: A.EventTarget, DelayNode: A.EventTarget, DynamicsCompressorNode: A.EventTarget, GainNode: A.EventTarget, AudioGainNode: A.EventTarget, IIRFilterNode: A.EventTarget, MediaElementAudioSourceNode: A.EventTarget, MediaStreamAudioDestinationNode: A.EventTarget, MediaStreamAudioSourceNode: A.EventTarget, OscillatorNode: A.EventTarget, Oscillator: A.EventTarget, PannerNode: A.EventTarget, AudioPannerNode: A.EventTarget, webkitAudioPannerNode: A.EventTarget, ScriptProcessorNode: A.EventTarget, JavaScriptAudioNode: A.EventTarget, StereoPannerNode: A.EventTarget, WaveShaperNode: A.EventTarget, EventTarget: A.EventTarget, File: A.File, FileList: A.FileList, FileWriter: A.FileWriter, HTMLFormElement: A.FormElement, Gamepad: A.Gamepad, History: A.History, HTMLCollection: A.HtmlCollection, HTMLFormControlsCollection: A.HtmlCollection, HTMLOptionsCollection: A.HtmlCollection, HTMLDocument: A.HtmlDocument, XMLHttpRequest: A.HttpRequest, XMLHttpRequestUpload: A.HttpRequestEventTarget, XMLHttpRequestEventTarget: A.HttpRequestEventTarget, Location: A.Location, MediaList: A.MediaList, MessagePort: A.MessagePort, MIDIInputMap: A.MidiInputMap, MIDIOutputMap: A.MidiOutputMap, MimeType: A.MimeType, MimeTypeArray: A.MimeTypeArray, MouseEvent: A.MouseEvent, DragEvent: A.MouseEvent, PointerEvent: A.MouseEvent, WheelEvent: A.MouseEvent, DocumentFragment: A.Node, ShadowRoot: A.Node, DocumentType: A.Node, Node: A.Node, NodeList: A.NodeList, RadioNodeList: A.NodeList, Plugin: A.Plugin, PluginArray: A.PluginArray, ProgressEvent: A.ProgressEvent, ResourceProgressEvent: A.ProgressEvent, RTCStatsReport: A.RtcStatsReport, HTMLSelectElement: A.SelectElement, SourceBuffer: A.SourceBuffer, SourceBufferList: A.SourceBufferList, SpeechGrammar: A.SpeechGrammar, SpeechGrammarList: A.SpeechGrammarList, SpeechRecognitionResult: A.SpeechRecognitionResult, Storage: A.Storage, CSSStyleSheet: A.StyleSheet, StyleSheet: A.StyleSheet, HTMLTableElement: A.TableElement, HTMLTableRowElement: A.TableRowElement, HTMLTableSectionElement: A.TableSectionElement, HTMLTemplateElement: A.TemplateElement, TextTrack: A.TextTrack, TextTrackCue: A.TextTrackCue, VTTCue: A.TextTrackCue, TextTrackCueList: A.TextTrackCueList, TextTrackList: A.TextTrackList, TimeRanges: A.TimeRanges, Touch: A.Touch, TouchList: A.TouchList, TrackDefaultList: A.TrackDefaultList, CompositionEvent: A.UIEvent, FocusEvent: A.UIEvent, KeyboardEvent: A.UIEvent, TextEvent: A.UIEvent, TouchEvent: A.UIEvent, UIEvent: A.UIEvent, URL: A.Url, VideoTrackList: A.VideoTrackList, Attr: A._Attr, CSSRuleList: A._CssRuleList, ClientRect: A._DomRect, DOMRect: A._DomRect, GamepadList: A._GamepadList, NamedNodeMap: A._NamedNodeMap, MozNamedAttrMap: A._NamedNodeMap, SpeechRecognitionResultList: A._SpeechRecognitionResultList, StyleSheetList: A._StyleSheetList, SVGLength: A.Length, SVGLengthList: A.LengthList, SVGNumber: A.Number, SVGNumberList: A.NumberList, SVGPointList: A.PointList, SVGScriptElement: A.ScriptElement0, SVGStringList: A.StringList, SVGAElement: A.SvgElement, SVGAnimateElement: A.SvgElement, SVGAnimateMotionElement: A.SvgElement, SVGAnimateTransformElement: A.SvgElement, SVGAnimationElement: A.SvgElement, SVGCircleElement: A.SvgElement, SVGClipPathElement: A.SvgElement, SVGDefsElement: A.SvgElement, SVGDescElement: A.SvgElement, SVGDiscardElement: A.SvgElement, SVGEllipseElement: A.SvgElement, SVGFEBlendElement: A.SvgElement, SVGFEColorMatrixElement: A.SvgElement, SVGFEComponentTransferElement: A.SvgElement, SVGFECompositeElement: A.SvgElement, SVGFEConvolveMatrixElement: A.SvgElement, SVGFEDiffuseLightingElement: A.SvgElement, SVGFEDisplacementMapElement: A.SvgElement, SVGFEDistantLightElement: A.SvgElement, SVGFEFloodElement: A.SvgElement, SVGFEFuncAElement: A.SvgElement, SVGFEFuncBElement: A.SvgElement, SVGFEFuncGElement: A.SvgElement, SVGFEFuncRElement: A.SvgElement, SVGFEGaussianBlurElement: A.SvgElement, SVGFEImageElement: A.SvgElement, SVGFEMergeElement: A.SvgElement, SVGFEMergeNodeElement: A.SvgElement, SVGFEMorphologyElement: A.SvgElement, SVGFEOffsetElement: A.SvgElement, SVGFEPointLightElement: A.SvgElement, SVGFESpecularLightingElement: A.SvgElement, SVGFESpotLightElement: A.SvgElement, SVGFETileElement: A.SvgElement, SVGFETurbulenceElement: A.SvgElement, SVGFilterElement: A.SvgElement, SVGForeignObjectElement: A.SvgElement, SVGGElement: A.SvgElement, SVGGeometryElement: A.SvgElement, SVGGraphicsElement: A.SvgElement, SVGImageElement: A.SvgElement, SVGLineElement: A.SvgElement, SVGLinearGradientElement: A.SvgElement, SVGMarkerElement: A.SvgElement, SVGMaskElement: A.SvgElement, SVGMetadataElement: A.SvgElement, SVGPathElement: A.SvgElement, SVGPatternElement: A.SvgElement, SVGPolygonElement: A.SvgElement, SVGPolylineElement: A.SvgElement, SVGRadialGradientElement: A.SvgElement, SVGRectElement: A.SvgElement, SVGSetElement: A.SvgElement, SVGStopElement: A.SvgElement, SVGStyleElement: A.SvgElement, SVGSVGElement: A.SvgElement, SVGSwitchElement: A.SvgElement, SVGSymbolElement: A.SvgElement, SVGTSpanElement: A.SvgElement, SVGTextContentElement: A.SvgElement, SVGTextElement: A.SvgElement, SVGTextPathElement: A.SvgElement, SVGTextPositioningElement: A.SvgElement, SVGTitleElement: A.SvgElement, SVGUseElement: A.SvgElement, SVGViewElement: A.SvgElement, SVGGradientElement: A.SvgElement, SVGComponentTransferFunctionElement: A.SvgElement, SVGFEDropShadowElement: A.SvgElement, SVGMPathElement: A.SvgElement, SVGElement: A.SvgElement, SVGTransform: A.Transform, SVGTransformList: A.TransformList, AudioBuffer: A.AudioBuffer, AudioParamMap: A.AudioParamMap, AudioTrackList: A.AudioTrackList, AudioContext: A.BaseAudioContext, webkitAudioContext: A.BaseAudioContext, BaseAudioContext: A.BaseAudioContext, OfflineAudioContext: A.OfflineAudioContext});
-    hunkHelpers.setOrUpdateLeafTags({WebGL: true, AnimationEffectReadOnly: true, AnimationEffectTiming: true, AnimationEffectTimingReadOnly: true, AnimationTimeline: true, AnimationWorkletGlobalScope: true, AuthenticatorAssertionResponse: true, AuthenticatorAttestationResponse: true, AuthenticatorResponse: true, BackgroundFetchFetch: true, BackgroundFetchManager: true, BackgroundFetchSettledFetch: true, BarProp: true, BarcodeDetector: true, BluetoothRemoteGATTDescriptor: true, Body: true, BudgetState: true, CacheStorage: true, CanvasGradient: true, CanvasPattern: true, CanvasRenderingContext2D: true, Client: true, Clients: true, CookieStore: true, Coordinates: true, Credential: true, CredentialUserData: true, CredentialsContainer: true, Crypto: true, CryptoKey: true, CSS: true, CSSVariableReferenceValue: true, CustomElementRegistry: true, DataTransfer: true, DataTransferItem: true, DeprecatedStorageInfo: true, DeprecatedStorageQuota: true, DeprecationReport: true, DetectedBarcode: true, DetectedFace: true, DetectedText: true, DeviceAcceleration: true, DeviceRotationRate: true, DirectoryEntry: true, webkitFileSystemDirectoryEntry: true, FileSystemDirectoryEntry: true, DirectoryReader: true, WebKitDirectoryReader: true, webkitFileSystemDirectoryReader: true, FileSystemDirectoryReader: true, DocumentOrShadowRoot: true, DocumentTimeline: true, DOMError: true, Iterator: true, DOMMatrix: true, DOMMatrixReadOnly: true, DOMParser: true, DOMPoint: true, DOMPointReadOnly: true, DOMQuad: true, DOMStringMap: true, Entry: true, webkitFileSystemEntry: true, FileSystemEntry: true, External: true, FaceDetector: true, FederatedCredential: true, FileEntry: true, webkitFileSystemFileEntry: true, FileSystemFileEntry: true, DOMFileSystem: true, WebKitFileSystem: true, webkitFileSystem: true, FileSystem: true, FontFace: true, FontFaceSource: true, FormData: true, GamepadButton: true, GamepadPose: true, Geolocation: true, Position: true, GeolocationPosition: true, Headers: true, HTMLHyperlinkElementUtils: true, IdleDeadline: true, ImageBitmap: true, ImageBitmapRenderingContext: true, ImageCapture: true, ImageData: true, InputDeviceCapabilities: true, IntersectionObserver: true, IntersectionObserverEntry: true, InterventionReport: true, KeyframeEffect: true, KeyframeEffectReadOnly: true, MediaCapabilities: true, MediaCapabilitiesInfo: true, MediaDeviceInfo: true, MediaError: true, MediaKeyStatusMap: true, MediaKeySystemAccess: true, MediaKeys: true, MediaKeysPolicy: true, MediaMetadata: true, MediaSession: true, MediaSettingsRange: true, MemoryInfo: true, MessageChannel: true, Metadata: true, MutationObserver: true, WebKitMutationObserver: true, MutationRecord: true, NavigationPreloadManager: true, Navigator: true, NavigatorAutomationInformation: true, NavigatorConcurrentHardware: true, NavigatorCookies: true, NavigatorUserMediaError: true, NodeFilter: true, NodeIterator: true, NonDocumentTypeChildNode: true, NonElementParentNode: true, NoncedElement: true, OffscreenCanvasRenderingContext2D: true, OverconstrainedError: true, PaintRenderingContext2D: true, PaintSize: true, PaintWorkletGlobalScope: true, PasswordCredential: true, Path2D: true, PaymentAddress: true, PaymentInstruments: true, PaymentManager: true, PaymentResponse: true, PerformanceEntry: true, PerformanceLongTaskTiming: true, PerformanceMark: true, PerformanceMeasure: true, PerformanceNavigation: true, PerformanceNavigationTiming: true, PerformanceObserver: true, PerformanceObserverEntryList: true, PerformancePaintTiming: true, PerformanceResourceTiming: true, PerformanceServerTiming: true, PerformanceTiming: true, Permissions: true, PhotoCapabilities: true, PositionError: true, GeolocationPositionError: true, Presentation: true, PresentationReceiver: true, PublicKeyCredential: true, PushManager: true, PushMessageData: true, PushSubscription: true, PushSubscriptionOptions: true, Range: true, RelatedApplication: true, ReportBody: true, ReportingObserver: true, ResizeObserver: true, ResizeObserverEntry: true, RTCCertificate: true, RTCIceCandidate: true, mozRTCIceCandidate: true, RTCLegacyStatsReport: true, RTCRtpContributingSource: true, RTCRtpReceiver: true, RTCRtpSender: true, RTCSessionDescription: true, mozRTCSessionDescription: true, RTCStatsResponse: true, Screen: true, ScrollState: true, ScrollTimeline: true, Selection: true, SpeechRecognitionAlternative: true, SpeechSynthesisVoice: true, StaticRange: true, StorageManager: true, StyleMedia: true, StylePropertyMap: true, StylePropertyMapReadonly: true, SyncManager: true, TaskAttributionTiming: true, TextDetector: true, TextMetrics: true, TrackDefault: true, TreeWalker: true, TrustedHTML: true, TrustedScriptURL: true, TrustedURL: true, UnderlyingSourceBase: true, URLSearchParams: true, VRCoordinateSystem: true, VRDisplayCapabilities: true, VREyeParameters: true, VRFrameData: true, VRFrameOfReference: true, VRPose: true, VRStageBounds: true, VRStageBoundsPoint: true, VRStageParameters: true, ValidityState: true, VideoPlaybackQuality: true, VideoTrack: true, VTTRegion: true, WindowClient: true, WorkletAnimation: true, WorkletGlobalScope: true, XPathEvaluator: true, XPathExpression: true, XPathNSResolver: true, XPathResult: true, XMLSerializer: true, XSLTProcessor: true, Bluetooth: true, BluetoothCharacteristicProperties: true, BluetoothRemoteGATTServer: true, BluetoothRemoteGATTService: true, BluetoothUUID: true, BudgetService: true, Cache: true, DOMFileSystemSync: true, DirectoryEntrySync: true, DirectoryReaderSync: true, EntrySync: true, FileEntrySync: true, FileReaderSync: true, FileWriterSync: true, HTMLAllCollection: true, Mojo: true, MojoHandle: true, MojoWatcher: true, NFC: true, PagePopupController: true, Report: true, Request: true, Response: true, SubtleCrypto: true, USBAlternateInterface: true, USBConfiguration: true, USBDevice: true, USBEndpoint: true, USBInTransferResult: true, USBInterface: true, USBIsochronousInTransferPacket: true, USBIsochronousInTransferResult: true, USBIsochronousOutTransferPacket: true, USBIsochronousOutTransferResult: true, USBOutTransferResult: true, WorkerLocation: true, WorkerNavigator: true, Worklet: true, IDBCursor: true, IDBCursorWithValue: true, IDBFactory: true, IDBIndex: true, IDBKeyRange: true, IDBObjectStore: true, IDBObservation: true, IDBObserver: true, IDBObserverChanges: true, SVGAngle: true, SVGAnimatedAngle: true, SVGAnimatedBoolean: true, SVGAnimatedEnumeration: true, SVGAnimatedInteger: true, SVGAnimatedLength: true, SVGAnimatedLengthList: true, SVGAnimatedNumber: true, SVGAnimatedNumberList: true, SVGAnimatedPreserveAspectRatio: true, SVGAnimatedRect: true, SVGAnimatedString: true, SVGAnimatedTransformList: true, SVGMatrix: true, SVGPoint: true, SVGPreserveAspectRatio: true, SVGRect: true, SVGUnitTypes: true, AudioListener: true, AudioParam: true, AudioTrack: true, AudioWorkletGlobalScope: true, AudioWorkletProcessor: true, PeriodicWave: true, WebGLActiveInfo: true, ANGLEInstancedArrays: true, ANGLE_instanced_arrays: true, WebGLBuffer: true, WebGLCanvas: true, WebGLColorBufferFloat: true, WebGLCompressedTextureASTC: true, WebGLCompressedTextureATC: true, WEBGL_compressed_texture_atc: true, WebGLCompressedTextureETC1: true, WEBGL_compressed_texture_etc1: true, WebGLCompressedTextureETC: true, WebGLCompressedTexturePVRTC: true, WEBGL_compressed_texture_pvrtc: true, WebGLCompressedTextureS3TC: true, WEBGL_compressed_texture_s3tc: true, WebGLCompressedTextureS3TCsRGB: true, WebGLDebugRendererInfo: true, WEBGL_debug_renderer_info: true, WebGLDebugShaders: true, WEBGL_debug_shaders: true, WebGLDepthTexture: true, WEBGL_depth_texture: true, WebGLDrawBuffers: true, WEBGL_draw_buffers: true, EXTsRGB: true, EXT_sRGB: true, EXTBlendMinMax: true, EXT_blend_minmax: true, EXTColorBufferFloat: true, EXTColorBufferHalfFloat: true, EXTDisjointTimerQuery: true, EXTDisjointTimerQueryWebGL2: true, EXTFragDepth: true, EXT_frag_depth: true, EXTShaderTextureLOD: true, EXT_shader_texture_lod: true, EXTTextureFilterAnisotropic: true, EXT_texture_filter_anisotropic: true, WebGLFramebuffer: true, WebGLGetBufferSubDataAsync: true, WebGLLoseContext: true, WebGLExtensionLoseContext: true, WEBGL_lose_context: true, OESElementIndexUint: true, OES_element_index_uint: true, OESStandardDerivatives: true, OES_standard_derivatives: true, OESTextureFloat: true, OES_texture_float: true, OESTextureFloatLinear: true, OES_texture_float_linear: true, OESTextureHalfFloat: true, OES_texture_half_float: true, OESTextureHalfFloatLinear: true, OES_texture_half_float_linear: true, OESVertexArrayObject: true, OES_vertex_array_object: true, WebGLProgram: true, WebGLQuery: true, WebGLRenderbuffer: true, WebGLRenderingContext: true, WebGL2RenderingContext: true, WebGLSampler: true, WebGLShader: true, WebGLShaderPrecisionFormat: true, WebGLSync: true, WebGLTexture: true, WebGLTimerQueryEXT: true, WebGLTransformFeedback: true, WebGLUniformLocation: true, WebGLVertexArrayObject: true, WebGLVertexArrayObjectOES: true, WebGL2RenderingContextBase: true, ArrayBuffer: true, SharedArrayBuffer: true, ArrayBufferView: false, DataView: true, Float32Array: true, Float64Array: true, Int16Array: true, Int32Array: true, Int8Array: true, Uint16Array: true, Uint32Array: true, Uint8ClampedArray: true, CanvasPixelArray: true, Uint8Array: false, HTMLAudioElement: true, HTMLBRElement: true, HTMLCanvasElement: true, HTMLContentElement: true, HTMLDListElement: true, HTMLDataElement: true, HTMLDataListElement: true, HTMLDetailsElement: true, HTMLDialogElement: true, HTMLEmbedElement: true, HTMLFieldSetElement: true, HTMLHRElement: true, HTMLHeadElement: true, HTMLHeadingElement: true, HTMLHtmlElement: true, HTMLIFrameElement: true, HTMLImageElement: true, HTMLInputElement: true, HTMLLIElement: true, HTMLLabelElement: true, HTMLLegendElement: true, HTMLLinkElement: true, HTMLMapElement: true, HTMLMediaElement: true, HTMLMenuElement: true, HTMLMetaElement: true, HTMLMeterElement: true, HTMLModElement: true, HTMLOListElement: true, HTMLObjectElement: true, HTMLOptGroupElement: true, HTMLOptionElement: true, HTMLOutputElement: true, HTMLParagraphElement: true, HTMLParamElement: true, HTMLPictureElement: true, HTMLPreElement: true, HTMLProgressElement: true, HTMLQuoteElement: true, HTMLScriptElement: true, HTMLShadowElement: true, HTMLSlotElement: true, HTMLSourceElement: true, HTMLSpanElement: true, HTMLStyleElement: true, HTMLTableCaptionElement: true, HTMLTableCellElement: true, HTMLTableDataCellElement: true, HTMLTableHeaderCellElement: true, HTMLTableColElement: true, HTMLTextAreaElement: true, HTMLTimeElement: true, HTMLTitleElement: true, HTMLTrackElement: true, HTMLUListElement: true, HTMLUnknownElement: true, HTMLVideoElement: true, HTMLDirectoryElement: true, HTMLFontElement: true, HTMLFrameElement: true, HTMLFrameSetElement: true, HTMLMarqueeElement: true, HTMLElement: false, AccessibleNodeList: true, HTMLAnchorElement: true, HTMLAreaElement: true, HTMLBaseElement: true, Blob: false, HTMLBodyElement: true, HTMLButtonElement: true, CDATASection: true, CharacterData: true, Comment: true, ProcessingInstruction: true, Text: true, CSSPerspective: true, CSSCharsetRule: true, CSSConditionRule: true, CSSFontFaceRule: true, CSSGroupingRule: true, CSSImportRule: true, CSSKeyframeRule: true, MozCSSKeyframeRule: true, WebKitCSSKeyframeRule: true, CSSKeyframesRule: true, MozCSSKeyframesRule: true, WebKitCSSKeyframesRule: true, CSSMediaRule: true, CSSNamespaceRule: true, CSSPageRule: true, CSSRule: true, CSSStyleRule: true, CSSSupportsRule: true, CSSViewportRule: true, CSSStyleDeclaration: true, MSStyleCSSProperties: true, CSS2Properties: true, CSSImageValue: true, CSSKeywordValue: true, CSSNumericValue: true, CSSPositionValue: true, CSSResourceValue: true, CSSUnitValue: true, CSSURLImageValue: true, CSSStyleValue: false, CSSMatrixComponent: true, CSSRotation: true, CSSScale: true, CSSSkew: true, CSSTranslation: true, CSSTransformComponent: false, CSSTransformValue: true, CSSUnparsedValue: true, DataTransferItemList: true, HTMLDivElement: true, XMLDocument: true, Document: false, DOMException: true, DOMImplementation: true, ClientRectList: true, DOMRectList: true, DOMRectReadOnly: false, DOMStringList: true, DOMTokenList: true, MathMLElement: true, Element: false, AbortPaymentEvent: true, AnimationEvent: true, AnimationPlaybackEvent: true, ApplicationCacheErrorEvent: true, BackgroundFetchClickEvent: true, BackgroundFetchEvent: true, BackgroundFetchFailEvent: true, BackgroundFetchedEvent: true, BeforeInstallPromptEvent: true, BeforeUnloadEvent: true, BlobEvent: true, CanMakePaymentEvent: true, ClipboardEvent: true, CloseEvent: true, CustomEvent: true, DeviceMotionEvent: true, DeviceOrientationEvent: true, ErrorEvent: true, ExtendableEvent: true, ExtendableMessageEvent: true, FetchEvent: true, FontFaceSetLoadEvent: true, ForeignFetchEvent: true, GamepadEvent: true, HashChangeEvent: true, InstallEvent: true, MediaEncryptedEvent: true, MediaKeyMessageEvent: true, MediaQueryListEvent: true, MediaStreamEvent: true, MediaStreamTrackEvent: true, MessageEvent: true, MIDIConnectionEvent: true, MIDIMessageEvent: true, MutationEvent: true, NotificationEvent: true, PageTransitionEvent: true, PaymentRequestEvent: true, PaymentRequestUpdateEvent: true, PopStateEvent: true, PresentationConnectionAvailableEvent: true, PresentationConnectionCloseEvent: true, PromiseRejectionEvent: true, PushEvent: true, RTCDataChannelEvent: true, RTCDTMFToneChangeEvent: true, RTCPeerConnectionIceEvent: true, RTCTrackEvent: true, SecurityPolicyViolationEvent: true, SensorErrorEvent: true, SpeechRecognitionError: true, SpeechRecognitionEvent: true, SpeechSynthesisEvent: true, StorageEvent: true, SyncEvent: true, TrackEvent: true, TransitionEvent: true, WebKitTransitionEvent: true, VRDeviceEvent: true, VRDisplayEvent: true, VRSessionEvent: true, MojoInterfaceRequestEvent: true, USBConnectionEvent: true, IDBVersionChangeEvent: true, AudioProcessingEvent: true, OfflineAudioCompletionEvent: true, WebGLContextEvent: true, Event: false, InputEvent: false, SubmitEvent: false, AbsoluteOrientationSensor: true, Accelerometer: true, AccessibleNode: true, AmbientLightSensor: true, Animation: true, ApplicationCache: true, DOMApplicationCache: true, OfflineResourceList: true, BackgroundFetchRegistration: true, BatteryManager: true, BroadcastChannel: true, CanvasCaptureMediaStreamTrack: true, DedicatedWorkerGlobalScope: true, EventSource: true, FileReader: true, FontFaceSet: true, Gyroscope: true, LinearAccelerationSensor: true, Magnetometer: true, MediaDevices: true, MediaKeySession: true, MediaQueryList: true, MediaRecorder: true, MediaSource: true, MediaStream: true, MediaStreamTrack: true, MIDIAccess: true, MIDIInput: true, MIDIOutput: true, MIDIPort: true, NetworkInformation: true, Notification: true, OffscreenCanvas: true, OrientationSensor: true, PaymentRequest: true, Performance: true, PermissionStatus: true, PresentationAvailability: true, PresentationConnection: true, PresentationConnectionList: true, PresentationRequest: true, RelativeOrientationSensor: true, RemotePlayback: true, RTCDataChannel: true, DataChannel: true, RTCDTMFSender: true, RTCPeerConnection: true, webkitRTCPeerConnection: true, mozRTCPeerConnection: true, ScreenOrientation: true, Sensor: true, ServiceWorker: true, ServiceWorkerContainer: true, ServiceWorkerGlobalScope: true, ServiceWorkerRegistration: true, SharedWorker: true, SharedWorkerGlobalScope: true, SpeechRecognition: true, webkitSpeechRecognition: true, SpeechSynthesis: true, SpeechSynthesisUtterance: true, VR: true, VRDevice: true, VRDisplay: true, VRSession: true, VisualViewport: true, WebSocket: true, Window: true, DOMWindow: true, Worker: true, WorkerGlobalScope: true, WorkerPerformance: true, BluetoothDevice: true, BluetoothRemoteGATTCharacteristic: true, Clipboard: true, MojoInterfaceInterceptor: true, USB: true, IDBDatabase: true, IDBOpenDBRequest: true, IDBVersionChangeRequest: true, IDBRequest: true, IDBTransaction: true, AnalyserNode: true, RealtimeAnalyserNode: true, AudioBufferSourceNode: true, AudioDestinationNode: true, AudioNode: true, AudioScheduledSourceNode: true, AudioWorkletNode: true, BiquadFilterNode: true, ChannelMergerNode: true, AudioChannelMerger: true, ChannelSplitterNode: true, AudioChannelSplitter: true, ConstantSourceNode: true, ConvolverNode: true, DelayNode: true, DynamicsCompressorNode: true, GainNode: true, AudioGainNode: true, IIRFilterNode: true, MediaElementAudioSourceNode: true, MediaStreamAudioDestinationNode: true, MediaStreamAudioSourceNode: true, OscillatorNode: true, Oscillator: true, PannerNode: true, AudioPannerNode: true, webkitAudioPannerNode: true, ScriptProcessorNode: true, JavaScriptAudioNode: true, StereoPannerNode: true, WaveShaperNode: true, EventTarget: false, File: true, FileList: true, FileWriter: true, HTMLFormElement: true, Gamepad: true, History: true, HTMLCollection: true, HTMLFormControlsCollection: true, HTMLOptionsCollection: true, HTMLDocument: true, XMLHttpRequest: true, XMLHttpRequestUpload: true, XMLHttpRequestEventTarget: false, Location: true, MediaList: true, MessagePort: true, MIDIInputMap: true, MIDIOutputMap: true, MimeType: true, MimeTypeArray: true, MouseEvent: true, DragEvent: true, PointerEvent: true, WheelEvent: true, DocumentFragment: true, ShadowRoot: true, DocumentType: true, Node: false, NodeList: true, RadioNodeList: true, Plugin: true, PluginArray: true, ProgressEvent: true, ResourceProgressEvent: true, RTCStatsReport: true, HTMLSelectElement: true, SourceBuffer: true, SourceBufferList: true, SpeechGrammar: true, SpeechGrammarList: true, SpeechRecognitionResult: true, Storage: true, CSSStyleSheet: true, StyleSheet: true, HTMLTableElement: true, HTMLTableRowElement: true, HTMLTableSectionElement: true, HTMLTemplateElement: true, TextTrack: true, TextTrackCue: true, VTTCue: true, TextTrackCueList: true, TextTrackList: true, TimeRanges: true, Touch: true, TouchList: true, TrackDefaultList: true, CompositionEvent: true, FocusEvent: true, KeyboardEvent: true, TextEvent: true, TouchEvent: true, UIEvent: false, URL: true, VideoTrackList: true, Attr: true, CSSRuleList: true, ClientRect: true, DOMRect: true, GamepadList: true, NamedNodeMap: true, MozNamedAttrMap: true, SpeechRecognitionResultList: true, StyleSheetList: true, SVGLength: true, SVGLengthList: true, SVGNumber: true, SVGNumberList: true, SVGPointList: true, SVGScriptElement: true, SVGStringList: true, SVGAElement: true, SVGAnimateElement: true, SVGAnimateMotionElement: true, SVGAnimateTransformElement: true, SVGAnimationElement: true, SVGCircleElement: true, SVGClipPathElement: true, SVGDefsElement: true, SVGDescElement: true, SVGDiscardElement: true, SVGEllipseElement: true, SVGFEBlendElement: true, SVGFEColorMatrixElement: true, SVGFEComponentTransferElement: true, SVGFECompositeElement: true, SVGFEConvolveMatrixElement: true, SVGFEDiffuseLightingElement: true, SVGFEDisplacementMapElement: true, SVGFEDistantLightElement: true, SVGFEFloodElement: true, SVGFEFuncAElement: true, SVGFEFuncBElement: true, SVGFEFuncGElement: true, SVGFEFuncRElement: true, SVGFEGaussianBlurElement: true, SVGFEImageElement: true, SVGFEMergeElement: true, SVGFEMergeNodeElement: true, SVGFEMorphologyElement: true, SVGFEOffsetElement: true, SVGFEPointLightElement: true, SVGFESpecularLightingElement: true, SVGFESpotLightElement: true, SVGFETileElement: true, SVGFETurbulenceElement: true, SVGFilterElement: true, SVGForeignObjectElement: true, SVGGElement: true, SVGGeometryElement: true, SVGGraphicsElement: true, SVGImageElement: true, SVGLineElement: true, SVGLinearGradientElement: true, SVGMarkerElement: true, SVGMaskElement: true, SVGMetadataElement: true, SVGPathElement: true, SVGPatternElement: true, SVGPolygonElement: true, SVGPolylineElement: true, SVGRadialGradientElement: true, SVGRectElement: true, SVGSetElement: true, SVGStopElement: true, SVGStyleElement: true, SVGSVGElement: true, SVGSwitchElement: true, SVGSymbolElement: true, SVGTSpanElement: true, SVGTextContentElement: true, SVGTextElement: true, SVGTextPathElement: true, SVGTextPositioningElement: true, SVGTitleElement: true, SVGUseElement: true, SVGViewElement: true, SVGGradientElement: true, SVGComponentTransferFunctionElement: true, SVGFEDropShadowElement: true, SVGMPathElement: true, SVGElement: false, SVGTransform: true, SVGTransformList: true, AudioBuffer: true, AudioParamMap: true, AudioTrackList: true, AudioContext: true, webkitAudioContext: true, BaseAudioContext: false, OfflineAudioContext: true});
+    hunkHelpers.setOrUpdateInterceptorsByTag({WebGL: J.Interceptor, AnimationEffectReadOnly: J.JavaScriptObject, AnimationEffectTiming: J.JavaScriptObject, AnimationEffectTimingReadOnly: J.JavaScriptObject, AnimationTimeline: J.JavaScriptObject, AnimationWorkletGlobalScope: J.JavaScriptObject, AuthenticatorAssertionResponse: J.JavaScriptObject, AuthenticatorAttestationResponse: J.JavaScriptObject, AuthenticatorResponse: J.JavaScriptObject, BackgroundFetchFetch: J.JavaScriptObject, BackgroundFetchManager: J.JavaScriptObject, BackgroundFetchSettledFetch: J.JavaScriptObject, BarProp: J.JavaScriptObject, BarcodeDetector: J.JavaScriptObject, BluetoothRemoteGATTDescriptor: J.JavaScriptObject, Body: J.JavaScriptObject, BudgetState: J.JavaScriptObject, CacheStorage: J.JavaScriptObject, CanvasGradient: J.JavaScriptObject, CanvasPattern: J.JavaScriptObject, CanvasRenderingContext2D: J.JavaScriptObject, Client: J.JavaScriptObject, Clients: J.JavaScriptObject, CookieStore: J.JavaScriptObject, Coordinates: J.JavaScriptObject, Credential: J.JavaScriptObject, CredentialUserData: J.JavaScriptObject, CredentialsContainer: J.JavaScriptObject, Crypto: J.JavaScriptObject, CryptoKey: J.JavaScriptObject, CSS: J.JavaScriptObject, CSSVariableReferenceValue: J.JavaScriptObject, CustomElementRegistry: J.JavaScriptObject, DataTransfer: J.JavaScriptObject, DataTransferItem: J.JavaScriptObject, DeprecatedStorageInfo: J.JavaScriptObject, DeprecatedStorageQuota: J.JavaScriptObject, DeprecationReport: J.JavaScriptObject, DetectedBarcode: J.JavaScriptObject, DetectedFace: J.JavaScriptObject, DetectedText: J.JavaScriptObject, DeviceAcceleration: J.JavaScriptObject, DeviceRotationRate: J.JavaScriptObject, DirectoryEntry: J.JavaScriptObject, webkitFileSystemDirectoryEntry: J.JavaScriptObject, FileSystemDirectoryEntry: J.JavaScriptObject, DirectoryReader: J.JavaScriptObject, WebKitDirectoryReader: J.JavaScriptObject, webkitFileSystemDirectoryReader: J.JavaScriptObject, FileSystemDirectoryReader: J.JavaScriptObject, DocumentOrShadowRoot: J.JavaScriptObject, DocumentTimeline: J.JavaScriptObject, DOMError: J.JavaScriptObject, Iterator: J.JavaScriptObject, DOMMatrix: J.JavaScriptObject, DOMMatrixReadOnly: J.JavaScriptObject, DOMParser: J.JavaScriptObject, DOMPoint: J.JavaScriptObject, DOMPointReadOnly: J.JavaScriptObject, DOMQuad: J.JavaScriptObject, DOMStringMap: J.JavaScriptObject, Entry: J.JavaScriptObject, webkitFileSystemEntry: J.JavaScriptObject, FileSystemEntry: J.JavaScriptObject, External: J.JavaScriptObject, FaceDetector: J.JavaScriptObject, FederatedCredential: J.JavaScriptObject, FileEntry: J.JavaScriptObject, webkitFileSystemFileEntry: J.JavaScriptObject, FileSystemFileEntry: J.JavaScriptObject, DOMFileSystem: J.JavaScriptObject, WebKitFileSystem: J.JavaScriptObject, webkitFileSystem: J.JavaScriptObject, FileSystem: J.JavaScriptObject, FontFace: J.JavaScriptObject, FontFaceSource: J.JavaScriptObject, FormData: J.JavaScriptObject, GamepadButton: J.JavaScriptObject, GamepadPose: J.JavaScriptObject, Geolocation: J.JavaScriptObject, Position: J.JavaScriptObject, GeolocationPosition: J.JavaScriptObject, Headers: J.JavaScriptObject, HTMLHyperlinkElementUtils: J.JavaScriptObject, IdleDeadline: J.JavaScriptObject, ImageBitmap: J.JavaScriptObject, ImageBitmapRenderingContext: J.JavaScriptObject, ImageCapture: J.JavaScriptObject, ImageData: J.JavaScriptObject, InputDeviceCapabilities: J.JavaScriptObject, IntersectionObserver: J.JavaScriptObject, IntersectionObserverEntry: J.JavaScriptObject, InterventionReport: J.JavaScriptObject, KeyframeEffect: J.JavaScriptObject, KeyframeEffectReadOnly: J.JavaScriptObject, MediaCapabilities: J.JavaScriptObject, MediaCapabilitiesInfo: J.JavaScriptObject, MediaDeviceInfo: J.JavaScriptObject, MediaError: J.JavaScriptObject, MediaKeyStatusMap: J.JavaScriptObject, MediaKeySystemAccess: J.JavaScriptObject, MediaKeys: J.JavaScriptObject, MediaKeysPolicy: J.JavaScriptObject, MediaMetadata: J.JavaScriptObject, MediaSession: J.JavaScriptObject, MediaSettingsRange: J.JavaScriptObject, MemoryInfo: J.JavaScriptObject, MessageChannel: J.JavaScriptObject, Metadata: J.JavaScriptObject, MutationObserver: J.JavaScriptObject, WebKitMutationObserver: J.JavaScriptObject, MutationRecord: J.JavaScriptObject, NavigationPreloadManager: J.JavaScriptObject, Navigator: J.JavaScriptObject, NavigatorAutomationInformation: J.JavaScriptObject, NavigatorConcurrentHardware: J.JavaScriptObject, NavigatorCookies: J.JavaScriptObject, NavigatorUserMediaError: J.JavaScriptObject, NodeFilter: J.JavaScriptObject, NodeIterator: J.JavaScriptObject, NonDocumentTypeChildNode: J.JavaScriptObject, NonElementParentNode: J.JavaScriptObject, NoncedElement: J.JavaScriptObject, OffscreenCanvasRenderingContext2D: J.JavaScriptObject, OverconstrainedError: J.JavaScriptObject, PaintRenderingContext2D: J.JavaScriptObject, PaintSize: J.JavaScriptObject, PaintWorkletGlobalScope: J.JavaScriptObject, PasswordCredential: J.JavaScriptObject, Path2D: J.JavaScriptObject, PaymentAddress: J.JavaScriptObject, PaymentInstruments: J.JavaScriptObject, PaymentManager: J.JavaScriptObject, PaymentResponse: J.JavaScriptObject, PerformanceEntry: J.JavaScriptObject, PerformanceLongTaskTiming: J.JavaScriptObject, PerformanceMark: J.JavaScriptObject, PerformanceMeasure: J.JavaScriptObject, PerformanceNavigation: J.JavaScriptObject, PerformanceNavigationTiming: J.JavaScriptObject, PerformanceObserver: J.JavaScriptObject, PerformanceObserverEntryList: J.JavaScriptObject, PerformancePaintTiming: J.JavaScriptObject, PerformanceResourceTiming: J.JavaScriptObject, PerformanceServerTiming: J.JavaScriptObject, PerformanceTiming: J.JavaScriptObject, Permissions: J.JavaScriptObject, PhotoCapabilities: J.JavaScriptObject, PositionError: J.JavaScriptObject, GeolocationPositionError: J.JavaScriptObject, Presentation: J.JavaScriptObject, PresentationReceiver: J.JavaScriptObject, PublicKeyCredential: J.JavaScriptObject, PushManager: J.JavaScriptObject, PushMessageData: J.JavaScriptObject, PushSubscription: J.JavaScriptObject, PushSubscriptionOptions: J.JavaScriptObject, Range: J.JavaScriptObject, RelatedApplication: J.JavaScriptObject, ReportBody: J.JavaScriptObject, ReportingObserver: J.JavaScriptObject, ResizeObserver: J.JavaScriptObject, ResizeObserverEntry: J.JavaScriptObject, RTCCertificate: J.JavaScriptObject, RTCIceCandidate: J.JavaScriptObject, mozRTCIceCandidate: J.JavaScriptObject, RTCLegacyStatsReport: J.JavaScriptObject, RTCRtpContributingSource: J.JavaScriptObject, RTCRtpReceiver: J.JavaScriptObject, RTCRtpSender: J.JavaScriptObject, RTCSessionDescription: J.JavaScriptObject, mozRTCSessionDescription: J.JavaScriptObject, RTCStatsResponse: J.JavaScriptObject, Screen: J.JavaScriptObject, ScrollState: J.JavaScriptObject, ScrollTimeline: J.JavaScriptObject, Selection: J.JavaScriptObject, SpeechRecognitionAlternative: J.JavaScriptObject, SpeechSynthesisVoice: J.JavaScriptObject, StaticRange: J.JavaScriptObject, StorageManager: J.JavaScriptObject, StyleMedia: J.JavaScriptObject, StylePropertyMap: J.JavaScriptObject, StylePropertyMapReadonly: J.JavaScriptObject, SyncManager: J.JavaScriptObject, TaskAttributionTiming: J.JavaScriptObject, TextDetector: J.JavaScriptObject, TextMetrics: J.JavaScriptObject, TrackDefault: J.JavaScriptObject, TreeWalker: J.JavaScriptObject, TrustedHTML: J.JavaScriptObject, TrustedScriptURL: J.JavaScriptObject, TrustedURL: J.JavaScriptObject, UnderlyingSourceBase: J.JavaScriptObject, URLSearchParams: J.JavaScriptObject, VRCoordinateSystem: J.JavaScriptObject, VRDisplayCapabilities: J.JavaScriptObject, VREyeParameters: J.JavaScriptObject, VRFrameData: J.JavaScriptObject, VRFrameOfReference: J.JavaScriptObject, VRPose: J.JavaScriptObject, VRStageBounds: J.JavaScriptObject, VRStageBoundsPoint: J.JavaScriptObject, VRStageParameters: J.JavaScriptObject, ValidityState: J.JavaScriptObject, VideoPlaybackQuality: J.JavaScriptObject, VideoTrack: J.JavaScriptObject, VTTRegion: J.JavaScriptObject, WindowClient: J.JavaScriptObject, WorkletAnimation: J.JavaScriptObject, WorkletGlobalScope: J.JavaScriptObject, XPathEvaluator: J.JavaScriptObject, XPathExpression: J.JavaScriptObject, XPathNSResolver: J.JavaScriptObject, XPathResult: J.JavaScriptObject, XMLSerializer: J.JavaScriptObject, XSLTProcessor: J.JavaScriptObject, Bluetooth: J.JavaScriptObject, BluetoothCharacteristicProperties: J.JavaScriptObject, BluetoothRemoteGATTServer: J.JavaScriptObject, BluetoothRemoteGATTService: J.JavaScriptObject, BluetoothUUID: J.JavaScriptObject, BudgetService: J.JavaScriptObject, Cache: J.JavaScriptObject, DOMFileSystemSync: J.JavaScriptObject, DirectoryEntrySync: J.JavaScriptObject, DirectoryReaderSync: J.JavaScriptObject, EntrySync: J.JavaScriptObject, FileEntrySync: J.JavaScriptObject, FileReaderSync: J.JavaScriptObject, FileWriterSync: J.JavaScriptObject, HTMLAllCollection: J.JavaScriptObject, Mojo: J.JavaScriptObject, MojoHandle: J.JavaScriptObject, MojoWatcher: J.JavaScriptObject, NFC: J.JavaScriptObject, PagePopupController: J.JavaScriptObject, Report: J.JavaScriptObject, Request: J.JavaScriptObject, Response: J.JavaScriptObject, SubtleCrypto: J.JavaScriptObject, USBAlternateInterface: J.JavaScriptObject, USBConfiguration: J.JavaScriptObject, USBDevice: J.JavaScriptObject, USBEndpoint: J.JavaScriptObject, USBInTransferResult: J.JavaScriptObject, USBInterface: J.JavaScriptObject, USBIsochronousInTransferPacket: J.JavaScriptObject, USBIsochronousInTransferResult: J.JavaScriptObject, USBIsochronousOutTransferPacket: J.JavaScriptObject, USBIsochronousOutTransferResult: J.JavaScriptObject, USBOutTransferResult: J.JavaScriptObject, WorkerLocation: J.JavaScriptObject, WorkerNavigator: J.JavaScriptObject, Worklet: J.JavaScriptObject, IDBCursor: J.JavaScriptObject, IDBCursorWithValue: J.JavaScriptObject, IDBFactory: J.JavaScriptObject, IDBIndex: J.JavaScriptObject, IDBKeyRange: J.JavaScriptObject, IDBObjectStore: J.JavaScriptObject, IDBObservation: J.JavaScriptObject, IDBObserver: J.JavaScriptObject, IDBObserverChanges: J.JavaScriptObject, SVGAngle: J.JavaScriptObject, SVGAnimatedAngle: J.JavaScriptObject, SVGAnimatedBoolean: J.JavaScriptObject, SVGAnimatedEnumeration: J.JavaScriptObject, SVGAnimatedInteger: J.JavaScriptObject, SVGAnimatedLength: J.JavaScriptObject, SVGAnimatedLengthList: J.JavaScriptObject, SVGAnimatedNumber: J.JavaScriptObject, SVGAnimatedNumberList: J.JavaScriptObject, SVGAnimatedPreserveAspectRatio: J.JavaScriptObject, SVGAnimatedRect: J.JavaScriptObject, SVGAnimatedString: J.JavaScriptObject, SVGAnimatedTransformList: J.JavaScriptObject, SVGMatrix: J.JavaScriptObject, SVGPoint: J.JavaScriptObject, SVGPreserveAspectRatio: J.JavaScriptObject, SVGRect: J.JavaScriptObject, SVGUnitTypes: J.JavaScriptObject, AudioListener: J.JavaScriptObject, AudioParam: J.JavaScriptObject, AudioTrack: J.JavaScriptObject, AudioWorkletGlobalScope: J.JavaScriptObject, AudioWorkletProcessor: J.JavaScriptObject, PeriodicWave: J.JavaScriptObject, WebGLActiveInfo: J.JavaScriptObject, ANGLEInstancedArrays: J.JavaScriptObject, ANGLE_instanced_arrays: J.JavaScriptObject, WebGLBuffer: J.JavaScriptObject, WebGLCanvas: J.JavaScriptObject, WebGLColorBufferFloat: J.JavaScriptObject, WebGLCompressedTextureASTC: J.JavaScriptObject, WebGLCompressedTextureATC: J.JavaScriptObject, WEBGL_compressed_texture_atc: J.JavaScriptObject, WebGLCompressedTextureETC1: J.JavaScriptObject, WEBGL_compressed_texture_etc1: J.JavaScriptObject, WebGLCompressedTextureETC: J.JavaScriptObject, WebGLCompressedTexturePVRTC: J.JavaScriptObject, WEBGL_compressed_texture_pvrtc: J.JavaScriptObject, WebGLCompressedTextureS3TC: J.JavaScriptObject, WEBGL_compressed_texture_s3tc: J.JavaScriptObject, WebGLCompressedTextureS3TCsRGB: J.JavaScriptObject, WebGLDebugRendererInfo: J.JavaScriptObject, WEBGL_debug_renderer_info: J.JavaScriptObject, WebGLDebugShaders: J.JavaScriptObject, WEBGL_debug_shaders: J.JavaScriptObject, WebGLDepthTexture: J.JavaScriptObject, WEBGL_depth_texture: J.JavaScriptObject, WebGLDrawBuffers: J.JavaScriptObject, WEBGL_draw_buffers: J.JavaScriptObject, EXTsRGB: J.JavaScriptObject, EXT_sRGB: J.JavaScriptObject, EXTBlendMinMax: J.JavaScriptObject, EXT_blend_minmax: J.JavaScriptObject, EXTColorBufferFloat: J.JavaScriptObject, EXTColorBufferHalfFloat: J.JavaScriptObject, EXTDisjointTimerQuery: J.JavaScriptObject, EXTDisjointTimerQueryWebGL2: J.JavaScriptObject, EXTFragDepth: J.JavaScriptObject, EXT_frag_depth: J.JavaScriptObject, EXTShaderTextureLOD: J.JavaScriptObject, EXT_shader_texture_lod: J.JavaScriptObject, EXTTextureFilterAnisotropic: J.JavaScriptObject, EXT_texture_filter_anisotropic: J.JavaScriptObject, WebGLFramebuffer: J.JavaScriptObject, WebGLGetBufferSubDataAsync: J.JavaScriptObject, WebGLLoseContext: J.JavaScriptObject, WebGLExtensionLoseContext: J.JavaScriptObject, WEBGL_lose_context: J.JavaScriptObject, OESElementIndexUint: J.JavaScriptObject, OES_element_index_uint: J.JavaScriptObject, OESStandardDerivatives: J.JavaScriptObject, OES_standard_derivatives: J.JavaScriptObject, OESTextureFloat: J.JavaScriptObject, OES_texture_float: J.JavaScriptObject, OESTextureFloatLinear: J.JavaScriptObject, OES_texture_float_linear: J.JavaScriptObject, OESTextureHalfFloat: J.JavaScriptObject, OES_texture_half_float: J.JavaScriptObject, OESTextureHalfFloatLinear: J.JavaScriptObject, OES_texture_half_float_linear: J.JavaScriptObject, OESVertexArrayObject: J.JavaScriptObject, OES_vertex_array_object: J.JavaScriptObject, WebGLProgram: J.JavaScriptObject, WebGLQuery: J.JavaScriptObject, WebGLRenderbuffer: J.JavaScriptObject, WebGLRenderingContext: J.JavaScriptObject, WebGL2RenderingContext: J.JavaScriptObject, WebGLSampler: J.JavaScriptObject, WebGLShader: J.JavaScriptObject, WebGLShaderPrecisionFormat: J.JavaScriptObject, WebGLSync: J.JavaScriptObject, WebGLTexture: J.JavaScriptObject, WebGLTimerQueryEXT: J.JavaScriptObject, WebGLTransformFeedback: J.JavaScriptObject, WebGLUniformLocation: J.JavaScriptObject, WebGLVertexArrayObject: J.JavaScriptObject, WebGLVertexArrayObjectOES: J.JavaScriptObject, WebGL2RenderingContextBase: J.JavaScriptObject, SharedArrayBuffer: A.NativeByteBuffer, ArrayBuffer: A.NativeArrayBuffer, ArrayBufferView: A.NativeTypedData, DataView: A.NativeByteData, Float32Array: A.NativeFloat32List, Float64Array: A.NativeFloat64List, Int16Array: A.NativeInt16List, Int32Array: A.NativeInt32List, Int8Array: A.NativeInt8List, Uint16Array: A.NativeUint16List, Uint32Array: A.NativeUint32List, Uint8ClampedArray: A.NativeUint8ClampedList, CanvasPixelArray: A.NativeUint8ClampedList, Uint8Array: A.NativeUint8List, HTMLAudioElement: A.HtmlElement, HTMLBRElement: A.HtmlElement, HTMLCanvasElement: A.HtmlElement, HTMLContentElement: A.HtmlElement, HTMLDListElement: A.HtmlElement, HTMLDataElement: A.HtmlElement, HTMLDataListElement: A.HtmlElement, HTMLDetailsElement: A.HtmlElement, HTMLDialogElement: A.HtmlElement, HTMLEmbedElement: A.HtmlElement, HTMLFieldSetElement: A.HtmlElement, HTMLHRElement: A.HtmlElement, HTMLHeadElement: A.HtmlElement, HTMLHeadingElement: A.HtmlElement, HTMLHtmlElement: A.HtmlElement, HTMLIFrameElement: A.HtmlElement, HTMLImageElement: A.HtmlElement, HTMLInputElement: A.HtmlElement, HTMLLIElement: A.HtmlElement, HTMLLabelElement: A.HtmlElement, HTMLLegendElement: A.HtmlElement, HTMLLinkElement: A.HtmlElement, HTMLMapElement: A.HtmlElement, HTMLMediaElement: A.HtmlElement, HTMLMenuElement: A.HtmlElement, HTMLMetaElement: A.HtmlElement, HTMLMeterElement: A.HtmlElement, HTMLModElement: A.HtmlElement, HTMLOListElement: A.HtmlElement, HTMLObjectElement: A.HtmlElement, HTMLOptGroupElement: A.HtmlElement, HTMLOptionElement: A.HtmlElement, HTMLOutputElement: A.HtmlElement, HTMLParagraphElement: A.HtmlElement, HTMLParamElement: A.HtmlElement, HTMLPictureElement: A.HtmlElement, HTMLPreElement: A.HtmlElement, HTMLProgressElement: A.HtmlElement, HTMLQuoteElement: A.HtmlElement, HTMLScriptElement: A.HtmlElement, HTMLShadowElement: A.HtmlElement, HTMLSlotElement: A.HtmlElement, HTMLSourceElement: A.HtmlElement, HTMLSpanElement: A.HtmlElement, HTMLStyleElement: A.HtmlElement, HTMLTableCaptionElement: A.HtmlElement, HTMLTableCellElement: A.HtmlElement, HTMLTableDataCellElement: A.HtmlElement, HTMLTableHeaderCellElement: A.HtmlElement, HTMLTableColElement: A.HtmlElement, HTMLTextAreaElement: A.HtmlElement, HTMLTimeElement: A.HtmlElement, HTMLTitleElement: A.HtmlElement, HTMLTrackElement: A.HtmlElement, HTMLUListElement: A.HtmlElement, HTMLUnknownElement: A.HtmlElement, HTMLVideoElement: A.HtmlElement, HTMLDirectoryElement: A.HtmlElement, HTMLFontElement: A.HtmlElement, HTMLFrameElement: A.HtmlElement, HTMLFrameSetElement: A.HtmlElement, HTMLMarqueeElement: A.HtmlElement, HTMLElement: A.HtmlElement, AccessibleNodeList: A.AccessibleNodeList, HTMLAnchorElement: A.AnchorElement, HTMLAreaElement: A.AreaElement, HTMLBaseElement: A.BaseElement, Blob: A.Blob, HTMLBodyElement: A.BodyElement, HTMLButtonElement: A.ButtonElement, CDATASection: A.CharacterData, CharacterData: A.CharacterData, Comment: A.CharacterData, ProcessingInstruction: A.CharacterData, Text: A.CharacterData, CSSPerspective: A.CssPerspective, CSSCharsetRule: A.CssRule, CSSConditionRule: A.CssRule, CSSFontFaceRule: A.CssRule, CSSGroupingRule: A.CssRule, CSSImportRule: A.CssRule, CSSKeyframeRule: A.CssRule, MozCSSKeyframeRule: A.CssRule, WebKitCSSKeyframeRule: A.CssRule, CSSKeyframesRule: A.CssRule, MozCSSKeyframesRule: A.CssRule, WebKitCSSKeyframesRule: A.CssRule, CSSMediaRule: A.CssRule, CSSNamespaceRule: A.CssRule, CSSPageRule: A.CssRule, CSSRule: A.CssRule, CSSStyleRule: A.CssRule, CSSSupportsRule: A.CssRule, CSSViewportRule: A.CssRule, CSSStyleDeclaration: A.CssStyleDeclaration, MSStyleCSSProperties: A.CssStyleDeclaration, CSS2Properties: A.CssStyleDeclaration, CSSImageValue: A.CssStyleValue, CSSKeywordValue: A.CssStyleValue, CSSNumericValue: A.CssStyleValue, CSSPositionValue: A.CssStyleValue, CSSResourceValue: A.CssStyleValue, CSSUnitValue: A.CssStyleValue, CSSURLImageValue: A.CssStyleValue, CSSStyleValue: A.CssStyleValue, CSSMatrixComponent: A.CssTransformComponent, CSSRotation: A.CssTransformComponent, CSSScale: A.CssTransformComponent, CSSSkew: A.CssTransformComponent, CSSTranslation: A.CssTransformComponent, CSSTransformComponent: A.CssTransformComponent, CSSTransformValue: A.CssTransformValue, CSSUnparsedValue: A.CssUnparsedValue, DataTransferItemList: A.DataTransferItemList, HTMLDivElement: A.DivElement, XMLDocument: A.Document, Document: A.Document, DOMException: A.DomException, DOMImplementation: A.DomImplementation, ClientRectList: A.DomRectList, DOMRectList: A.DomRectList, DOMRectReadOnly: A.DomRectReadOnly, DOMStringList: A.DomStringList, DOMTokenList: A.DomTokenList, MathMLElement: A.Element, Element: A.Element, AbortPaymentEvent: A.Event, AnimationEvent: A.Event, AnimationPlaybackEvent: A.Event, ApplicationCacheErrorEvent: A.Event, BackgroundFetchClickEvent: A.Event, BackgroundFetchEvent: A.Event, BackgroundFetchFailEvent: A.Event, BackgroundFetchedEvent: A.Event, BeforeInstallPromptEvent: A.Event, BeforeUnloadEvent: A.Event, BlobEvent: A.Event, CanMakePaymentEvent: A.Event, ClipboardEvent: A.Event, CloseEvent: A.Event, CustomEvent: A.Event, DeviceMotionEvent: A.Event, DeviceOrientationEvent: A.Event, ErrorEvent: A.Event, ExtendableEvent: A.Event, ExtendableMessageEvent: A.Event, FetchEvent: A.Event, FontFaceSetLoadEvent: A.Event, ForeignFetchEvent: A.Event, GamepadEvent: A.Event, HashChangeEvent: A.Event, InstallEvent: A.Event, MediaEncryptedEvent: A.Event, MediaKeyMessageEvent: A.Event, MediaQueryListEvent: A.Event, MediaStreamEvent: A.Event, MediaStreamTrackEvent: A.Event, MessageEvent: A.Event, MIDIConnectionEvent: A.Event, MIDIMessageEvent: A.Event, MutationEvent: A.Event, NotificationEvent: A.Event, PageTransitionEvent: A.Event, PaymentRequestEvent: A.Event, PaymentRequestUpdateEvent: A.Event, PopStateEvent: A.Event, PresentationConnectionAvailableEvent: A.Event, PresentationConnectionCloseEvent: A.Event, PromiseRejectionEvent: A.Event, PushEvent: A.Event, RTCDataChannelEvent: A.Event, RTCDTMFToneChangeEvent: A.Event, RTCPeerConnectionIceEvent: A.Event, RTCTrackEvent: A.Event, SecurityPolicyViolationEvent: A.Event, SensorErrorEvent: A.Event, SpeechRecognitionError: A.Event, SpeechRecognitionEvent: A.Event, SpeechSynthesisEvent: A.Event, StorageEvent: A.Event, SyncEvent: A.Event, TrackEvent: A.Event, TransitionEvent: A.Event, WebKitTransitionEvent: A.Event, VRDeviceEvent: A.Event, VRDisplayEvent: A.Event, VRSessionEvent: A.Event, MojoInterfaceRequestEvent: A.Event, USBConnectionEvent: A.Event, IDBVersionChangeEvent: A.Event, AudioProcessingEvent: A.Event, OfflineAudioCompletionEvent: A.Event, WebGLContextEvent: A.Event, Event: A.Event, InputEvent: A.Event, SubmitEvent: A.Event, AbsoluteOrientationSensor: A.EventTarget, Accelerometer: A.EventTarget, AccessibleNode: A.EventTarget, AmbientLightSensor: A.EventTarget, Animation: A.EventTarget, ApplicationCache: A.EventTarget, DOMApplicationCache: A.EventTarget, OfflineResourceList: A.EventTarget, BackgroundFetchRegistration: A.EventTarget, BatteryManager: A.EventTarget, BroadcastChannel: A.EventTarget, CanvasCaptureMediaStreamTrack: A.EventTarget, DedicatedWorkerGlobalScope: A.EventTarget, EventSource: A.EventTarget, FileReader: A.EventTarget, FontFaceSet: A.EventTarget, Gyroscope: A.EventTarget, LinearAccelerationSensor: A.EventTarget, Magnetometer: A.EventTarget, MediaDevices: A.EventTarget, MediaKeySession: A.EventTarget, MediaQueryList: A.EventTarget, MediaRecorder: A.EventTarget, MediaSource: A.EventTarget, MediaStream: A.EventTarget, MediaStreamTrack: A.EventTarget, MIDIAccess: A.EventTarget, MIDIInput: A.EventTarget, MIDIOutput: A.EventTarget, MIDIPort: A.EventTarget, NetworkInformation: A.EventTarget, Notification: A.EventTarget, OffscreenCanvas: A.EventTarget, OrientationSensor: A.EventTarget, PaymentRequest: A.EventTarget, Performance: A.EventTarget, PermissionStatus: A.EventTarget, PresentationAvailability: A.EventTarget, PresentationConnection: A.EventTarget, PresentationConnectionList: A.EventTarget, PresentationRequest: A.EventTarget, RelativeOrientationSensor: A.EventTarget, RemotePlayback: A.EventTarget, RTCDataChannel: A.EventTarget, DataChannel: A.EventTarget, RTCDTMFSender: A.EventTarget, RTCPeerConnection: A.EventTarget, webkitRTCPeerConnection: A.EventTarget, mozRTCPeerConnection: A.EventTarget, ScreenOrientation: A.EventTarget, Sensor: A.EventTarget, ServiceWorker: A.EventTarget, ServiceWorkerContainer: A.EventTarget, ServiceWorkerGlobalScope: A.EventTarget, ServiceWorkerRegistration: A.EventTarget, SharedWorker: A.EventTarget, SharedWorkerGlobalScope: A.EventTarget, SpeechRecognition: A.EventTarget, webkitSpeechRecognition: A.EventTarget, SpeechSynthesis: A.EventTarget, SpeechSynthesisUtterance: A.EventTarget, VR: A.EventTarget, VRDevice: A.EventTarget, VRDisplay: A.EventTarget, VRSession: A.EventTarget, VisualViewport: A.EventTarget, WebSocket: A.EventTarget, Window: A.EventTarget, DOMWindow: A.EventTarget, Worker: A.EventTarget, WorkerGlobalScope: A.EventTarget, WorkerPerformance: A.EventTarget, BluetoothDevice: A.EventTarget, BluetoothRemoteGATTCharacteristic: A.EventTarget, Clipboard: A.EventTarget, MojoInterfaceInterceptor: A.EventTarget, USB: A.EventTarget, IDBDatabase: A.EventTarget, IDBOpenDBRequest: A.EventTarget, IDBVersionChangeRequest: A.EventTarget, IDBRequest: A.EventTarget, IDBTransaction: A.EventTarget, AnalyserNode: A.EventTarget, RealtimeAnalyserNode: A.EventTarget, AudioBufferSourceNode: A.EventTarget, AudioDestinationNode: A.EventTarget, AudioNode: A.EventTarget, AudioScheduledSourceNode: A.EventTarget, AudioWorkletNode: A.EventTarget, BiquadFilterNode: A.EventTarget, ChannelMergerNode: A.EventTarget, AudioChannelMerger: A.EventTarget, ChannelSplitterNode: A.EventTarget, AudioChannelSplitter: A.EventTarget, ConstantSourceNode: A.EventTarget, ConvolverNode: A.EventTarget, DelayNode: A.EventTarget, DynamicsCompressorNode: A.EventTarget, GainNode: A.EventTarget, AudioGainNode: A.EventTarget, IIRFilterNode: A.EventTarget, MediaElementAudioSourceNode: A.EventTarget, MediaStreamAudioDestinationNode: A.EventTarget, MediaStreamAudioSourceNode: A.EventTarget, OscillatorNode: A.EventTarget, Oscillator: A.EventTarget, PannerNode: A.EventTarget, AudioPannerNode: A.EventTarget, webkitAudioPannerNode: A.EventTarget, ScriptProcessorNode: A.EventTarget, JavaScriptAudioNode: A.EventTarget, StereoPannerNode: A.EventTarget, WaveShaperNode: A.EventTarget, EventTarget: A.EventTarget, File: A.File, FileList: A.FileList, FileWriter: A.FileWriter, HTMLFormElement: A.FormElement, Gamepad: A.Gamepad, History: A.History, HTMLCollection: A.HtmlCollection, HTMLFormControlsCollection: A.HtmlCollection, HTMLOptionsCollection: A.HtmlCollection, HTMLDocument: A.HtmlDocument, XMLHttpRequest: A.HttpRequest, XMLHttpRequestUpload: A.HttpRequestEventTarget, XMLHttpRequestEventTarget: A.HttpRequestEventTarget, Location: A.Location, MediaList: A.MediaList, MessagePort: A.MessagePort, MIDIInputMap: A.MidiInputMap, MIDIOutputMap: A.MidiOutputMap, MimeType: A.MimeType, MimeTypeArray: A.MimeTypeArray, MouseEvent: A.MouseEvent, DragEvent: A.MouseEvent, PointerEvent: A.MouseEvent, WheelEvent: A.MouseEvent, DocumentFragment: A.Node, ShadowRoot: A.Node, DocumentType: A.Node, Node: A.Node, NodeList: A.NodeList, RadioNodeList: A.NodeList, Plugin: A.Plugin, PluginArray: A.PluginArray, ProgressEvent: A.ProgressEvent, ResourceProgressEvent: A.ProgressEvent, RTCStatsReport: A.RtcStatsReport, HTMLSelectElement: A.SelectElement, SourceBuffer: A.SourceBuffer, SourceBufferList: A.SourceBufferList, SpeechGrammar: A.SpeechGrammar, SpeechGrammarList: A.SpeechGrammarList, SpeechRecognitionResult: A.SpeechRecognitionResult, Storage: A.Storage, CSSStyleSheet: A.StyleSheet, StyleSheet: A.StyleSheet, HTMLTableElement: A.TableElement, HTMLTableRowElement: A.TableRowElement, HTMLTableSectionElement: A.TableSectionElement, HTMLTemplateElement: A.TemplateElement, TextTrack: A.TextTrack, TextTrackCue: A.TextTrackCue, VTTCue: A.TextTrackCue, TextTrackCueList: A.TextTrackCueList, TextTrackList: A.TextTrackList, TimeRanges: A.TimeRanges, Touch: A.Touch, TouchList: A.TouchList, TrackDefaultList: A.TrackDefaultList, CompositionEvent: A.UIEvent, FocusEvent: A.UIEvent, KeyboardEvent: A.UIEvent, TextEvent: A.UIEvent, TouchEvent: A.UIEvent, UIEvent: A.UIEvent, URL: A.Url, VideoTrackList: A.VideoTrackList, Attr: A._Attr, CSSRuleList: A._CssRuleList, ClientRect: A._DomRect, DOMRect: A._DomRect, GamepadList: A._GamepadList, NamedNodeMap: A._NamedNodeMap, MozNamedAttrMap: A._NamedNodeMap, SpeechRecognitionResultList: A._SpeechRecognitionResultList, StyleSheetList: A._StyleSheetList, SVGLength: A.Length, SVGLengthList: A.LengthList, SVGNumber: A.Number, SVGNumberList: A.NumberList, SVGPointList: A.PointList, SVGScriptElement: A.ScriptElement0, SVGStringList: A.StringList, SVGAElement: A.SvgElement, SVGAnimateElement: A.SvgElement, SVGAnimateMotionElement: A.SvgElement, SVGAnimateTransformElement: A.SvgElement, SVGAnimationElement: A.SvgElement, SVGCircleElement: A.SvgElement, SVGClipPathElement: A.SvgElement, SVGDefsElement: A.SvgElement, SVGDescElement: A.SvgElement, SVGDiscardElement: A.SvgElement, SVGEllipseElement: A.SvgElement, SVGFEBlendElement: A.SvgElement, SVGFEColorMatrixElement: A.SvgElement, SVGFEComponentTransferElement: A.SvgElement, SVGFECompositeElement: A.SvgElement, SVGFEConvolveMatrixElement: A.SvgElement, SVGFEDiffuseLightingElement: A.SvgElement, SVGFEDisplacementMapElement: A.SvgElement, SVGFEDistantLightElement: A.SvgElement, SVGFEFloodElement: A.SvgElement, SVGFEFuncAElement: A.SvgElement, SVGFEFuncBElement: A.SvgElement, SVGFEFuncGElement: A.SvgElement, SVGFEFuncRElement: A.SvgElement, SVGFEGaussianBlurElement: A.SvgElement, SVGFEImageElement: A.SvgElement, SVGFEMergeElement: A.SvgElement, SVGFEMergeNodeElement: A.SvgElement, SVGFEMorphologyElement: A.SvgElement, SVGFEOffsetElement: A.SvgElement, SVGFEPointLightElement: A.SvgElement, SVGFESpecularLightingElement: A.SvgElement, SVGFESpotLightElement: A.SvgElement, SVGFETileElement: A.SvgElement, SVGFETurbulenceElement: A.SvgElement, SVGFilterElement: A.SvgElement, SVGForeignObjectElement: A.SvgElement, SVGGElement: A.SvgElement, SVGGeometryElement: A.SvgElement, SVGGraphicsElement: A.SvgElement, SVGImageElement: A.SvgElement, SVGLineElement: A.SvgElement, SVGLinearGradientElement: A.SvgElement, SVGMarkerElement: A.SvgElement, SVGMaskElement: A.SvgElement, SVGMetadataElement: A.SvgElement, SVGPathElement: A.SvgElement, SVGPatternElement: A.SvgElement, SVGPolygonElement: A.SvgElement, SVGPolylineElement: A.SvgElement, SVGRadialGradientElement: A.SvgElement, SVGRectElement: A.SvgElement, SVGSetElement: A.SvgElement, SVGStopElement: A.SvgElement, SVGStyleElement: A.SvgElement, SVGSVGElement: A.SvgElement, SVGSwitchElement: A.SvgElement, SVGSymbolElement: A.SvgElement, SVGTSpanElement: A.SvgElement, SVGTextContentElement: A.SvgElement, SVGTextElement: A.SvgElement, SVGTextPathElement: A.SvgElement, SVGTextPositioningElement: A.SvgElement, SVGTitleElement: A.SvgElement, SVGUseElement: A.SvgElement, SVGViewElement: A.SvgElement, SVGGradientElement: A.SvgElement, SVGComponentTransferFunctionElement: A.SvgElement, SVGFEDropShadowElement: A.SvgElement, SVGMPathElement: A.SvgElement, SVGElement: A.SvgElement, SVGTransform: A.Transform, SVGTransformList: A.TransformList, AudioBuffer: A.AudioBuffer, AudioParamMap: A.AudioParamMap, AudioTrackList: A.AudioTrackList, AudioContext: A.BaseAudioContext, webkitAudioContext: A.BaseAudioContext, BaseAudioContext: A.BaseAudioContext, OfflineAudioContext: A.OfflineAudioContext});
+    hunkHelpers.setOrUpdateLeafTags({WebGL: true, AnimationEffectReadOnly: true, AnimationEffectTiming: true, AnimationEffectTimingReadOnly: true, AnimationTimeline: true, AnimationWorkletGlobalScope: true, AuthenticatorAssertionResponse: true, AuthenticatorAttestationResponse: true, AuthenticatorResponse: true, BackgroundFetchFetch: true, BackgroundFetchManager: true, BackgroundFetchSettledFetch: true, BarProp: true, BarcodeDetector: true, BluetoothRemoteGATTDescriptor: true, Body: true, BudgetState: true, CacheStorage: true, CanvasGradient: true, CanvasPattern: true, CanvasRenderingContext2D: true, Client: true, Clients: true, CookieStore: true, Coordinates: true, Credential: true, CredentialUserData: true, CredentialsContainer: true, Crypto: true, CryptoKey: true, CSS: true, CSSVariableReferenceValue: true, CustomElementRegistry: true, DataTransfer: true, DataTransferItem: true, DeprecatedStorageInfo: true, DeprecatedStorageQuota: true, DeprecationReport: true, DetectedBarcode: true, DetectedFace: true, DetectedText: true, DeviceAcceleration: true, DeviceRotationRate: true, DirectoryEntry: true, webkitFileSystemDirectoryEntry: true, FileSystemDirectoryEntry: true, DirectoryReader: true, WebKitDirectoryReader: true, webkitFileSystemDirectoryReader: true, FileSystemDirectoryReader: true, DocumentOrShadowRoot: true, DocumentTimeline: true, DOMError: true, Iterator: true, DOMMatrix: true, DOMMatrixReadOnly: true, DOMParser: true, DOMPoint: true, DOMPointReadOnly: true, DOMQuad: true, DOMStringMap: true, Entry: true, webkitFileSystemEntry: true, FileSystemEntry: true, External: true, FaceDetector: true, FederatedCredential: true, FileEntry: true, webkitFileSystemFileEntry: true, FileSystemFileEntry: true, DOMFileSystem: true, WebKitFileSystem: true, webkitFileSystem: true, FileSystem: true, FontFace: true, FontFaceSource: true, FormData: true, GamepadButton: true, GamepadPose: true, Geolocation: true, Position: true, GeolocationPosition: true, Headers: true, HTMLHyperlinkElementUtils: true, IdleDeadline: true, ImageBitmap: true, ImageBitmapRenderingContext: true, ImageCapture: true, ImageData: true, InputDeviceCapabilities: true, IntersectionObserver: true, IntersectionObserverEntry: true, InterventionReport: true, KeyframeEffect: true, KeyframeEffectReadOnly: true, MediaCapabilities: true, MediaCapabilitiesInfo: true, MediaDeviceInfo: true, MediaError: true, MediaKeyStatusMap: true, MediaKeySystemAccess: true, MediaKeys: true, MediaKeysPolicy: true, MediaMetadata: true, MediaSession: true, MediaSettingsRange: true, MemoryInfo: true, MessageChannel: true, Metadata: true, MutationObserver: true, WebKitMutationObserver: true, MutationRecord: true, NavigationPreloadManager: true, Navigator: true, NavigatorAutomationInformation: true, NavigatorConcurrentHardware: true, NavigatorCookies: true, NavigatorUserMediaError: true, NodeFilter: true, NodeIterator: true, NonDocumentTypeChildNode: true, NonElementParentNode: true, NoncedElement: true, OffscreenCanvasRenderingContext2D: true, OverconstrainedError: true, PaintRenderingContext2D: true, PaintSize: true, PaintWorkletGlobalScope: true, PasswordCredential: true, Path2D: true, PaymentAddress: true, PaymentInstruments: true, PaymentManager: true, PaymentResponse: true, PerformanceEntry: true, PerformanceLongTaskTiming: true, PerformanceMark: true, PerformanceMeasure: true, PerformanceNavigation: true, PerformanceNavigationTiming: true, PerformanceObserver: true, PerformanceObserverEntryList: true, PerformancePaintTiming: true, PerformanceResourceTiming: true, PerformanceServerTiming: true, PerformanceTiming: true, Permissions: true, PhotoCapabilities: true, PositionError: true, GeolocationPositionError: true, Presentation: true, PresentationReceiver: true, PublicKeyCredential: true, PushManager: true, PushMessageData: true, PushSubscription: true, PushSubscriptionOptions: true, Range: true, RelatedApplication: true, ReportBody: true, ReportingObserver: true, ResizeObserver: true, ResizeObserverEntry: true, RTCCertificate: true, RTCIceCandidate: true, mozRTCIceCandidate: true, RTCLegacyStatsReport: true, RTCRtpContributingSource: true, RTCRtpReceiver: true, RTCRtpSender: true, RTCSessionDescription: true, mozRTCSessionDescription: true, RTCStatsResponse: true, Screen: true, ScrollState: true, ScrollTimeline: true, Selection: true, SpeechRecognitionAlternative: true, SpeechSynthesisVoice: true, StaticRange: true, StorageManager: true, StyleMedia: true, StylePropertyMap: true, StylePropertyMapReadonly: true, SyncManager: true, TaskAttributionTiming: true, TextDetector: true, TextMetrics: true, TrackDefault: true, TreeWalker: true, TrustedHTML: true, TrustedScriptURL: true, TrustedURL: true, UnderlyingSourceBase: true, URLSearchParams: true, VRCoordinateSystem: true, VRDisplayCapabilities: true, VREyeParameters: true, VRFrameData: true, VRFrameOfReference: true, VRPose: true, VRStageBounds: true, VRStageBoundsPoint: true, VRStageParameters: true, ValidityState: true, VideoPlaybackQuality: true, VideoTrack: true, VTTRegion: true, WindowClient: true, WorkletAnimation: true, WorkletGlobalScope: true, XPathEvaluator: true, XPathExpression: true, XPathNSResolver: true, XPathResult: true, XMLSerializer: true, XSLTProcessor: true, Bluetooth: true, BluetoothCharacteristicProperties: true, BluetoothRemoteGATTServer: true, BluetoothRemoteGATTService: true, BluetoothUUID: true, BudgetService: true, Cache: true, DOMFileSystemSync: true, DirectoryEntrySync: true, DirectoryReaderSync: true, EntrySync: true, FileEntrySync: true, FileReaderSync: true, FileWriterSync: true, HTMLAllCollection: true, Mojo: true, MojoHandle: true, MojoWatcher: true, NFC: true, PagePopupController: true, Report: true, Request: true, Response: true, SubtleCrypto: true, USBAlternateInterface: true, USBConfiguration: true, USBDevice: true, USBEndpoint: true, USBInTransferResult: true, USBInterface: true, USBIsochronousInTransferPacket: true, USBIsochronousInTransferResult: true, USBIsochronousOutTransferPacket: true, USBIsochronousOutTransferResult: true, USBOutTransferResult: true, WorkerLocation: true, WorkerNavigator: true, Worklet: true, IDBCursor: true, IDBCursorWithValue: true, IDBFactory: true, IDBIndex: true, IDBKeyRange: true, IDBObjectStore: true, IDBObservation: true, IDBObserver: true, IDBObserverChanges: true, SVGAngle: true, SVGAnimatedAngle: true, SVGAnimatedBoolean: true, SVGAnimatedEnumeration: true, SVGAnimatedInteger: true, SVGAnimatedLength: true, SVGAnimatedLengthList: true, SVGAnimatedNumber: true, SVGAnimatedNumberList: true, SVGAnimatedPreserveAspectRatio: true, SVGAnimatedRect: true, SVGAnimatedString: true, SVGAnimatedTransformList: true, SVGMatrix: true, SVGPoint: true, SVGPreserveAspectRatio: true, SVGRect: true, SVGUnitTypes: true, AudioListener: true, AudioParam: true, AudioTrack: true, AudioWorkletGlobalScope: true, AudioWorkletProcessor: true, PeriodicWave: true, WebGLActiveInfo: true, ANGLEInstancedArrays: true, ANGLE_instanced_arrays: true, WebGLBuffer: true, WebGLCanvas: true, WebGLColorBufferFloat: true, WebGLCompressedTextureASTC: true, WebGLCompressedTextureATC: true, WEBGL_compressed_texture_atc: true, WebGLCompressedTextureETC1: true, WEBGL_compressed_texture_etc1: true, WebGLCompressedTextureETC: true, WebGLCompressedTexturePVRTC: true, WEBGL_compressed_texture_pvrtc: true, WebGLCompressedTextureS3TC: true, WEBGL_compressed_texture_s3tc: true, WebGLCompressedTextureS3TCsRGB: true, WebGLDebugRendererInfo: true, WEBGL_debug_renderer_info: true, WebGLDebugShaders: true, WEBGL_debug_shaders: true, WebGLDepthTexture: true, WEBGL_depth_texture: true, WebGLDrawBuffers: true, WEBGL_draw_buffers: true, EXTsRGB: true, EXT_sRGB: true, EXTBlendMinMax: true, EXT_blend_minmax: true, EXTColorBufferFloat: true, EXTColorBufferHalfFloat: true, EXTDisjointTimerQuery: true, EXTDisjointTimerQueryWebGL2: true, EXTFragDepth: true, EXT_frag_depth: true, EXTShaderTextureLOD: true, EXT_shader_texture_lod: true, EXTTextureFilterAnisotropic: true, EXT_texture_filter_anisotropic: true, WebGLFramebuffer: true, WebGLGetBufferSubDataAsync: true, WebGLLoseContext: true, WebGLExtensionLoseContext: true, WEBGL_lose_context: true, OESElementIndexUint: true, OES_element_index_uint: true, OESStandardDerivatives: true, OES_standard_derivatives: true, OESTextureFloat: true, OES_texture_float: true, OESTextureFloatLinear: true, OES_texture_float_linear: true, OESTextureHalfFloat: true, OES_texture_half_float: true, OESTextureHalfFloatLinear: true, OES_texture_half_float_linear: true, OESVertexArrayObject: true, OES_vertex_array_object: true, WebGLProgram: true, WebGLQuery: true, WebGLRenderbuffer: true, WebGLRenderingContext: true, WebGL2RenderingContext: true, WebGLSampler: true, WebGLShader: true, WebGLShaderPrecisionFormat: true, WebGLSync: true, WebGLTexture: true, WebGLTimerQueryEXT: true, WebGLTransformFeedback: true, WebGLUniformLocation: true, WebGLVertexArrayObject: true, WebGLVertexArrayObjectOES: true, WebGL2RenderingContextBase: true, SharedArrayBuffer: true, ArrayBuffer: true, ArrayBufferView: false, DataView: true, Float32Array: true, Float64Array: true, Int16Array: true, Int32Array: true, Int8Array: true, Uint16Array: true, Uint32Array: true, Uint8ClampedArray: true, CanvasPixelArray: true, Uint8Array: false, HTMLAudioElement: true, HTMLBRElement: true, HTMLCanvasElement: true, HTMLContentElement: true, HTMLDListElement: true, HTMLDataElement: true, HTMLDataListElement: true, HTMLDetailsElement: true, HTMLDialogElement: true, HTMLEmbedElement: true, HTMLFieldSetElement: true, HTMLHRElement: true, HTMLHeadElement: true, HTMLHeadingElement: true, HTMLHtmlElement: true, HTMLIFrameElement: true, HTMLImageElement: true, HTMLInputElement: true, HTMLLIElement: true, HTMLLabelElement: true, HTMLLegendElement: true, HTMLLinkElement: true, HTMLMapElement: true, HTMLMediaElement: true, HTMLMenuElement: true, HTMLMetaElement: true, HTMLMeterElement: true, HTMLModElement: true, HTMLOListElement: true, HTMLObjectElement: true, HTMLOptGroupElement: true, HTMLOptionElement: true, HTMLOutputElement: true, HTMLParagraphElement: true, HTMLParamElement: true, HTMLPictureElement: true, HTMLPreElement: true, HTMLProgressElement: true, HTMLQuoteElement: true, HTMLScriptElement: true, HTMLShadowElement: true, HTMLSlotElement: true, HTMLSourceElement: true, HTMLSpanElement: true, HTMLStyleElement: true, HTMLTableCaptionElement: true, HTMLTableCellElement: true, HTMLTableDataCellElement: true, HTMLTableHeaderCellElement: true, HTMLTableColElement: true, HTMLTextAreaElement: true, HTMLTimeElement: true, HTMLTitleElement: true, HTMLTrackElement: true, HTMLUListElement: true, HTMLUnknownElement: true, HTMLVideoElement: true, HTMLDirectoryElement: true, HTMLFontElement: true, HTMLFrameElement: true, HTMLFrameSetElement: true, HTMLMarqueeElement: true, HTMLElement: false, AccessibleNodeList: true, HTMLAnchorElement: true, HTMLAreaElement: true, HTMLBaseElement: true, Blob: false, HTMLBodyElement: true, HTMLButtonElement: true, CDATASection: true, CharacterData: true, Comment: true, ProcessingInstruction: true, Text: true, CSSPerspective: true, CSSCharsetRule: true, CSSConditionRule: true, CSSFontFaceRule: true, CSSGroupingRule: true, CSSImportRule: true, CSSKeyframeRule: true, MozCSSKeyframeRule: true, WebKitCSSKeyframeRule: true, CSSKeyframesRule: true, MozCSSKeyframesRule: true, WebKitCSSKeyframesRule: true, CSSMediaRule: true, CSSNamespaceRule: true, CSSPageRule: true, CSSRule: true, CSSStyleRule: true, CSSSupportsRule: true, CSSViewportRule: true, CSSStyleDeclaration: true, MSStyleCSSProperties: true, CSS2Properties: true, CSSImageValue: true, CSSKeywordValue: true, CSSNumericValue: true, CSSPositionValue: true, CSSResourceValue: true, CSSUnitValue: true, CSSURLImageValue: true, CSSStyleValue: false, CSSMatrixComponent: true, CSSRotation: true, CSSScale: true, CSSSkew: true, CSSTranslation: true, CSSTransformComponent: false, CSSTransformValue: true, CSSUnparsedValue: true, DataTransferItemList: true, HTMLDivElement: true, XMLDocument: true, Document: false, DOMException: true, DOMImplementation: true, ClientRectList: true, DOMRectList: true, DOMRectReadOnly: false, DOMStringList: true, DOMTokenList: true, MathMLElement: true, Element: false, AbortPaymentEvent: true, AnimationEvent: true, AnimationPlaybackEvent: true, ApplicationCacheErrorEvent: true, BackgroundFetchClickEvent: true, BackgroundFetchEvent: true, BackgroundFetchFailEvent: true, BackgroundFetchedEvent: true, BeforeInstallPromptEvent: true, BeforeUnloadEvent: true, BlobEvent: true, CanMakePaymentEvent: true, ClipboardEvent: true, CloseEvent: true, CustomEvent: true, DeviceMotionEvent: true, DeviceOrientationEvent: true, ErrorEvent: true, ExtendableEvent: true, ExtendableMessageEvent: true, FetchEvent: true, FontFaceSetLoadEvent: true, ForeignFetchEvent: true, GamepadEvent: true, HashChangeEvent: true, InstallEvent: true, MediaEncryptedEvent: true, MediaKeyMessageEvent: true, MediaQueryListEvent: true, MediaStreamEvent: true, MediaStreamTrackEvent: true, MessageEvent: true, MIDIConnectionEvent: true, MIDIMessageEvent: true, MutationEvent: true, NotificationEvent: true, PageTransitionEvent: true, PaymentRequestEvent: true, PaymentRequestUpdateEvent: true, PopStateEvent: true, PresentationConnectionAvailableEvent: true, PresentationConnectionCloseEvent: true, PromiseRejectionEvent: true, PushEvent: true, RTCDataChannelEvent: true, RTCDTMFToneChangeEvent: true, RTCPeerConnectionIceEvent: true, RTCTrackEvent: true, SecurityPolicyViolationEvent: true, SensorErrorEvent: true, SpeechRecognitionError: true, SpeechRecognitionEvent: true, SpeechSynthesisEvent: true, StorageEvent: true, SyncEvent: true, TrackEvent: true, TransitionEvent: true, WebKitTransitionEvent: true, VRDeviceEvent: true, VRDisplayEvent: true, VRSessionEvent: true, MojoInterfaceRequestEvent: true, USBConnectionEvent: true, IDBVersionChangeEvent: true, AudioProcessingEvent: true, OfflineAudioCompletionEvent: true, WebGLContextEvent: true, Event: false, InputEvent: false, SubmitEvent: false, AbsoluteOrientationSensor: true, Accelerometer: true, AccessibleNode: true, AmbientLightSensor: true, Animation: true, ApplicationCache: true, DOMApplicationCache: true, OfflineResourceList: true, BackgroundFetchRegistration: true, BatteryManager: true, BroadcastChannel: true, CanvasCaptureMediaStreamTrack: true, DedicatedWorkerGlobalScope: true, EventSource: true, FileReader: true, FontFaceSet: true, Gyroscope: true, LinearAccelerationSensor: true, Magnetometer: true, MediaDevices: true, MediaKeySession: true, MediaQueryList: true, MediaRecorder: true, MediaSource: true, MediaStream: true, MediaStreamTrack: true, MIDIAccess: true, MIDIInput: true, MIDIOutput: true, MIDIPort: true, NetworkInformation: true, Notification: true, OffscreenCanvas: true, OrientationSensor: true, PaymentRequest: true, Performance: true, PermissionStatus: true, PresentationAvailability: true, PresentationConnection: true, PresentationConnectionList: true, PresentationRequest: true, RelativeOrientationSensor: true, RemotePlayback: true, RTCDataChannel: true, DataChannel: true, RTCDTMFSender: true, RTCPeerConnection: true, webkitRTCPeerConnection: true, mozRTCPeerConnection: true, ScreenOrientation: true, Sensor: true, ServiceWorker: true, ServiceWorkerContainer: true, ServiceWorkerGlobalScope: true, ServiceWorkerRegistration: true, SharedWorker: true, SharedWorkerGlobalScope: true, SpeechRecognition: true, webkitSpeechRecognition: true, SpeechSynthesis: true, SpeechSynthesisUtterance: true, VR: true, VRDevice: true, VRDisplay: true, VRSession: true, VisualViewport: true, WebSocket: true, Window: true, DOMWindow: true, Worker: true, WorkerGlobalScope: true, WorkerPerformance: true, BluetoothDevice: true, BluetoothRemoteGATTCharacteristic: true, Clipboard: true, MojoInterfaceInterceptor: true, USB: true, IDBDatabase: true, IDBOpenDBRequest: true, IDBVersionChangeRequest: true, IDBRequest: true, IDBTransaction: true, AnalyserNode: true, RealtimeAnalyserNode: true, AudioBufferSourceNode: true, AudioDestinationNode: true, AudioNode: true, AudioScheduledSourceNode: true, AudioWorkletNode: true, BiquadFilterNode: true, ChannelMergerNode: true, AudioChannelMerger: true, ChannelSplitterNode: true, AudioChannelSplitter: true, ConstantSourceNode: true, ConvolverNode: true, DelayNode: true, DynamicsCompressorNode: true, GainNode: true, AudioGainNode: true, IIRFilterNode: true, MediaElementAudioSourceNode: true, MediaStreamAudioDestinationNode: true, MediaStreamAudioSourceNode: true, OscillatorNode: true, Oscillator: true, PannerNode: true, AudioPannerNode: true, webkitAudioPannerNode: true, ScriptProcessorNode: true, JavaScriptAudioNode: true, StereoPannerNode: true, WaveShaperNode: true, EventTarget: false, File: true, FileList: true, FileWriter: true, HTMLFormElement: true, Gamepad: true, History: true, HTMLCollection: true, HTMLFormControlsCollection: true, HTMLOptionsCollection: true, HTMLDocument: true, XMLHttpRequest: true, XMLHttpRequestUpload: true, XMLHttpRequestEventTarget: false, Location: true, MediaList: true, MessagePort: true, MIDIInputMap: true, MIDIOutputMap: true, MimeType: true, MimeTypeArray: true, MouseEvent: true, DragEvent: true, PointerEvent: true, WheelEvent: true, DocumentFragment: true, ShadowRoot: true, DocumentType: true, Node: false, NodeList: true, RadioNodeList: true, Plugin: true, PluginArray: true, ProgressEvent: true, ResourceProgressEvent: true, RTCStatsReport: true, HTMLSelectElement: true, SourceBuffer: true, SourceBufferList: true, SpeechGrammar: true, SpeechGrammarList: true, SpeechRecognitionResult: true, Storage: true, CSSStyleSheet: true, StyleSheet: true, HTMLTableElement: true, HTMLTableRowElement: true, HTMLTableSectionElement: true, HTMLTemplateElement: true, TextTrack: true, TextTrackCue: true, VTTCue: true, TextTrackCueList: true, TextTrackList: true, TimeRanges: true, Touch: true, TouchList: true, TrackDefaultList: true, CompositionEvent: true, FocusEvent: true, KeyboardEvent: true, TextEvent: true, TouchEvent: true, UIEvent: false, URL: true, VideoTrackList: true, Attr: true, CSSRuleList: true, ClientRect: true, DOMRect: true, GamepadList: true, NamedNodeMap: true, MozNamedAttrMap: true, SpeechRecognitionResultList: true, StyleSheetList: true, SVGLength: true, SVGLengthList: true, SVGNumber: true, SVGNumberList: true, SVGPointList: true, SVGScriptElement: true, SVGStringList: true, SVGAElement: true, SVGAnimateElement: true, SVGAnimateMotionElement: true, SVGAnimateTransformElement: true, SVGAnimationElement: true, SVGCircleElement: true, SVGClipPathElement: true, SVGDefsElement: true, SVGDescElement: true, SVGDiscardElement: true, SVGEllipseElement: true, SVGFEBlendElement: true, SVGFEColorMatrixElement: true, SVGFEComponentTransferElement: true, SVGFECompositeElement: true, SVGFEConvolveMatrixElement: true, SVGFEDiffuseLightingElement: true, SVGFEDisplacementMapElement: true, SVGFEDistantLightElement: true, SVGFEFloodElement: true, SVGFEFuncAElement: true, SVGFEFuncBElement: true, SVGFEFuncGElement: true, SVGFEFuncRElement: true, SVGFEGaussianBlurElement: true, SVGFEImageElement: true, SVGFEMergeElement: true, SVGFEMergeNodeElement: true, SVGFEMorphologyElement: true, SVGFEOffsetElement: true, SVGFEPointLightElement: true, SVGFESpecularLightingElement: true, SVGFESpotLightElement: true, SVGFETileElement: true, SVGFETurbulenceElement: true, SVGFilterElement: true, SVGForeignObjectElement: true, SVGGElement: true, SVGGeometryElement: true, SVGGraphicsElement: true, SVGImageElement: true, SVGLineElement: true, SVGLinearGradientElement: true, SVGMarkerElement: true, SVGMaskElement: true, SVGMetadataElement: true, SVGPathElement: true, SVGPatternElement: true, SVGPolygonElement: true, SVGPolylineElement: true, SVGRadialGradientElement: true, SVGRectElement: true, SVGSetElement: true, SVGStopElement: true, SVGStyleElement: true, SVGSVGElement: true, SVGSwitchElement: true, SVGSymbolElement: true, SVGTSpanElement: true, SVGTextContentElement: true, SVGTextElement: true, SVGTextPathElement: true, SVGTextPositioningElement: true, SVGTitleElement: true, SVGUseElement: true, SVGViewElement: true, SVGGradientElement: true, SVGComponentTransferFunctionElement: true, SVGFEDropShadowElement: true, SVGMPathElement: true, SVGElement: false, SVGTransform: true, SVGTransformList: true, AudioBuffer: true, AudioParamMap: true, AudioTrackList: true, AudioContext: true, webkitAudioContext: true, BaseAudioContext: false, OfflineAudioContext: true});
     A.NativeTypedArray.$nativeSuperclassTag = "ArrayBufferView";
     A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin.$nativeSuperclassTag = "ArrayBufferView";
     A._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin.$nativeSuperclassTag = "ArrayBufferView";
@@ -20269,6 +24423,9 @@
   };
   Function.prototype.call$1$1 = function(a) {
     return this(a);
+  };
+  Function.prototype.call$2$2 = function(a, b) {
+    return this(a, b);
   };
   convertAllToFastObject(holders);
   convertToFastObject($);

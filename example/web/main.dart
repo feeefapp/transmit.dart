@@ -7,11 +7,13 @@
  * file that was distributed with this source code.
  */
 
+import 'dart:async';
 import 'dart:html' as html;
 import 'package:transmit_client/transmit.dart';
 
 Transmit? transmit;
-dynamic subscription;
+Subscription? subscription;
+StreamSubscription<dynamic>? streamSubscription;
 
 void main() {
   // Set up button event listeners
@@ -85,13 +87,33 @@ void connect() {
   // Create subscription
   subscription = transmit!.subscription('test');
 
-  // Register message handler
-  subscription.onMessage((message) {
-    addMessage('Message received: ${message.toString()}', 'message');
+  // Example 1: Using Stream API (recommended)
+  streamSubscription = subscription!.stream.listen(
+    (message) {
+      addMessage('📨 Stream: ${message.toString()}', 'message');
+    },
+    onError: (error) {
+      addMessage('❌ Stream error: $error', 'error');
+    },
+    onDone: () {
+      addMessage('✅ Stream closed', 'info');
+    },
+  );
+
+  // Example 2: Typed stream with filtering
+  subscription!.streamAs<Map<String, dynamic>>()
+    .where((msg) => msg.containsKey('type'))
+    .listen((msg) {
+      addMessage('📝 Typed: ${msg['type']} - ${msg['data']}', 'message');
+    });
+
+  // Example 3: Callback API (also available for compatibility)
+  subscription!.onMessage((message) {
+    addMessage('📞 Callback: ${message.toString()}', 'message');
   });
 
   // Create subscription on server
-  subscription.create().then((_) {
+  subscription!.create().then((_) {
     addMessage('Subscription created for channel: test', 'success');
   }).catchError((error) {
     addMessage('Failed to create subscription: $error', 'error');
@@ -103,7 +125,14 @@ void disconnect() {
     return;
   }
 
+  // Cancel stream subscription
+  streamSubscription?.cancel();
+  streamSubscription = null;
+
+  // Delete subscription
   subscription?.delete();
+  
+  // Close connection
   transmit?.close();
   transmit = null;
   subscription = null;
@@ -155,7 +184,7 @@ void addMessage(String message, String type) {
   if (messagesDiv == null) return;
 
   final messageDiv = html.DivElement()
-    ..className = 'message'
+    ..className = 'message message-$type'
     ..innerHtml = '''
       <div class="message-time">${DateTime.now().toLocal().toString().substring(11, 19)}</div>
       <div class="message-content">$message</div>

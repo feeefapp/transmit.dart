@@ -8,7 +8,7 @@
  */
 
 import 'dart:async';
-import 'package:transmit_client/src/transmit_stub.dart';
+import 'package:transmit_client/src/transmit_io.dart';
 
 /// Fake EventSource for testing.
 /// This implements the EventSource interface used by the Transmit client.

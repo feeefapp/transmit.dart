@@ -50,6 +50,8 @@ Then open `http://localhost:8080/index.html`
 - ✅ Trigger test events button
 - ✅ Message display with timestamps
 - ✅ Clear messages functionality
+- ✅ **Stream API examples** - Demonstrates both Stream and Callback APIs
+- ✅ **Typed streams** - Shows how to use `streamAs<T>()` for type-safe message handling
 
 ## Testing
 
