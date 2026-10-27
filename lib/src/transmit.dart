@@ -18,7 +18,7 @@ import 'hook_event.dart';
 import 'subscription.dart';
 import 'transmit_status.dart';
 import 'transmit_stub.dart'
-    if (dart.library.html) 'transmit_web.dart'
+    if (dart.library.js_interop) 'transmit_web.dart'
     if (dart.library.io) 'transmit_io.dart';
 
 /// Options for creating a Transmit client.

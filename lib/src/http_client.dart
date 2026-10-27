@@ -11,7 +11,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'http_client_stub.dart'
-    if (dart.library.html) 'http_client_web.dart'
+    if (dart.library.js_interop) 'http_client_web.dart'
     if (dart.library.io) 'http_client_io.dart';
 
 /// HTTP client for communicating with the Transmit server.
